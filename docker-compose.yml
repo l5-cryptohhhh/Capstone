@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:17
+    container_name: scoutai-db
+    environment:
+      POSTGRES_DB: ${SCOUTAI_DB_NAME:-scoutai}
+      POSTGRES_USER: ${SCOUTAI_DB_USER:-scoutai}
+      POSTGRES_PASSWORD: ${SCOUTAI_DB_PASSWORD:-scoutai}
+    ports:
+      - "${SCOUTAI_DB_PORT:-5432}:5432"
+    volumes:
+      - scoutai-pgdata:/var/lib/postgresql/data
+
+volumes:
+  scoutai-pgdata:
