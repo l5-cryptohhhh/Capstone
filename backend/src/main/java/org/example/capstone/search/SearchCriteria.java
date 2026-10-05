@@ -6,9 +6,11 @@ import java.util.List;
 
 /**
  * Criteri strutturati di ricerca. Sono prodotti dai parametri della GET /players
- * e, più avanti, dall'interpretazione AI della ricerca in linguaggio naturale.
+ * e dall'interpretazione AI della ricerca in linguaggio naturale.
  *
- * @param sort campo di ordinamento: name, age, minutes, rating, goals, assists oppure la chiave di una metrica
+ * @param teamName   parte del nome della squadra (usato dall'AI, che non conosce gli id)
+ * @param leagueName parte del nome del campionato (usato dall'AI, che non conosce gli id)
+ * @param sort       campo di ordinamento: name, age, minutes, appearances, rating, goals, assists oppure la chiave di una metrica
  */
 public record SearchCriteria(
         String q,
@@ -17,6 +19,8 @@ public record SearchCriteria(
         Integer maxAge,
         Long leagueId,
         Long teamId,
+        String teamName,
+        String leagueName,
         Integer season,
         Integer minMinutes,
         List<MetricFilter> filters,

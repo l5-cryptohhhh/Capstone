@@ -16,7 +16,7 @@
 
 .page__title {
   font-size: clamp(2.2rem, 5vw, 3.6rem);
-  line-height: 1;
+  line-height: 1.05;
   text-wrap: balance;
 }
 
@@ -41,13 +41,13 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: end;
   gap: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--ink);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .dossier-head__name {
-  font-size: clamp(2.8rem, 8vw, 5.4rem);
-  line-height: 0.92;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
@@ -63,10 +63,11 @@
 
 .dossier-head__sep {
   display: inline-block;
-  width: 1px;
-  height: 14px;
+  width: 4px;
+  height: 4px;
   margin: 0 12px;
-  background: var(--rule-strong);
+  background: var(--ink-3);
+  border-radius: 50%;
 }
 
 /* Parti del modulo */
@@ -76,10 +77,8 @@
 
 .part__title {
   margin-bottom: 14px;
-  padding-bottom: 6px;
-  font-size: 1.55rem;
-  line-height: 1.1;
-  border-bottom: 2px solid var(--ink);
+  font-size: 1.5rem;
+  line-height: 1.15;
 }
 
 .note {
@@ -99,8 +98,12 @@
 .fields {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  border-top: 1px solid var(--rule-strong);
-  border-left: 1px solid var(--rule-strong);
+  overflow: hidden;
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
 }
 
 .fields--stats {
@@ -108,10 +111,9 @@
 }
 
 .fields__item {
-  padding: 8px 12px 10px;
-  background: var(--sheet);
-  border-right: 1px solid var(--rule-strong);
-  border-bottom: 1px solid var(--rule-strong);
+  padding: 10px 16px 12px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
 }
 
 .fields__item dt {
@@ -131,7 +133,7 @@
 }
 
 .group__title {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--ink-2);
 }
 
@@ -140,8 +142,8 @@
   display: grid;
   align-items: center;
   gap: 4px 16px;
-  padding: 6px 0;
-  border-bottom: 1px dotted var(--rule-strong);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .metric-row {
@@ -159,7 +161,7 @@
 
 .metric-row__pct {
   text-align: right;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--pen);
 }
 
@@ -178,25 +180,29 @@
   content: '';
   position: absolute;
   inset: 50% 0 auto;
-  height: 1.5px;
-  background: var(--rule-strong);
+  height: 4px;
+  background: var(--rule);
+  border-radius: var(--radius-pill);
   transform: translateY(-50%);
 }
 
 .scale__ticks {
   position: absolute;
   inset: 50% 0 auto;
-  height: 8px;
+  height: 10px;
   transform: translateY(-50%);
   background: repeating-linear-gradient(90deg, var(--rule-strong) 0 1px, transparent 1px 10%);
+  opacity: 0.55;
 }
 
 .scale__tick {
   position: absolute;
   top: 50%;
   width: 1.5px;
-  height: 16px;
+  height: 14px;
   background: var(--ink-3);
+  border-radius: var(--radius-pill);
+  opacity: 0.6;
   transform: translate(-50%, -50%);
 }
 
@@ -250,24 +256,19 @@
   }
 }
 
-/* Timbro rosso */
+/* Avviso: dati mancanti o campione piccolo */
 .stamp {
   max-width: 560px;
   margin: 4px 0 18px;
-  padding: 12px 16px 14px;
+  padding: 14px 18px 16px;
   color: var(--stamp);
-  border: 2px solid var(--stamp);
-  border-radius: var(--radius);
-  outline: 1px solid var(--stamp);
-  outline-offset: 3px;
-  transform: rotate(-0.7deg);
+  background: var(--stamp-wash);
+  border-radius: var(--radius-lg);
 }
 
 .stamp__title {
-  font-size: 1.45rem;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .stamp__body {
@@ -289,10 +290,12 @@
 }
 
 .compare-head {
-  padding: 12px 14px 14px;
-  background: var(--sheet);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
+  padding: 14px 16px 16px;
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
 }
 
 .compare-head__top {
@@ -311,13 +314,13 @@
   width: 28px;
   height: 28px;
   border: 1px solid var(--rule);
-  border-radius: var(--radius);
+  border-radius: 50%;
 }
 
 .compare-head__name {
   margin-top: 10px;
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-  line-height: 1;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 1.1;
   overflow-wrap: anywhere;
 }
 
@@ -344,8 +347,8 @@
   display: grid;
   grid-template-columns: var(--first-col) repeat(var(--n, 2), minmax(0, 1fr));
   gap: 16px;
-  padding: 7px 0;
-  border-bottom: 1px dotted var(--rule-strong);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .cmp-table th {
@@ -396,12 +399,8 @@
 }
 
 .cmp-cell.is-best .cmp-cell__value {
-  color: var(--ink);
-  font-weight: 800;
-  text-decoration: underline;
-  text-decoration-color: var(--pen);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  color: var(--pen);
+  font-weight: 700;
 }
 
 /* Pagine di lettura */
@@ -486,14 +485,14 @@
 }
 
 .fields--core {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .fields--core dd {
-  font-stretch: 68%;
-  font-size: 1.75rem;
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 /* Intestazioni di colonna del confronto: forma e nome del giocatore sopra i suoi valori */
@@ -520,7 +519,7 @@
   gap: 4px 16px;
   margin-top: 14px;
   padding: 8px 0 6px;
-  border-bottom: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule);
 }
 
 .cmp-table thead tr {
@@ -528,7 +527,7 @@
   grid-template-columns: var(--first-col) repeat(var(--n, 2), minmax(0, 1fr));
   gap: 16px;
   padding: 6px 0;
-  border-bottom: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule);
 }
 
 /* Con la barra laterale dei filtri il vassoio si centra sulla colonna dei risultati */
@@ -570,7 +569,6 @@
 
 .fields__item--empty {
   display: none;
-  background: var(--paper);
 }
 
 .fields__item--empty.f-d {
@@ -667,4 +665,8 @@
 .cmp-table th {
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+.page__title + .results__season {
+  margin-top: 6px;
 }

@@ -9,12 +9,12 @@ import { PlayerPhoto } from '../../components/PlayerPhoto'
 import { ScaleRow } from '../../components/ScaleRow'
 import { Stamp } from '../../components/Stamp'
 import { StateMessage } from '../../components/StateMessage'
-import { useI18n } from '../../i18n/I18nProvider'
+import { useI18n } from '../../i18n/useI18n'
 import type { TranslationKey } from '../../i18n/it'
 import { countryName } from '../../lib/countries'
 import { formatDate, formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
-import { useCompare } from '../compare/CompareProvider'
+import { useCompare } from '../compare/useCompare'
 import { MIN_COHORT, MIN_MINUTES_FOR_PERCENTILES, formatMetricValue } from './helpers'
 
 const STAT_ROWS: { key: keyof StatLine; labelKey: TranslationKey; decimals?: number }[] = [
@@ -159,9 +159,13 @@ function Stats({ entry }: { entry: SeasonEntry }) {
   )
 }
 
+/** Il key azzera la squadra scelta quando si passa da un giocatore all'altro. */
 export function PlayerPage() {
   const { id } = useParams()
-  const playerId = Number(id)
+  return <PlayerView key={id} playerId={Number(id)} />
+}
+
+function PlayerView({ playerId }: { playerId: number }) {
   const { t, locale } = useI18n()
   const [params] = useSearchParams()
   const [teamIndex, setTeamIndex] = useState(0)

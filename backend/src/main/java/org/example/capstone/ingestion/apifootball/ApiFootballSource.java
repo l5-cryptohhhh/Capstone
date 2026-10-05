@@ -134,7 +134,9 @@ public class ApiFootballSource implements PlayerDataSource {
     }
 
     private static LocalDate parseDate(String value) {
-        if (value == null) return null;
+        if (value == null) {
+            return null;
+        }
         try {
             return LocalDate.parse(value);
         } catch (DateTimeParseException e) {
@@ -144,13 +146,17 @@ public class ApiFootballSource implements PlayerDataSource {
 
     /** Altezza e peso arrivano come testo ("177" o "177 cm"): si estrae il primo numero. */
     static Integer parseInt(String value) {
-        if (value == null) return null;
+        if (value == null) {
+            return null;
+        }
         Matcher m = DIGITS.matcher(value);
         return m.find() ? Integer.valueOf(m.group()) : null;
     }
 
     private static BigDecimal parseRating(String value) {
-        if (value == null || value.isBlank()) return null;
+        if (value == null || value.isBlank()) {
+            return null;
+        }
         try {
             return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
         } catch (NumberFormatException e) {

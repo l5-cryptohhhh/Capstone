@@ -36,6 +36,14 @@ class SearchParamParserTest {
     }
 
     @Test
+    void acceptsAppearancesAsSort() {
+        SearchCriteria c = SearchParamParser.parse(new SearchParamParser.Request(null, null, null, null, null, null,
+                null, null, "appearances", "desc", 0, 20, Map.of()));
+
+        assertThat(c.sort()).isEqualTo("appearances");
+    }
+
+    @Test
     void ignoresUnrelatedParameters() {
         SearchCriteria c = SearchParamParser.parse(request(Map.of("q", "x", "page", "0", "foo", "bar")));
 

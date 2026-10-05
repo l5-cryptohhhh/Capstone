@@ -24,6 +24,19 @@ class AiRateLimitInterceptorTest {
     }
 
     @Test
+    void preflightRequestsDoNotConsumeTheLimit() {
+        MockHttpServletRequest preflight = new MockHttpServletRequest("OPTIONS", "/api/v1/ai/search");
+        preflight.setRemoteAddr("3.3.3.3");
+        preflight.addHeader("Origin", "http://localhost:5173");
+        preflight.addHeader("Access-Control-Request-Method", "POST");
+
+        for (int i = 0; i < AiRateLimitInterceptor.MAX_PER_MINUTE * 2; i++) {
+            assertTrue(interceptor.preHandle(preflight, new MockHttpServletResponse(), new Object()));
+        }
+        assertTrue(call("3.3.3.3"), "il limite è ancora intero per le chiamate vere");
+    }
+
+    @Test
     void blocksAfterLimitPerIpAndResetsNextWindow() {
         for (int i = 0; i < AiRateLimitInterceptor.MAX_PER_MINUTE; i++) {
             assertTrue(call("1.1.1.1"));

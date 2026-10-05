@@ -106,7 +106,7 @@ public class PagePersister {
         return players.save(player);
     }
 
-    private PlayerSeasonStat upsertStat(Player player, League league, int season, SourceStat s, Instant now) {
+    private void upsertStat(Player player, League league, int season, SourceStat s, Instant now) {
         Team team = teams.findByApiId(s.teamApiId()).orElseGet(Team::new);
         team.setApiId(s.teamApiId());
         team.setName(s.teamName());
@@ -145,6 +145,6 @@ public class PagePersister {
         entity.setYellowCards(s.yellowCards());
         entity.setRedCards(s.redCards());
         entity.setSyncedAt(now);
-        return stats.save(entity);
+        stats.save(entity);
     }
 }

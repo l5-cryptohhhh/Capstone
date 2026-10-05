@@ -14,13 +14,25 @@ class AdminKeyInterceptorTest {
     private static boolean call(String configuredKey, String headerValue) {
         AdminKeyInterceptor interceptor = new AdminKeyInterceptor(new SecurityProperties(configuredKey, null));
         MockHttpServletRequest request = new MockHttpServletRequest();
-        if (headerValue != null) request.addHeader("X-Admin-Key", headerValue);
+        if (headerValue != null) {
+            request.addHeader("X-Admin-Key", headerValue);
+        }
         return interceptor.preHandle(request, new MockHttpServletResponse(), new Object());
     }
 
     @Test
     void acceptsCorrectKey() {
         assertThat(call("secret", "secret")).isTrue();
+    }
+
+    @Test
+    void lettingBrowserPreflightThroughDoesNotRequireTheKey() {
+        AdminKeyInterceptor interceptor = new AdminKeyInterceptor(new SecurityProperties("secret", null));
+        MockHttpServletRequest preflight = new MockHttpServletRequest("OPTIONS", "/api/v1/admin/import/run");
+        preflight.addHeader("Origin", "http://localhost:5173");
+        preflight.addHeader("Access-Control-Request-Method", "POST");
+
+        assertThat(interceptor.preHandle(preflight, new MockHttpServletResponse(), new Object())).isTrue();
     }
 
     @Test

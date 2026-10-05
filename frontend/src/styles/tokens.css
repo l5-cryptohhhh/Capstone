@@ -1,60 +1,80 @@
 /*
- * Token del dossier: carta, inchiostro, penna, timbro.
- * Inchiostro = fatti stampati. Penna blu = tutto ciò che l'utente segna o seleziona. Timbro rosso = stati e avvisi.
+ * Token di ScoutAI: base chiara premium con aloni pastello, superfici in vetro, angoli morbidi.
+ * Inchiostro = fatti. Blu = tutto ciò che l'utente segna o seleziona. Arancio = stati e avvisi.
  * I colori dei marcatori di confronto (--mark-*) sono validati (CVD, contrasto) per tema.
  */
 :root {
-  --paper: #f4f6fa;
-  --sheet: #fbfcfe;
-  --ink: #14233f;
-  --ink-2: #44526f;
-  --ink-3: #62708d;
-  --rule: #cfd6e4;
-  --rule-strong: #7a89a6;
-  --pen: #2455d9;
+  --paper: #f5f5f7;
+  --sheet: #ffffff;
+  --glass: rgb(255 255 255 / 68%);
+  --glass-border: rgb(255 255 255 / 80%);
+  --ink: #1d1d1f;
+  --ink-2: #515154;
+  --ink-3: #6e6e73;
+  --rule: rgb(0 0 0 / 8%);
+  --rule-strong: rgb(0 0 0 / 22%);
+  --pen: #0071e3;
   --pen-on: #ffffff;
-  --pen-wash: #e4ebfc;
-  --stamp: #c8312b;
-  --stamp-wash: #fbebe9;
-  --focus: #2455d9;
+  --pen-wash: rgb(0 113 227 / 10%);
+  --stamp: #b9380f;
+  --stamp-wash: rgb(255 149 0 / 14%);
+  --focus: #0071e3;
 
-  --mark-1: #2455d9;
+  --mark-1: #0071e3;
   --mark-2: #c8312b;
   --mark-3: #0e8a6b;
 
-  --lift: 0 1px 0 rgb(20 35 63 / 6%), 0 8px 24px -12px rgb(20 35 63 / 22%);
+  /* Aloni pastello dello sfondo */
+  --glow-lavender: rgb(196 181 253 / 55%);
+  --glow-peach: rgb(255 196 170 / 50%);
+  --glow-sky: rgb(173 214 255 / 50%);
+  --glow-mint: rgb(167 232 214 / 50%);
 
-  --font: 'Archivo Variable', 'Segoe UI', system-ui, sans-serif;
+  --lift: 0 1px 2px rgb(0 0 0 / 4%), 0 12px 32px -8px rgb(60 50 120 / 14%);
+  --lift-hover: 0 2px 4px rgb(0 0 0 / 5%), 0 24px 48px -12px rgb(60 50 120 / 22%);
 
-  --radius: 2px;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', system-ui,
+    sans-serif;
+
+  --radius: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
   --topbar-h: 56px;
   --sheet-w: 320px;
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --paper: #0b1324;
-  --sheet: #101a2e;
-  --ink: #e8edf7;
-  --ink-2: #a9b6cf;
-  --ink-3: #8a99b6;
-  --rule: #27375a;
-  --rule-strong: #5a6d96;
-  --pen: #6f93ff;
-  --pen-on: #0b1324;
-  --pen-wash: #1a2a52;
-  --stamp: #f0766a;
-  --stamp-wash: #3a1d22;
-  --focus: #8fa9ff;
+  --paper: #0b0b0f;
+  --sheet: #1c1c22;
+  --glass: rgb(40 40 50 / 58%);
+  --glass-border: rgb(255 255 255 / 10%);
+  --ink: #f5f5f7;
+  --ink-2: #c7c7cc;
+  --ink-3: #98989d;
+  --rule: rgb(255 255 255 / 10%);
+  --rule-strong: rgb(255 255 255 / 28%);
+  --pen: #2997ff;
+  --pen-on: #00101f;
+  --pen-wash: rgb(41 151 255 / 16%);
+  --stamp: #ffb27a;
+  --stamp-wash: rgb(255 149 0 / 16%);
+  --focus: #64b5ff;
 
-  --mark-1: #5a82f2;
+  --mark-1: #5aaaff;
   --mark-2: #e8624f;
   --mark-3: #25a27b;
 
-  --lift: 0 1px 0 rgb(0 0 0 / 30%), 0 10px 28px -12px rgb(0 0 0 / 60%);
+  --glow-lavender: rgb(140 120 255 / 40%);
+  --glow-peach: rgb(255 160 130 / 28%);
+  --glow-sky: rgb(100 170 255 / 32%);
+  --glow-mint: rgb(90 210 180 / 26%);
+
+  --lift: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px -8px rgb(0 0 0 / 55%);
+  --lift-hover: 0 2px 4px rgb(0 0 0 / 35%), 0 24px 48px -12px rgb(0 0 0 / 65%);
 
   color-scheme: dark;
 }

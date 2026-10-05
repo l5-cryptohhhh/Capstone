@@ -1,23 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { en } from './en'
 import { it, type TranslationKey } from './it'
-import { interpolate, type Vars } from './interpolate'
+import { interpolate } from './interpolate'
 import { METRIC_LABELS, type Lang } from './metricLabels'
+import { I18nContext, type I18nValue } from './useI18n'
 
 const DICTIONARIES: Record<Lang, Record<TranslationKey, string>> = { it, en }
 const STORAGE_KEY = 'scoutai.lang'
-
-
-interface I18nValue {
-  lang: Lang
-  setLang: (lang: Lang) => void
-  t: (key: TranslationKey, vars?: Vars) => string
-  /** Etichetta di una metrica nella lingua corrente (se sconosciuta, restituisce la chiave). */
-  metricLabel: (key: string) => string
-  locale: string
-}
-
-const I18nContext = createContext<I18nValue | null>(null)
 
 function readStoredLang(): Lang {
   try {
@@ -57,10 +46,4 @@ export function I18nProvider({ children, initialLang }: { children: ReactNode; i
   )
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
-}
-
-export function useI18n(): I18nValue {
-  const ctx = useContext(I18nContext)
-  if (!ctx) throw new Error('useI18n deve essere usato dentro I18nProvider')
-  return ctx
 }
