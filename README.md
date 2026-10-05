@@ -17,4 +17,11 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 3. Backend: `cd backend && ./mvnw spring-boot:run`
 4. Frontend: `cd frontend && npm install && npm run dev`
 
-Il file `.env` è ignorato da git: non committare mai le chiavi.
+5. Admin: per importare i dati (limite API-Football: 100 richieste/giorno) `POST /api/v1/admin/import/run` con header `X-Admin-Key`; lo stato è su `GET /api/v1/admin/import/status`.
+6. Test: `cd backend && ./mvnw test` e `cd frontend && npm test`.
+
+Il file `.env` è ignorato da git: non committare mai le chiavi. Le variabili del database hanno prefisso `SCOUTAI_` per non collidere con quelle di sistema.
+
+## Design
+
+Contesto di prodotto in [PRODUCT.md](PRODUCT.md), sistema visivo ("Dossier dello scout") in [DESIGN.md](DESIGN.md). Il frontend è in italiano e inglese, con tema chiaro e scuro.

@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
     PLAYER_NOT_FOUND(HttpStatus.NOT_FOUND),
+    LEAGUE_NOT_FOUND(HttpStatus.NOT_FOUND),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST),
     INSUFFICIENT_DATA(HttpStatus.UNPROCESSABLE_ENTITY),
     QUERY_NOT_INTERPRETABLE(HttpStatus.UNPROCESSABLE_ENTITY),

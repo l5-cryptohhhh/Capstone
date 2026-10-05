@@ -37,3 +37,8 @@ build/
 .env.*
 !.env.example
 node_modules/
+
+### Impeccable: gli screenshot di revisione sono prodotti di lavoro, non sorgenti ###
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/

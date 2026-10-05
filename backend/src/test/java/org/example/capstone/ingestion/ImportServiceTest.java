@@ -7,6 +7,7 @@ import org.example.capstone.ingestion.source.PlayerDataSource;
 import org.example.capstone.ingestion.source.SourcePlayerPage;
 import org.example.capstone.league.League;
 import org.example.capstone.league.LeagueRepository;
+import org.example.capstone.stats.StatsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -28,6 +30,7 @@ class ImportServiceTest {
     private QuotaService quota;
     private ImportService service;
     private ImportTask task;
+    private StatsService statsService;
 
     @BeforeEach
     void setUp() {
@@ -37,9 +40,11 @@ class ImportServiceTest {
         ImportTaskRepository tasks = mock(ImportTaskRepository.class);
         LeagueRepository leagues = mock(LeagueRepository.class);
         ImportProperties properties = new ImportProperties(90, List.of(2024), false);
-        service = new ImportService(source, persister, quota, tasks, leagues, properties);
+        statsService = mock(StatsService.class);
+        service = new ImportService(source, persister, quota, tasks, leagues, properties, statsService);
 
         League league = new League();
+        league.setId(7L);
         league.setApiId(135);
         league.setName("Serie A");
         task = new ImportTask();
@@ -59,6 +64,18 @@ class ImportServiceTest {
 
         assertThat(result.outcome()).isEqualTo(RunOutcome.COMPLETED);
         assertThat(result.pagesFetched()).isEqualTo(2);
+        verify(statsService).recompute(7L, 2024); // metriche ricalcolate quando il campionato è completo
+    }
+
+    @Test
+    void doesNotRecomputeStatsWhileTaskIsStillInProgress() {
+        when(quota.remainingToday()).thenReturn(1, 0);
+        when(source.fetchPlayersPage(135, 2024, 1)).thenReturn(new SourcePlayerPage(1, 54, List.of()));
+        when(persister.persistPage(any(), any())).thenReturn(TaskStatus.IN_PROGRESS);
+
+        service.run();
+
+        verify(statsService, never()).recompute(anyLong(), anyInt());
     }
 
     @Test
