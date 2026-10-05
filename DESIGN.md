@@ -1,10 +1,10 @@
 ---
 name: ScoutAI
-description: A calm, soft scouting tool. Premium light base with pastel glows, glass surfaces, every judgment a mark on a percentile scale.
+description: A calm, soft scouting tool. Premium light base with strong pastel glows, floating glass surfaces, fluid motion, every judgment a mark on a percentile scale.
 colors:
   paper: "#f5f5f7"
   sheet: "#ffffff"
-  glass: "rgb(255 255 255 / 68%)"
+  glass: "rgb(255 255 255 / 58%)"
   ink: "#1d1d1f"
   ink-2: "#515154"
   ink-3: "#6e6e73"
@@ -18,13 +18,13 @@ colors:
   mark-1: "#0071e3"
   mark-2: "#c8312b"
   mark-3: "#0e8a6b"
-  glow-lavender: "rgb(196 181 253 / 55%)"
-  glow-peach: "rgb(255 196 170 / 50%)"
-  glow-sky: "rgb(173 214 255 / 50%)"
-  glow-mint: "rgb(167 232 214 / 50%)"
+  glow-lavender: "rgb(190 172 255 / 78%)"
+  glow-peach: "rgb(255 186 158 / 72%)"
+  glow-sky: "rgb(150 205 255 / 72%)"
+  glow-mint: "rgb(150 232 205 / 68%)"
   night-paper: "#0b0b0f"
   night-sheet: "#1c1c22"
-  night-glass: "rgb(40 40 50 / 58%)"
+  night-glass: "rgb(44 44 58 / 52%)"
   night-ink: "#f5f5f7"
   night-ink-2: "#c7c7cc"
   night-ink-3: "#98989d"
@@ -82,6 +82,7 @@ spacing:
   lg: "24px"
   xl: "36px"
   topbar-h: "56px"
+  topbar-offset: "76px"
   sheet-w: "320px"
 components:
   button:
@@ -119,15 +120,16 @@ components:
 
 **Creative North Star: "Strumento calmo e premium"**
 
-ScoutAI is a working tool for scouts, drawn the way Apple draws its interfaces: a quiet light base, soft pastel glows in the corners, translucent glass surfaces and generous rounded corners. Nothing is hard-edged. Depth comes from blur, light borders and one family of soft shadows, never from heavy rules.
+ScoutAI is a working tool for scouts, drawn the way Apple draws its interfaces: a quiet light base, large pastel glows, floating translucent glass, generous rounded corners and motion that responds instantly and settles smoothly. Nothing is hard-edged. Depth comes from blur, a bright top edge and one family of soft shadows, never from heavy rules.
 
 Three accents, one meaning each. Ink is fact. Blue is whatever the user marks or selects. Orange is any uncertain state (missing percentile, small sample, error). The pastel glows are atmosphere only and never carry meaning. The night variant keeps the same rules on a near-black base with the same glows, dimmer.
 
 The product rule behind the look is unchanged: facts are shown as numbers, judgments as marks on a 0 to 100 percentile scale, and uncertainty is stated in plain words.
 
 **Key Characteristics:**
-- Base `#f5f5f7` (night `#0b0b0f`) with four fixed radial glows: lavender, peach, sky, mint.
-- Glass surfaces: translucent fill, `backdrop-filter: blur(24px) saturate(180%)`, a light 1px border and a soft lift.
+- Base `#f5f5f7` (night `#0b0b0f`) with four large fixed radial glows: lavender, peach, sky, mint.
+- Glass surfaces: translucent fill, `backdrop-filter: blur(28px) saturate(190%)`, a light 1px border, a bright top edge (`--edge`) and a soft lift.
+- A floating pill-shaped top bar, and a first screen with an oversized gradient headline.
 - Rounded everywhere: 12px controls, 24px cards and panels, pills for buttons, tabs and chips.
 - System font stack (SF Pro on Apple devices, Segoe UI Variable on Windows), tight tracking on large text.
 - Italian and English, light and dark, keyboard focus always visible.
@@ -149,7 +151,10 @@ The product rule behind the look is unchanged: facts are shown as numbers, judgm
 - **Rule / Rule Strong**: black at 8% and 22% (night white at 10% and 28%). Dividers and control borders.
 
 ### Glows
-`glow-lavender`, `glow-peach`, `glow-sky`, `glow-mint` are the four radial gradients of the page background, fixed while the page scrolls. They are decoration and must stay low in contrast.
+`glow-lavender`, `glow-peach`, `glow-sky`, `glow-mint` are the four radial gradients of the page background (70rem wide, anchored at the corners), fixed while the page scrolls. They are the main source of color and stay static: nothing in the background moves.
+
+### Brand gradient
+`--brand` (ink to indigo to violet; night: pale to violet) fills only the headline of the first screen. It is the single decorative gradient; every other text is flat ink.
 
 ### Named Rules
 **The One Meaning Rule.** Pen = user marks and selection. Orange = uncertain state. Ink = fact. Glows are atmosphere. A new accent or a decorative second use of an accent is a defect.
@@ -160,9 +165,10 @@ The product rule behind the look is unchanged: facts are shown as numbers, judgm
 **Font:** system stack (`-apple-system`, `BlinkMacSystemFont`, `SF Pro Text`, `Segoe UI Variable Text`, `Segoe UI`, `system-ui`). No web font is loaded.
 
 ### Hierarchy
+- **Hero title** (700, clamp(2.8rem, 8.5vw, 6rem), line-height 1.02, tracking -0.045em, brand gradient): the first screen headline. The clipped gradient needs 0.14em of bottom padding so descenders are not cut.
 - **Name display** (700, clamp(2.6rem, 7vw, 4.6rem), line-height 1, tracking -0.035em): the player's name in the head.
-- **Page title** (700, clamp(2.2rem, 5vw, 3.6rem), tracking -0.035em): compare and reading pages. The results count uses the same tracking.
-- **Form heading** (700, 1.4 to 1.5rem, tracking -0.02em): panel title, part titles. Group titles are 1.05rem in ink-2.
+- **Page title** (700, clamp(2.6rem, 6.5vw, 4.6rem), tracking -0.035em): compare and reading pages.
+- **Form heading** (700, 1.4 to 1.75rem, tracking -0.02 to -0.03em): panel title and part titles; the results count is 1.6 to 2.1rem. Group titles are 1.05rem in ink-2.
 - **Core value** (700, 1.6rem): the headline stats in the core group.
 - **Value** (700, 16px, tabular figures): field values, register metrics, compare cells.
 - **Body** (400, 15px, 1.5): running text; reading pages 66ch at 1.65.
@@ -174,29 +180,29 @@ The product rule behind the look is unchanged: facts are shown as numbers, judgm
 
 ## Layout
 
-Search: a sticky floating glass panel on the left (320px column, 16px inset) and a fluid results register on the right (24px 28px padding, 120px bottom room for the tray). Dossier and compare: a centered page, 980px (compare 1120px, reading 760px), 24px 28px padding, parts separated by 36px. The top bar is one line at 56px with the wordmark, the nav pills, then the IT/EN and theme controls.
+Search opens with a centered hero (headline and one line of context, with generous space above and below), then a sticky floating glass panel on the left (320px column, 16px inset) and a fluid results register on the right inside a glass card. Dossier and compare: a centered page, 980px (compare 1120px, reading 760px), 40px 28px padding, parts separated by 48px. The top bar is a floating pill 56px tall, 16px from the sides and 12px from the top, with the wordmark, the nav pills, then the IT/EN and theme controls. Everything that sticks below it uses `--topbar-offset`.
 
-Facts sit in rounded glass groups, divided by 1px rules, not in loose cards. Bio and stat fields use a fixed-column grid (6 columns on desktop, 2 on phone) with empty cells completing the last row. Metric rows are a four-part line: label, scale, value, percentile.
+The player head is one large glass card (32px radius). Facts sit in rounded glass groups, divided by 1px rules, not in loose cards. Bio and stat fields use a fixed-column grid (6 columns on desktop, 2 on phone) with empty cells completing the last row. Metric rows are a four-part line: label, scale, value, percentile.
 
 Responsive: at 1180px optional register columns drop; at 900px the panel collapses behind a toggle above the results; at 760px the top bar wraps to two rows (92px) and metric rows put the scale on its own line; at 700px every register row becomes a compact multi-line row; at 560px compare heads become one-line rows.
 
 ## Elevation & Depth
 
-Depth is blur plus one soft shadow family. `--lift` (`0 1px 2px rgb(0 0 0 / 4%), 0 12px 32px -8px rgb(60 50 120 / 14%)`) is used by panels, cards, the tray and field groups; `--lift-hover` is reserved for raised hover states. Night uses darker, stronger values. The register header and the top bar are glass with a hairline, not a shadow.
+Depth is blur, a bright top edge and one soft shadow family. `--edge` is a 1px inset highlight on top of every glass surface. `--lift` (edge plus `0 1px 2px` and `0 18px 44px -10px` in a violet-tinted shadow) is used by the top bar, panels, cards, the tray and field groups; `--lift-hover` is reserved for raised hover states. Night uses a dim edge and darker shadows. The register header is transparent over its glass card.
 
 ### Named Rules
 **The Glass Rule.** A translucent surface sits on the base or on a glow, never on another translucent surface. Do not stack glass on glass.
 
 ## Shapes
 
-Radius tokens: `--radius` 12px (inputs, selects), `--radius-lg` 24px (panels, cards, tray, field groups, warning card), `--radius-pill` for buttons, tabs, segmented selectors, counters and chips. Icon buttons and compare swatches are circles. Check boxes are 6px. Portraits keep the passport format (30x38, 56x72, 104x134) with 10px corners (16px for the large one) and a top-aligned crop, with initials as fallback.
+Radius tokens: `--radius` 12px (inputs, selects), `--radius-lg` 24px (panels, cards, tray, field groups, warning card), `--radius-pill` for the top bar, buttons, tabs, segmented selectors, counters and chips. The player head card uses 32px. Icon buttons and compare swatches are circles. Check boxes are 6px. Portraits keep the passport format (30x38, 56x72, 104x134) with 10px corners (16px for the large one) and a top-aligned crop, with initials as fallback.
 
 ## Components
 
 ### Buttons
-- 38px tall pills, 1px `rule-strong` border, 14px semibold. Hover: pen-wash fill and pen border. Press: scale 0.97 in 100ms. Disabled: 50% opacity.
+- 38px tall pills, 1px `rule-strong` border, top edge highlight, 14px semibold. Hover: pen-wash fill and pen border. Press: scale 0.96, responding in 80ms; release returns through the spring curve. Disabled: 50% opacity.
 - **Primary:** solid pen. **On:** pen-wash with pen text. **Quiet:** transparent with pen text and a wash on hover. **Add:** same as default with pen text.
-- **Icon button:** 40px circle (32px small), grey wash on hover, scales down on press.
+- **Icon button:** 40px circle (32px small), grey wash on hover, scales to 0.9 on press and springs back.
 - **Segmented selector** (language, season, team): glass pill track, selected segment solid pen.
 
 ### Inputs
@@ -221,10 +227,10 @@ Dense rows (8px 10px, 1px `rule` dividers) under a sticky glass header that sits
 Player heads are glass cards with a circular mark swatch. Rows share a grid: label, a shared scale with every player's mark, then one value and percentile per player (up to 3). The best value is shown in pen blue. The tray floats centered on the results column when the panel is open.
 
 ### Navigation
-Glass top bar with a hairline. Nav links are pills: ink-2 text, a grey wash on hover, pen text on a pen-wash pill for the current page.
+A floating glass pill that stays at the top while the page scrolls under it. Nav links are pills: ink-2 text, a grey wash on hover, pen text on a pen-wash pill for the current page. On phone it becomes a 24px-radius card in two rows.
 
 ### Motion
-Hover and state transitions are 0.2s with `cubic-bezier(0.22, 1, 0.36, 1)`; presses are 100ms. Scale marks draw in once (0.5s, staggered 40ms). Everything is reduced to near zero under `prefers-reduced-motion: reduce`. Under `prefers-reduced-transparency` glass becomes solid sheet fills with a stronger border, and under `prefers-contrast: more` dividers and secondary text use their strong values.
+Two curves. `--ease-out` (`cubic-bezier(0.22, 1, 0.36, 1)`, critically damped, no overshoot) is the default for hover and state changes (0.2 to 0.5s) and for entrances. `--spring` (a CSS `linear()` curve with about 10% overshoot) is used only for the release of a press, where the touch carried momentum. Presses respond in 80 to 200ms and are plain transitions, so they retarget from the current value if interrupted. Pages rise in once (16px, 0.8s), the hero staggers its lines by 80ms, the compare tray rises into place, and compare cards lift 3px on hover. Scale marks draw in once (0.5s, staggered 40ms). Nothing in the background moves. Everything is reduced to near zero under `prefers-reduced-motion: reduce`. Under `prefers-reduced-transparency` glass becomes solid sheet fills with a stronger border, and under `prefers-contrast: more` dividers and secondary text use their strong values.
 
 ## Do's and Don'ts
 
@@ -238,8 +244,10 @@ Hover and state transitions are 0.2s with `cubic-bezier(0.22, 1, 0.36, 1)`; pres
 
 ### Don't:
 - **Don't** put glass on glass, or glass over busy content without a border.
+- **Don't** animate the background, add overshoot to hovers or entrances, or lock input during a transition.
 - **Don't** use hard rules heavier than 1px, uppercase labels, rotated stamps or dashed boxes.
-- **Don't** make the glows brighter or add a fifth one; they must not compete with content.
+- **Don't** add a fifth glow or let a glow sit behind body text without a glass layer; content stays readable first.
+- **Don't** use the brand gradient anywhere except the first-screen headline.
 - **Don't** use em dashes in interface copy.
 - **Don't** introduce a second accent or color a state with blue.
 - **Don't** present fake AI output; the AI is not in the interface yet.

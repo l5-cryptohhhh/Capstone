@@ -83,78 +83,87 @@ export function SearchPage() {
   const activeCount = activeFilterCount(filters)
 
   return (
-    <div className="search">
-      <button
-        type="button"
-        className="btn search__toggle"
-        aria-expanded={sheetOpen}
-        aria-controls="filter-sheet"
-        onClick={() => setSheetOpen((open) => !open)}
-      >
-        {sheetOpen ? t('filters.close') : t('filters.open')}
-        {activeCount > 0 && <span className="count">{activeCount}</span>}
-      </button>
+    <>
+      <header className="hero">
+        <h1 className="hero__title rise">{t('search.hero.title')}</h1>
+        <p className="hero__lead rise" style={{ ['--d' as string]: 1 }}>
+          {t('search.hero.lead')}
+        </p>
+      </header>
 
-      <div id="filter-sheet" className={sheetOpen ? 'search__sheet is-open' : 'search__sheet'}>
-        <FilterSheet
-          filters={filters}
-          leagues={leagues.data ?? []}
-          metrics={metrics.data ?? []}
-          onChange={onChange}
-          onReset={onReset}
-        />
-      </div>
+      <div className="search">
+        <button
+          type="button"
+          className="btn search__toggle"
+          aria-expanded={sheetOpen}
+          aria-controls="filter-sheet"
+          onClick={() => setSheetOpen((open) => !open)}
+        >
+          {sheetOpen ? t('filters.close') : t('filters.open')}
+          {activeCount > 0 && <span className="count">{activeCount}</span>}
+        </button>
 
-      <section className="search__results" aria-label={t('results.region')}>
-        {noDataAtAll ? (
-          <StateMessage tone="empty" title={t('results.nodata.title')}>
-            {t('results.nodata.body')}
-          </StateMessage>
-        ) : players.isError && !players.data ? (
-          <ErrorState error={players.error} onRetry={() => players.refetch()} />
-        ) : !players.data ? (
-          <SkeletonRows />
-        ) : (
-          <>
-            <div className="results__head">
-              <h1 className="results__count" aria-live="polite">
-                {t(count === 1 ? 'results.count.one' : 'results.count.other', {
-                  n: new Intl.NumberFormat(locale).format(count),
-                })}
-              </h1>
-              {shownSeason !== undefined && (
-                <p className="results__season">{t('results.season', { season: seasonLabel(shownSeason) })}</p>
+        <div id="filter-sheet" className={sheetOpen ? 'search__sheet is-open' : 'search__sheet'}>
+          <FilterSheet
+            filters={filters}
+            leagues={leagues.data ?? []}
+            metrics={metrics.data ?? []}
+            onChange={onChange}
+            onReset={onReset}
+          />
+        </div>
+
+        <section className="search__results" aria-label={t('results.region')}>
+          {noDataAtAll ? (
+            <StateMessage tone="empty" title={t('results.nodata.title')}>
+              {t('results.nodata.body')}
+            </StateMessage>
+          ) : players.isError && !players.data ? (
+            <ErrorState error={players.error} onRetry={() => players.refetch()} />
+          ) : !players.data ? (
+            <SkeletonRows />
+          ) : (
+            <>
+              <div className="results__head">
+                <h2 className="results__count" aria-live="polite">
+                  {t(count === 1 ? 'results.count.one' : 'results.count.other', {
+                    n: new Intl.NumberFormat(locale).format(count),
+                  })}
+                </h2>
+                {shownSeason !== undefined && (
+                  <p className="results__season">{t('results.season', { season: seasonLabel(shownSeason) })}</p>
+                )}
+              </div>
+
+              {players.data.content.length === 0 ? (
+                <StateMessage
+                  tone="empty"
+                  title={t('results.empty.title')}
+                  action={
+                    activeCount > 0 && (
+                      <button type="button" className="btn" onClick={onReset}>
+                        {t('filters.reset')}
+                      </button>
+                    )
+                  }
+                >
+                  {t('results.empty.body')}
+                </StateMessage>
+              ) : (
+                <ResultsRegister
+                  data={players.data}
+                  filters={filters}
+                  metricKeys={metricKeys}
+                  busy={players.isFetching}
+                  onSort={onSort}
+                  onPage={(page) => onChange({ page })}
+                />
               )}
-            </div>
-
-            {players.data.content.length === 0 ? (
-              <StateMessage
-                tone="empty"
-                title={t('results.empty.title')}
-                action={
-                  activeCount > 0 && (
-                    <button type="button" className="btn" onClick={onReset}>
-                      {t('filters.reset')}
-                    </button>
-                  )
-                }
-              >
-                {t('results.empty.body')}
-              </StateMessage>
-            ) : (
-              <ResultsRegister
-                data={players.data}
-                filters={filters}
-                metricKeys={metricKeys}
-                busy={players.isFetching}
-                onSort={onSort}
-                onPage={(page) => onChange({ page })}
-              />
-            )}
-            {players.isError && <ErrorState error={players.error} onRetry={() => players.refetch()} />}
-          </>
-        )}
-      </section>
-    </div>
+              {players.isError && <ErrorState error={players.error} onRetry={() => players.refetch()} />}
+            </>
+          )}
+        </section>
+      </div>
+    </>
   )
 }

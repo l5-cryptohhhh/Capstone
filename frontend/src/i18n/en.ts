@@ -26,6 +26,8 @@ export const en: Record<TranslationKey, string> = {
   'position.ATT.plural': 'forwards',
   'position.any': 'Any',
 
+  'search.hero.title': 'Find the right player.',
+  'search.hero.lead': 'Search real data from Europe\'s top five leagues and compare who you need.',
   'filters.title': 'New search',
   'filters.open': 'Filters',
   'filters.close': 'Close filters',

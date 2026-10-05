@@ -6,8 +6,9 @@
 :root {
   --paper: #f5f5f7;
   --sheet: #ffffff;
-  --glass: rgb(255 255 255 / 68%);
-  --glass-border: rgb(255 255 255 / 80%);
+  --glass: rgb(255 255 255 / 58%);
+  --glass-border: rgb(255 255 255 / 85%);
+  --edge: inset 0 1px 0 rgb(255 255 255 / 80%);
   --ink: #1d1d1f;
   --ink-2: #515154;
   --ink-3: #6e6e73;
@@ -25,13 +26,16 @@
   --mark-3: #0e8a6b;
 
   /* Aloni pastello dello sfondo */
-  --glow-lavender: rgb(196 181 253 / 55%);
-  --glow-peach: rgb(255 196 170 / 50%);
-  --glow-sky: rgb(173 214 255 / 50%);
-  --glow-mint: rgb(167 232 214 / 50%);
+  --glow-lavender: rgb(190 172 255 / 78%);
+  --glow-peach: rgb(255 186 158 / 72%);
+  --glow-sky: rgb(150 205 255 / 72%);
+  --glow-mint: rgb(150 232 205 / 68%);
 
-  --lift: 0 1px 2px rgb(0 0 0 / 4%), 0 12px 32px -8px rgb(60 50 120 / 14%);
-  --lift-hover: 0 2px 4px rgb(0 0 0 / 5%), 0 24px 48px -12px rgb(60 50 120 / 22%);
+  /* Titolo della prima schermata: l'unico punto con un gradiente di marca */
+  --brand: linear-gradient(120deg, #1d1d1f 15%, #5e5ce6 58%, #bf5af2 100%);
+
+  --lift: var(--edge), 0 1px 2px rgb(0 0 0 / 4%), 0 18px 44px -10px rgb(70 55 140 / 20%);
+  --lift-hover: var(--edge), 0 2px 4px rgb(0 0 0 / 5%), 0 30px 60px -12px rgb(70 55 140 / 30%);
 
   --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', system-ui,
     sans-serif;
@@ -40,9 +44,16 @@
   --radius-lg: 24px;
   --radius-pill: 999px;
   --topbar-h: 56px;
+  /* Altezza della barra più il suo margine: serve a tutto ciò che resta fisso sotto di essa */
+  --topbar-offset: 76px;
   --sheet-w: 320px;
 
+  /* Curva critica per i movimenti normali; molla con un filo di rimbalzo solo per il rilascio */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: linear(
+    0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017 19.4%, 1.067 21.8%, 1.093 24%,
+    1.101 26.5%, 1.091 29.3%, 1.065 33.4%, 1.016 40.6%, 0.996 47%, 0.991 52%, 1 63%, 1
+  );
 
   color-scheme: light;
 }
@@ -50,8 +61,9 @@
 :root[data-theme='dark'] {
   --paper: #0b0b0f;
   --sheet: #1c1c22;
-  --glass: rgb(40 40 50 / 58%);
-  --glass-border: rgb(255 255 255 / 10%);
+  --glass: rgb(44 44 58 / 52%);
+  --glass-border: rgb(255 255 255 / 12%);
+  --edge: inset 0 1px 0 rgb(255 255 255 / 9%);
   --ink: #f5f5f7;
   --ink-2: #c7c7cc;
   --ink-3: #98989d;
@@ -68,13 +80,15 @@
   --mark-2: #e8624f;
   --mark-3: #25a27b;
 
-  --glow-lavender: rgb(140 120 255 / 40%);
-  --glow-peach: rgb(255 160 130 / 28%);
-  --glow-sky: rgb(100 170 255 / 32%);
-  --glow-mint: rgb(90 210 180 / 26%);
+  --glow-lavender: rgb(140 120 255 / 56%);
+  --glow-peach: rgb(255 160 130 / 38%);
+  --glow-sky: rgb(100 170 255 / 46%);
+  --glow-mint: rgb(90 210 180 / 36%);
 
-  --lift: 0 1px 2px rgb(0 0 0 / 30%), 0 12px 32px -8px rgb(0 0 0 / 55%);
-  --lift-hover: 0 2px 4px rgb(0 0 0 / 35%), 0 24px 48px -12px rgb(0 0 0 / 65%);
+  --brand: linear-gradient(120deg, #f5f5f7 15%, #a9a7ff 58%, #e0a6ff 100%);
+
+  --lift: var(--edge), 0 1px 2px rgb(0 0 0 / 30%), 0 18px 44px -10px rgb(0 0 0 / 60%);
+  --lift-hover: var(--edge), 0 2px 4px rgb(0 0 0 / 35%), 0 30px 60px -12px rgb(0 0 0 / 70%);
 
   color-scheme: dark;
 }
