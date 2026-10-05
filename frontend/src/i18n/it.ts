@@ -24,6 +24,8 @@ export const it = {
   'position.ATT.plural': 'attaccanti',
   'position.any': 'Qualsiasi',
 
+  'search.hero.title': 'Trova il giocatore giusto.',
+  'search.hero.lead': 'Cerca tra i dati reali dei top 5 campionati europei e confronta chi ti serve.',
   'filters.title': 'Nuova ricerca',
   'filters.open': 'Filtri',
   'filters.close': 'Chiudi filtri',

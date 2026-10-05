@@ -6,16 +6,19 @@
 
 .topbar {
   position: sticky;
-  top: 0;
+  top: 12px;
   z-index: 20;
   display: flex;
   align-items: center;
   gap: 32px;
   height: var(--topbar-h);
-  padding: 0 24px;
+  margin: 12px 16px 0;
+  padding: 0 16px 0 28px;
   background: var(--glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid var(--rule);
+  backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--lift);
 }
 
 .wordmark {
@@ -135,7 +138,7 @@
   color: var(--ink-2);
   transition:
     background-color 0.2s var(--ease-out),
-    transform 0.1s ease-out;
+    transform 0.6s var(--spring);
 }
 
 .icon-btn:hover {
@@ -144,7 +147,8 @@
 }
 
 .icon-btn:active {
-  transform: scale(0.92);
+  transform: scale(0.9);
+  transition-duration: 0.2s, 0.08s;
 }
 
 .icon-btn--sm {
@@ -166,10 +170,11 @@
   background: var(--sheet);
   border: 1px solid var(--rule-strong);
   border-radius: var(--radius-pill);
+  box-shadow: var(--edge);
   transition:
     background-color 0.2s var(--ease-out),
     border-color 0.2s var(--ease-out),
-    transform 0.1s ease-out;
+    transform 0.6s var(--spring);
 }
 
 .btn:hover:not(:disabled) {
@@ -177,8 +182,10 @@
   border-color: var(--pen);
 }
 
+/* Il tocco risponde subito; il rilascio torna con la molla */
 .btn:active:not(:disabled) {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.2s, 0.2s, 0.08s;
 }
 
 .btn:disabled {
@@ -235,6 +242,14 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--lift);
+  animation: tray-in 0.7s var(--ease-out) both;
+}
+
+@keyframes tray-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(28px) scale(0.96);
+  }
 }
 
 .tray__title {
@@ -291,7 +306,9 @@
     flex-wrap: wrap;
     gap: 0 12px;
     height: auto;
-    padding: 8px 12px 0;
+    margin: 8px 8px 0;
+    padding: 8px 12px;
+    border-radius: var(--radius-lg);
   }
 
   .topbar__nav {
@@ -330,5 +347,6 @@
 @media (max-width: 760px) {
   :root {
     --topbar-h: 92px;
+    --topbar-offset: 108px;
   }
 }
