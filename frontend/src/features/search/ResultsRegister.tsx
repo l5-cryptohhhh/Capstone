@@ -1,6 +1,6 @@
-import { CaretDown, CaretUp } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, LockSimple } from '@phosphor-icons/react'
 import { Link, useLocation } from 'react-router-dom'
-import type { PageResponse, PlayerSummary } from '../../api/types'
+import type { PageResponse, PlayerRow } from '../../api/types'
 import { PlayerPhoto } from '../../components/PlayerPhoto'
 import { ScaleRow } from '../../components/ScaleRow'
 import { useI18n } from '../../i18n/useI18n'
@@ -11,7 +11,7 @@ import { useCompare } from '../compare/useCompare'
 import type { Filters } from './filters'
 
 interface Props {
-  data: PageResponse<PlayerSummary>
+  data: PageResponse<PlayerRow>
   filters: Filters
   metricKeys: string[]
   busy: boolean
@@ -83,7 +83,31 @@ export function ResultsRegister({ data, filters, metricKeys, busy, onSort, onPag
             </tr>
           </thead>
           <tbody>
-            {data.content.map((player) => {
+            {data.content.map((player, index) => {
+              if (player.locked) {
+                return (
+                  <tr key={`locked-${index}`} className="is-locked">
+                    <td className="check" />
+                    <th scope="row" className="who">
+                      <Link to="/accesso" className="who__link" state={{ from: `/${location.search}` }}>
+                        <span className="lock-badge">
+                          <LockSimple size={16} weight="bold" aria-hidden="true" />
+                        </span>
+                        <span className="who__text">
+                          <span className="who__name">{t('locked.row')}</span>
+                          <span className="who__sub">{t('locked.row.action')}</span>
+                        </span>
+                      </Link>
+                    </th>
+                    <td className="num age" />
+                    <td className="pos">{player.position ? t(`position.${player.position}.short`) : '-'}</td>
+                    <td className="team">{player.team.name}</td>
+                    <td colSpan={3 + metricKeys.length} className="locked-fill">
+                      <span className="skeleton skeleton--line" aria-hidden="true" />
+                    </td>
+                  </tr>
+                )
+              }
               const selected = compare.has(player.id)
               const blocked = !selected && compare.isFull
               return (

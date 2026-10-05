@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +38,19 @@ public class PlayerSearchService {
         this.statsProperties = statsProperties;
     }
 
+    /** Giocatori che un visitatore non registrato puÃ² vedere per ogni campionato; gli altri sono bloccati. */
+    static final int FREE_PER_LEAGUE = 3;
+
     public PageResponse<PlayerSummaryDto> search(SearchCriteria criteria, int page, int size) {
+        return run(criteria, page, size, false);
+    }
+
+    /** Come search, ma per i visitatori: restano visibili solo i migliori FREE_PER_LEAGUE di ogni campionato. */
+    public PageResponse<PlayerSummaryDto> searchPreview(SearchCriteria criteria, int page, int size) {
+        return run(criteria, page, size, true);
+    }
+
+    private PageResponse<PlayerSummaryDto> run(SearchCriteria criteria, int page, int size, boolean preview) {
         Integer season = criteria.season() != null ? criteria.season() : stats.findMaxSeason();
         if (season == null) {
             return PageResponse.empty(page, size); // nessun dato ancora importato
@@ -47,8 +60,20 @@ public class PlayerSearchService {
         Page<PlayerSeasonStat> result = stats.findAll(
                 PlayerSearchSpecs.from(criteria, season, minMinutes, LocalDate.now()), PageRequest.of(page, size));
 
+        Set<Long> unlocked = preview ? freeIds(result.getContent(), season) : null;
         Map<Long, Map<String, MetricValueDto>> extra = relevantMetrics(criteria, result.getContent());
-        return PageResponse.of(result, s -> toSummary(s, extra.getOrDefault(s.getId(), Map.of())));
+        return PageResponse.of(result, s -> unlocked != null && !unlocked.contains(s.getId())
+                ? toLocked(s)
+                : toSummary(s, extra.getOrDefault(s.getId(), Map.of())));
+    }
+
+    /** Id delle righe visibili ai visitatori: i primi per voto di ogni campionato presente nella pagina. */
+    private Set<Long> freeIds(List<PlayerSeasonStat> rows, int season) {
+        Set<Long> ids = new HashSet<>();
+        rows.stream().map(s -> s.getLeague().getId()).distinct().forEach(leagueId ->
+                ids.addAll(stats.findTopIds(leagueId, season, statsProperties.minMinutes(),
+                        PageRequest.of(0, FREE_PER_LEAGUE))));
+        return ids;
     }
 
     /** Valori delle metriche coinvolte nella ricerca (filtri e ordinamento), per mostrarli nei risultati. */
@@ -75,6 +100,12 @@ public class PlayerSearchService {
         return new PlayerSummaryDto(p.getId(), p.getName(), PlayerMapper.age(p.getBirthDate()), p.getNationality(),
                 s.getPosition() != null ? s.getPosition() : p.getPosition(), p.getPhotoUrl(),
                 PlayerMapper.team(s.getTeam()), PlayerMapper.league(s.getLeague()), s.getSeason(), s.getMinutes(),
-                s.getAppearances(), s.getGoals(), s.getAssists(), s.getRating(), metricValues);
+                s.getAppearances(), s.getGoals(), s.getAssists(), s.getRating(), metricValues, false);
+    }
+
+    /** Riga bloccata: nessun dato che identifichi il giocatore o ne mostri le statistiche. */
+    private static PlayerSummaryDto toLocked(PlayerSeasonStat s) {
+        return new PlayerSummaryDto(null, null, null, null, s.getPosition(), null, PlayerMapper.team(s.getTeam()),
+                PlayerMapper.league(s.getLeague()), s.getSeason(), null, null, null, null, null, Map.of(), true);
     }
 }

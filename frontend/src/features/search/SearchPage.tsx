@@ -1,8 +1,10 @@
+import { LockSimple } from '@phosphor-icons/react'
 import { useCallback, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useLeagues, useMetrics, usePlayers } from '../../api/queries'
 import { ErrorState } from '../../components/ErrorState'
 import { StateMessage } from '../../components/StateMessage'
+import { useAuth } from '../auth/useAuth'
 import { useI18n } from '../../i18n/useI18n'
 import { seasonLabel } from '../../lib/format'
 import { FilterSheet } from './FilterSheet'
@@ -33,6 +35,8 @@ function SkeletonRows() {
 
 export function SearchPage() {
   const { t, locale } = useI18n()
+  const { user } = useAuth()
+  const location = useLocation()
   const [params, setParams] = useSearchParams()
   const [sheetOpen, setSheetOpen] = useState(false)
   const filters = useMemo(() => parseFilters(params), [params])
@@ -134,6 +138,18 @@ export function SearchPage() {
                   <p className="results__season">{t('results.season', { season: seasonLabel(shownSeason) })}</p>
                 )}
               </div>
+
+              {!user && players.data.content.some((row) => row.locked) && (
+                <aside className="locked-banner" role="note">
+                  <LockSimple size={20} weight="bold" aria-hidden="true" />
+                  <p>
+                    {t('locked.banner', { n: 3 })}{' '}
+                    <Link to="/accesso" state={{ from: `/${location.search}` }}>
+                      {t('locked.cta')}
+                    </Link>
+                  </p>
+                </aside>
+              )}
 
               {players.data.content.length === 0 ? (
                 <StateMessage
