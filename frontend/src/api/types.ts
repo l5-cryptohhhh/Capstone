@@ -43,7 +43,19 @@ export interface PlayerSummary {
   rating: number | null
   /** valori delle metriche usate per filtrare o ordinare */
   metrics: Record<string, MetricValue>
+  locked: false
 }
+
+/** Riga riservata agli utenti registrati: del giocatore il backend non invia nulla oltre a ruolo, squadra e campionato. */
+export interface LockedPlayerSummary {
+  locked: true
+  position: Position | null
+  team: TeamRef
+  league: LeagueRef
+  season: number
+}
+
+export type PlayerRow = PlayerSummary | LockedPlayerSummary
 
 export interface PageResponse<T> {
   content: T[]

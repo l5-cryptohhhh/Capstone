@@ -29,6 +29,14 @@ public interface PlayerSeasonStatRepository
     @Query("select s from PlayerSeasonStat s join fetch s.player where s.league.id = :leagueId and s.season = :season")
     List<PlayerSeasonStat> findForRecompute(@Param("leagueId") long leagueId, @Param("season") int season);
 
+    /** Id delle righe meglio valutate di un campionato in una stagione (chi ha giocato almeno minMinutes). */
+    @Query("""
+            select s.id from PlayerSeasonStat s
+            where s.league.id = :leagueId and s.season = :season and s.minutes >= :minMinutes
+            order by s.rating desc nulls last, s.id asc""")
+    List<Long> findTopIds(@Param("leagueId") long leagueId, @Param("season") int season,
+                          @Param("minMinutes") int minMinutes, Pageable pageable);
+
     @Query("select max(s.season) from PlayerSeasonStat s")
     Integer findMaxSeason();
 

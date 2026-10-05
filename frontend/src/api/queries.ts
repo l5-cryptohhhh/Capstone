@@ -1,6 +1,7 @@
 import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query'
 import { apiGet } from './client'
-import type { LeagueWithSeasons, MetricInfo, PageResponse, PlayerDetail, PlayerSummary, TeamRef } from './types'
+import { useAuth } from '../features/auth/useAuth'
+import type { LeagueWithSeasons, MetricInfo, PageResponse, PlayerDetail, PlayerRow, TeamRef } from './types'
 
 const FIVE_MINUTES = 5 * 60 * 1000
 
@@ -34,9 +35,11 @@ export function useTeams(leagueId: number | undefined, season: number | undefine
 }
 
 export function usePlayers(params: URLSearchParams) {
+  const { user } = useAuth()
   return useQuery({
-    queryKey: ['players', params.toString()],
-    queryFn: ({ signal }) => apiGet<PageResponse<PlayerSummary>>('/players', params, signal),
+    // L'utente è nella chiave: il visitatore riceve righe bloccate, chi ha fatto l'accesso no
+    queryKey: ['players', params.toString(), user?.id ?? null],
+    queryFn: ({ signal }) => apiGet<PageResponse<PlayerRow>>('/players', params, signal),
     placeholderData: keepPreviousData,
   })
 }

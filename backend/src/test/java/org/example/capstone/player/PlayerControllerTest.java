@@ -1,5 +1,7 @@
 package org.example.capstone.player;
 
+import org.example.capstone.auth.AuthInterceptor;
+import org.example.capstone.auth.AuthService.UserDto;
 import org.example.capstone.common.ApiException;
 import org.example.capstone.common.ErrorCode;
 import org.example.capstone.common.GlobalExceptionHandler;
@@ -44,6 +46,7 @@ class PlayerControllerTest {
         when(searchService.search(any(), anyInt(), anyInt())).thenReturn(PageResponse.empty(0, 20));
 
         mvc.perform(get("/api/v1/players")
+                        .requestAttr(AuthInterceptor.USER_ATTRIBUTE, new UserDto(1L, "a@b.it", "Anna"))
                         .param("position", "MID").param("maxAge", "22").param("season", "2024")
                         .param("pct.def_actions_p90.min", "70").param("sort", "def_actions_p90"))
                 .andExpect(status().isOk())
@@ -58,6 +61,16 @@ class PlayerControllerTest {
         assertThat(c.season()).isEqualTo(2024);
         assertThat(c.filters()).hasSize(1);
         assertThat(c.sort()).isEqualTo("def_actions_p90");
+    }
+
+    @Test
+    void visitorsGetThePreviewWithLockedRows() throws Exception {
+        when(searchService.searchPreview(any(), anyInt(), anyInt())).thenReturn(PageResponse.empty(0, 20));
+
+        mvc.perform(get("/api/v1/players")).andExpect(status().isOk());
+
+        verify(searchService).searchPreview(any(), eq(0), eq(20));
+        verify(searchService, never()).search(any(), anyInt(), anyInt());
     }
 
     @Test
