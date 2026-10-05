@@ -21,6 +21,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminKeyInterceptor).addPathPatterns("/api/v1/admin/**");
+        registry.addInterceptor(aiRateLimitInterceptor).addPathPatterns("/api/v1/ai/**");
+    }
+
+    /** Solo il frontend configurato può chiamare l'API dal browser. */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins(security.corsAllowedOrigin())
+                .allowedMethods("GET", "POST", "OPTIONS")
+                .allowedHeaders("Content-Type", "X-Admin-Key");
     }
 
     /** Solo il frontend configurato può chiamare l'API dal browser; nessun "*". */
