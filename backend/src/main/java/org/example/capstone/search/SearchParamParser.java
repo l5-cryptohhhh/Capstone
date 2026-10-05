@@ -21,7 +21,7 @@ public final class SearchParamParser {
 
     public static final int MAX_PAGE_SIZE = 50;
     private static final int MAX_QUERY_LENGTH = 100;
-    private static final Set<String> BASIC_SORTS = Set.of("name", "age", "minutes", "rating", "goals", "assists");
+    private static final Set<String> BASIC_SORTS = Set.of("name", "age", "minutes", "appearances", "rating", "goals", "assists");
 
     private SearchParamParser() {
     }
@@ -32,24 +32,40 @@ public final class SearchParamParser {
     }
 
     public static SearchCriteria parse(Request r) {
-        if (r.page() < 0) throw invalid("page deve essere >= 0");
-        if (r.size() < 1 || r.size() > MAX_PAGE_SIZE) throw invalid("size deve essere tra 1 e " + MAX_PAGE_SIZE);
-        if (r.q() != null && r.q().length() > MAX_QUERY_LENGTH) throw invalid("q troppo lunga (max " + MAX_QUERY_LENGTH + ")");
-        if (r.minAge() != null && r.minAge() < 0) throw invalid("minAge non valido");
-        if (r.maxAge() != null && r.maxAge() < 0) throw invalid("maxAge non valido");
-        if (r.minAge() != null && r.maxAge() != null && r.minAge() > r.maxAge()) throw invalid("minAge maggiore di maxAge");
-        if (r.minMinutes() != null && r.minMinutes() < 0) throw invalid("minMinutes non valido");
+        if (r.page() < 0) {
+            throw invalid("page deve essere >= 0");
+        }
+        if (r.size() < 1 || r.size() > MAX_PAGE_SIZE) {
+            throw invalid("size deve essere tra 1 e " + MAX_PAGE_SIZE);
+        }
+        if (r.q() != null && r.q().length() > MAX_QUERY_LENGTH) {
+            throw invalid("q troppo lunga (max " + MAX_QUERY_LENGTH + ")");
+        }
+        if (r.minAge() != null && r.minAge() < 0) {
+            throw invalid("minAge non valido");
+        }
+        if (r.maxAge() != null && r.maxAge() < 0) {
+            throw invalid("maxAge non valido");
+        }
+        if (r.minAge() != null && r.maxAge() != null && r.minAge() > r.maxAge()) {
+            throw invalid("minAge maggiore di maxAge");
+        }
+        if (r.minMinutes() != null && r.minMinutes() < 0) {
+            throw invalid("minMinutes non valido");
+        }
 
         String order = r.order() == null ? "desc" : r.order().toLowerCase();
-        if (!order.equals("asc") && !order.equals("desc")) throw invalid("order deve essere asc o desc");
+        if (!order.equals("asc") && !order.equals("desc")) {
+            throw invalid("order deve essere asc o desc");
+        }
 
         String sort = r.sort() == null ? "minutes" : r.sort();
         if (!BASIC_SORTS.contains(sort) && MetricKey.fromKey(sort).isEmpty()) {
             throw invalid("sort non valido: " + sort);
         }
 
-        return new SearchCriteria(r.q(), r.position(), r.minAge(), r.maxAge(), r.leagueId(), r.teamId(), r.season(),
-                r.minMinutes(), parseFilters(r.params()), sort, order.equals("desc"));
+        return new SearchCriteria(r.q(), r.position(), r.minAge(), r.maxAge(), r.leagueId(), r.teamId(), null, null,
+                r.season(), r.minMinutes(), parseFilters(r.params()), sort, order.equals("desc"));
     }
 
     private static List<MetricFilter> parseFilters(Map<String, String> params) {
@@ -57,7 +73,9 @@ public final class SearchParamParser {
         Map<String, BigDecimal[]> bounds = new LinkedHashMap<>();
         for (Map.Entry<String, String> e : params.entrySet()) {
             String name = e.getKey();
-            if (!name.startsWith("pct.") && !name.startsWith("val.")) continue;
+            if (!name.startsWith("pct.") && !name.startsWith("val.")) {
+                continue;
+            }
 
             String[] parts = name.split("\\.");
             if (parts.length != 3 || !(parts[2].equals("min") || parts[2].equals("max"))) {

@@ -8,7 +8,8 @@ import { ComparePage } from '../features/compare/ComparePage'
 import { MethodPage } from '../features/method/MethodPage'
 import { PlayerPage } from '../features/player/PlayerPage'
 import { SearchPage } from '../features/search/SearchPage'
-import { I18nProvider, useI18n } from '../i18n/I18nProvider'
+import { I18nProvider } from '../i18n/I18nProvider'
+import { useI18n } from '../i18n/useI18n'
 import { ThemeProvider } from './ThemeProvider'
 
 const queryClient = new QueryClient({
@@ -35,7 +36,7 @@ function NotFound() {
           </Link>
         }
       >
-        {t('error.PLAYER_NOT_FOUND')}
+        {t('error.pageNotFound')}
       </StateMessage>
     </div>
   )

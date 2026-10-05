@@ -10,6 +10,7 @@ import org.springframework.web.client.RestClientException;
 
 import java.net.http.HttpClient;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class OpenRouterClient {
         if (!keyConfigured) {
             throw new ApiException(ErrorCode.AI_UNAVAILABLE, "OPENROUTER_API_KEY non configurata");
         }
-        Map<String, Object> body = new java.util.HashMap<>();
+        Map<String, Object> body = new HashMap<>();
         body.put("model", model);
         body.put("temperature", 0.2);
         body.put("messages", List.of(

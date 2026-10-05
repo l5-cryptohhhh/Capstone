@@ -50,7 +50,7 @@ function playerQuery(id: number) {
 }
 
 export function usePlayer(id: number) {
-  return useQuery(playerQuery(id))
+  return useQuery({ ...playerQuery(id), enabled: Number.isInteger(id) })
 }
 
 export function usePlayersByIds(ids: number[]) {

@@ -26,9 +26,6 @@ public interface PlayerSeasonStatRepository
     @EntityGraph(attributePaths = {"team", "league"})
     List<PlayerSeasonStat> findByPlayerIdOrderBySeasonDesc(Long playerId);
 
-    @EntityGraph(attributePaths = {"team", "league"})
-    List<PlayerSeasonStat> findByPlayerIdOrderBySeasonDescIdAsc(Long playerId);
-
     @Query("select s from PlayerSeasonStat s join fetch s.player where s.league.id = :leagueId and s.season = :season")
     List<PlayerSeasonStat> findForRecompute(@Param("leagueId") long leagueId, @Param("season") int season);
 

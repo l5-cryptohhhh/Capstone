@@ -1,4 +1,4 @@
-import { useI18n } from '../i18n/I18nProvider'
+import { useI18n } from '../i18n/useI18n'
 import { scalePosition } from '../lib/scale'
 
 export type MarkShape = 'x' | 'circle' | 'square'
@@ -49,7 +49,7 @@ export function MarkGlyph({ shape, color }: { shape: MarkShape; color: string })
  */
 export function ScaleRow({ label, marks, order = 0, compact = false }: Props) {
   const { t } = useI18n()
-  const known = marks.filter((m) => m.percentile !== null)
+  const known = marks.filter((m): m is ScaleMark & { percentile: number } => m.percentile !== null)
 
   const description =
     known.length === 0
@@ -76,7 +76,7 @@ export function ScaleRow({ label, marks, order = 0, compact = false }: Props) {
           <span
             key={mark.id}
             className="scale__mark"
-            style={{ left: `${scalePosition(mark.percentile as number)}%`, ['--i' as string]: order + index }}
+            style={{ left: `${scalePosition(mark.percentile)}%`, ['--i' as string]: order + index }}
           >
             <MarkGlyph shape={mark.shape} color={mark.color} />
           </span>

@@ -7,13 +7,13 @@ import { PlayerPhoto } from '../../components/PlayerPhoto'
 import { MarkGlyph, ScaleRow } from '../../components/ScaleRow'
 import { Stamp } from '../../components/Stamp'
 import { StateMessage } from '../../components/StateMessage'
-import { useI18n } from '../../i18n/I18nProvider'
+import { useI18n } from '../../i18n/useI18n'
 import { countryName } from '../../lib/countries'
 import { formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { formatMetricValue } from '../player/helpers'
 import { SLOTS, bestIndex, commonSeason, entryFor, parseIds } from './helpers'
-import { useCompare } from './CompareProvider'
+import { useCompare } from './useCompare'
 
 const BIO_ROWS = ['age', 'nationality', 'height', 'position', 'team', 'minutes'] as const
 

@@ -1,24 +1,8 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { CompareContext, type CompareEntry, type CompareValue } from './useCompare'
 
-export const MAX_COMPARE = 3
+const MAX_COMPARE = 3
 const STORAGE_KEY = 'scoutai.compare'
-
-export interface CompareEntry {
-  id: number
-  name: string
-  photoUrl: string | null
-}
-
-interface CompareValue {
-  entries: CompareEntry[]
-  has: (id: number) => boolean
-  isFull: boolean
-  add: (entry: CompareEntry) => boolean
-  remove: (id: number) => void
-  clear: () => void
-}
-
-const CompareContext = createContext<CompareValue | null>(null)
 
 function load(): CompareEntry[] {
   try {
@@ -76,10 +60,4 @@ export function CompareProvider({ children }: { children: ReactNode }) {
   )
 
   return <CompareContext.Provider value={value}>{children}</CompareContext.Provider>
-}
-
-export function useCompare(): CompareValue {
-  const ctx = useContext(CompareContext)
-  if (!ctx) throw new Error('useCompare deve essere usato dentro CompareProvider')
-  return ctx
 }

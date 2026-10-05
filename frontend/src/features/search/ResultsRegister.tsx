@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import type { PageResponse, PlayerSummary } from '../../api/types'
 import { PlayerPhoto } from '../../components/PlayerPhoto'
 import { ScaleRow } from '../../components/ScaleRow'
-import { useI18n } from '../../i18n/I18nProvider'
+import { useI18n } from '../../i18n/useI18n'
 import type { TranslationKey } from '../../i18n/it'
 import { countryName } from '../../lib/countries'
 import { formatNumber } from '../../lib/format'
-import { useCompare } from '../compare/CompareProvider'
+import { useCompare } from '../compare/useCompare'
 import type { Filters } from './filters'
 
 interface Props {

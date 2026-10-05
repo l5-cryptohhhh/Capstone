@@ -1,15 +1,20 @@
 package org.example.capstone.ai;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.example.capstone.common.ApiException;
 import org.example.capstone.common.ErrorCode;
-import org.example.capstone.player.PlayerDtos.PageDto;
-import org.example.capstone.player.PlayerDtos.PlayerDetailDto;
-import org.example.capstone.player.PlayerDtos.PlayerSummaryDto;
-import org.example.capstone.player.PlayerSearchCriteria;
-import org.example.capstone.player.PlayerService;
+import org.example.capstone.common.PageResponse;
+import org.example.capstone.player.PlayerQueryService;
+import org.example.capstone.player.Position;
+import org.example.capstone.player.dto.PlayerDetailDto;
+import org.example.capstone.player.dto.PlayerSummaryDto;
+import org.example.capstone.search.PlayerSearchService;
+import org.example.capstone.search.SearchCriteria;
 import org.springframework.stereotype.Service;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.json.JsonMapper;
+
+import java.util.Set;
 
 /**
  * L'AI interpreta, non inventa: traduce una frase in filtri strutturati (poi eseguiti sul DB)
@@ -17,6 +22,12 @@ import tools.jackson.databind.json.JsonMapper;
  */
 @Service
 public class AiService {
+
+    /** Ordinamenti che l'AI può chiedere; qualsiasi altro valore viene ignorato. */
+    static final Set<String> SORTABLE = Set.of("rating", "goals", "assists", "minutes", "appearances");
+
+    private static final String DEFAULT_SORT = "rating";
+    private static final int PAGE_SIZE = 20;
 
     private static final String INTERPRET_PROMPT = """
             Sei il parser di ricerca di una piattaforma di scouting calcistico.
@@ -43,45 +54,67 @@ public class AiService {
             """;
 
     private final OpenRouterClient llm;
-    private final PlayerService players;
+    private final PlayerSearchService search;
+    private final PlayerQueryService players;
     private final JsonMapper mapper;
 
-    public AiService(OpenRouterClient llm, PlayerService players, JsonMapper mapper) {
+    public AiService(OpenRouterClient llm, PlayerSearchService search, PlayerQueryService players, JsonMapper mapper) {
         this.llm = llm;
+        this.search = search;
         this.players = players;
         this.mapper = mapper;
     }
 
-    public record AiSearchResult(PlayerSearchCriteria interpreted, PageDto<PlayerSummaryDto> results) {
+    /**
+     * Filtri che l'AI può compilare: solo questi campi, mai query. Ogni altro campo della risposta viene ignorato.
+     */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record AiFilters(String name, Position position, String team, String league, Integer season,
+                            Integer minAge, Integer maxAge, Integer minMinutes, String sort) {
+
+        /** True se c'è almeno un filtro (l'ordinamento non conta). */
+        boolean hasFilters() {
+            return hasText(name) || position != null || hasText(team) || hasText(league) || season != null
+                    || minAge != null || maxAge != null || minMinutes != null;
+        }
+
+        private static boolean hasText(String value) {
+            return value != null && !value.isBlank();
+        }
+    }
+
+    public record AiSearchResult(AiFilters interpreted, PageResponse<PlayerSummaryDto> results) {
     }
 
     public record PlayerReport(Long playerId, String report) {
     }
 
     public AiSearchResult search(String query) {
-        PlayerSearchCriteria criteria = interpret(query);
-        return new AiSearchResult(criteria, players.search(criteria));
+        AiFilters filters = interpret(query);
+        SearchCriteria criteria = new SearchCriteria(filters.name(), filters.position(), filters.minAge(),
+                filters.maxAge(), null, null, filters.team(), filters.league(), filters.season(),
+                filters.minMinutes(), null, filters.sort() != null ? filters.sort() : DEFAULT_SORT, true);
+        return new AiSearchResult(filters, search.search(criteria, 0, PAGE_SIZE));
     }
 
-    PlayerSearchCriteria interpret(String query) {
+    AiFilters interpret(String query) {
         String raw = llm.complete(INTERPRET_PROMPT, query, true);
-        PlayerSearchCriteria parsed;
+        AiFilters parsed;
         try {
-            parsed = mapper.readValue(stripFences(raw), PlayerSearchCriteria.class);
+            parsed = mapper.readValue(stripFences(raw), AiFilters.class);
         } catch (JacksonException e) {
-            throw new ApiException(ErrorCode.QUERY_NOT_INTERPRETABLE, "Non sono riuscito a interpretare la richiesta");
+            throw notInterpretable();
         }
         if (parsed == null || !parsed.hasFilters()) {
-            throw new ApiException(ErrorCode.QUERY_NOT_INTERPRETABLE, "Non sono riuscito a interpretare la richiesta");
+            throw notInterpretable();
         }
-        // Solo i filtri passano: paginazione fissa e ordinamento ammesso solo se in whitelist
-        String sort = parsed.sort() != null && PlayerService.SORTABLE.contains(parsed.sort()) ? parsed.sort() : null;
-        return new PlayerSearchCriteria(parsed.name(), parsed.position(), parsed.team(), parsed.league(),
-                parsed.season(), parsed.minAge(), parsed.maxAge(), parsed.minMinutes(), sort, 0, 20);
+        String sort = parsed.sort() != null && SORTABLE.contains(parsed.sort()) ? parsed.sort() : null;
+        return new AiFilters(parsed.name(), parsed.position(), parsed.team(), parsed.league(), parsed.season(),
+                parsed.minAge(), parsed.maxAge(), parsed.minMinutes(), sort);
     }
 
     public PlayerReport report(Long playerId) {
-        PlayerDetailDto detail = players.detail(playerId);
+        PlayerDetailDto detail = players.detail(playerId, null);
         if (detail.seasons().isEmpty()) {
             throw new ApiException(ErrorCode.INSUFFICIENT_DATA, "Nessuna statistica disponibile per questo giocatore");
         }
@@ -92,6 +125,10 @@ public class AiService {
             throw new ApiException(ErrorCode.INTERNAL_ERROR, "Errore interno", e);
         }
         return new PlayerReport(playerId, llm.complete(REPORT_PROMPT, data, false));
+    }
+
+    private static ApiException notInterpretable() {
+        return new ApiException(ErrorCode.QUERY_NOT_INTERPRETABLE, "Non sono riuscito a interpretare la richiesta");
     }
 
     /** Alcuni modelli avvolgono il JSON in ```json ... ``` anche se non richiesto. */
