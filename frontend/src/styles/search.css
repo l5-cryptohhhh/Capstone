@@ -13,11 +13,15 @@
 
 .search__sheet {
   position: sticky;
-  top: var(--topbar-h);
-  height: calc(100dvh - var(--topbar-h));
+  top: calc(var(--topbar-h) + 16px);
+  height: calc(100dvh - var(--topbar-h) - 32px);
+  margin: 16px 0 16px 16px;
   overflow-y: auto;
-  background: var(--sheet);
-  border-right: 1px solid var(--rule-strong);
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
 }
 
 .search__results {
@@ -37,18 +41,18 @@
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 18px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .sheet__title {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.1;
 }
 
 .sheet .btn--quiet {
   min-height: 28px;
-  padding: 0;
+  padding: 0 10px;
   font-size: 13px;
 }
 
@@ -66,19 +70,22 @@
   margin-bottom: 6px;
   padding: 0;
   font-size: 12.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-2);
 }
 
 .input {
   width: 100%;
-  height: 38px;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 12px;
   font-size: 14px;
-  background: var(--paper);
-  border: 1px solid var(--rule-strong);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
   border-radius: var(--radius);
   appearance: none;
+  transition:
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
 }
 
 select.input {
@@ -95,13 +102,13 @@ select.input {
 }
 
 .input:hover:not(:disabled) {
-  border-color: var(--ink-2);
+  border-color: var(--rule-strong);
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 0;
+  outline: none;
   border-color: var(--pen);
+  box-shadow: 0 0 0 4px var(--pen-wash);
 }
 
 .input:disabled {
@@ -148,9 +155,9 @@ select.input {
   width: 18px;
   height: 18px;
   transform: translateY(-50%);
-  background: var(--paper);
+  background: var(--sheet);
   border: 1.5px solid var(--rule-strong);
-  border-radius: var(--radius);
+  border-radius: 6px;
 }
 
 .box input,
@@ -256,8 +263,8 @@ select.input {
   flex-wrap: wrap;
   gap: 4px 16px;
   margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .results__count {
@@ -305,8 +312,9 @@ select.input {
   font-weight: 700;
   color: var(--ink-2);
   white-space: nowrap;
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule-strong);
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--rule);
 }
 
 .register .num,
@@ -331,6 +339,10 @@ select.input {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.register tbody tr {
+  transition: background-color 0.2s var(--ease-out);
 }
 
 .register tbody tr:hover {
@@ -427,9 +439,13 @@ select.input {
   flex: none;
   place-items: center;
   overflow: hidden;
-  background: var(--paper);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+
+.photo--lg {
+  border-radius: 16px;
 }
 
 .photo img {
@@ -455,8 +471,7 @@ select.input {
 }
 
 .photo__initials {
-  font-stretch: 68%;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 0.95rem;
   color: var(--ink-3);
 }
@@ -470,16 +485,19 @@ select.input {
   max-width: 560px;
   margin: 32px 0;
   padding: 24px;
-  border: 1px dashed var(--rule-strong);
-  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
 }
 
 .state--error {
-  border: 1.5px solid var(--stamp);
+  border-color: var(--stamp);
 }
 
 .state__title {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.1;
 }
 
@@ -501,7 +519,12 @@ select.input {
   display: block;
   height: 14px;
   background: var(--rule);
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
+}
+
+.skeleton--title,
+.skeleton--block {
+  border-radius: var(--radius-lg);
 }
 
 .skeleton--who {
@@ -560,10 +583,7 @@ select.input {
     position: static;
     display: none;
     height: auto;
-    margin-top: 12px;
-    border-right: 0;
-    border-top: 1px solid var(--rule-strong);
-    border-bottom: 1px solid var(--rule-strong);
+    margin: 12px 16px 0;
   }
 
   .search__sheet.is-open {
@@ -599,16 +619,13 @@ select.input {
 .chip-stamp {
   display: inline-block;
   margin-left: 8px;
-  padding: 0 6px;
+  padding: 0 8px;
   font-size: 11.5px;
-  font-weight: 800;
-  line-height: 18px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 20px;
   color: var(--stamp);
-  border: 1.5px solid var(--stamp);
-  border-radius: var(--radius);
-  transform: rotate(-2deg);
+  background: var(--stamp-wash);
+  border-radius: var(--radius-pill);
 }
 
 .register td.metric {

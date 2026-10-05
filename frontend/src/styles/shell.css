@@ -13,8 +13,9 @@
   gap: 32px;
   height: var(--topbar-h);
   padding: 0 24px;
-  background: var(--sheet);
-  border-bottom: 1px solid var(--rule-strong);
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--rule);
 }
 
 .wordmark {
@@ -30,30 +31,31 @@
 
 .topbar__nav {
   display: flex;
-  align-items: stretch;
-  align-self: stretch;
+  align-items: center;
   gap: 4px;
 }
 
 .topbar__nav a {
   display: inline-flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 6px 14px;
   font-weight: 600;
   text-decoration: none;
   color: var(--ink-2);
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.15s var(--ease-out);
+  border-radius: var(--radius-pill);
+  transition:
+    color 0.2s var(--ease-out),
+    background-color 0.2s var(--ease-out);
 }
 
 .topbar__nav a:hover {
   color: var(--ink);
+  background: var(--rule);
 }
 
 .topbar__nav a[aria-current='page'] {
-  color: var(--ink);
-  border-bottom-color: var(--pen);
+  color: var(--pen);
+  background: var(--pen-wash);
 }
 
 .topbar__tools {
@@ -67,22 +69,25 @@
   display: inline-block;
   min-width: 18px;
   margin-left: 6px;
-  padding: 0 5px;
+  padding: 0 6px;
   font-size: 12px;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 18px;
   text-align: center;
-  border: 1px solid currentcolor;
-  border-radius: var(--radius);
+  color: var(--pen-on);
+  background: var(--pen);
+  border-radius: var(--radius-pill);
 }
 
 /* Selettore a segmenti (lingua, stagione, squadra) */
 .seg {
   display: inline-flex;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--sheet);
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .seg--wide {
@@ -101,15 +106,14 @@
   color: var(--ink-2);
   background: transparent;
   border: 0;
-  border-right: 1px solid var(--rule);
-}
-
-.seg__btn:last-child {
-  border-right: 0;
+  border-radius: var(--radius-pill);
+  transition:
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
 }
 
 .seg__btn:hover {
-  background: var(--pen-wash);
+  background: var(--rule);
   color: var(--ink);
 }
 
@@ -127,13 +131,20 @@
   padding: 0;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 50%;
   color: var(--ink-2);
+  transition:
+    background-color 0.2s var(--ease-out),
+    transform 0.1s ease-out;
 }
 
 .icon-btn:hover {
   color: var(--ink);
-  background: var(--pen-wash);
+  background: var(--rule);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
 }
 
 .icon-btn--sm {
@@ -154,10 +165,11 @@
   color: var(--ink);
   background: var(--sheet);
   border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   transition:
-    background-color 0.15s var(--ease-out),
-    border-color 0.15s var(--ease-out);
+    background-color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    transform 0.1s ease-out;
 }
 
 .btn:hover:not(:disabled) {
@@ -166,7 +178,7 @@
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: scale(0.97);
 }
 
 .btn:disabled {
@@ -194,13 +206,15 @@
   background: transparent;
   border-color: transparent;
   color: var(--pen);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+}
+
+.btn--quiet:hover:not(:disabled) {
+  background: var(--pen-wash);
+  border-color: transparent;
 }
 
 .btn--add {
   margin-top: 10px;
-  border-style: dashed;
   color: var(--pen);
 }
 
@@ -216,9 +230,10 @@
   width: min(920px, calc(100% - 32px));
   padding: 10px 14px;
   transform: translateX(-50%);
-  background: var(--sheet);
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
   box-shadow: var(--lift);
 }
 
@@ -228,7 +243,6 @@
 }
 
 .tray__count {
-  font-stretch: 100%;
   font-weight: 600;
   font-size: 13px;
   color: var(--ink-3);
@@ -247,9 +261,9 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
-  padding: 2px 2px 2px 6px;
+  padding: 3px 3px 3px 6px;
   border: 1px solid var(--rule);
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
 }
 
 .tray__name {

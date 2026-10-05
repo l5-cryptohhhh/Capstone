@@ -11,7 +11,14 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  /* Base chiara premium con aloni pastello sfumati, fissi mentre la pagina scorre */
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, var(--glow-lavender), transparent 60%),
+    radial-gradient(50rem 36rem at 95% 5%, var(--glow-peach), transparent 60%),
+    radial-gradient(55rem 40rem at 80% 105%, var(--glow-sky), transparent 60%),
+    radial-gradient(50rem 36rem at 0% 100%, var(--glow-mint), transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font);
   font-size: 15px;
@@ -86,8 +93,9 @@ select:disabled {
 
 ::-webkit-scrollbar-thumb {
   background: var(--rule-strong);
-  border: 2px solid var(--paper);
-  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--radius-pill);
 }
 
 input[type='search']::-webkit-search-cancel-button {
@@ -122,7 +130,7 @@ input[type='search']::-webkit-search-cancel-button {
   top: 8px;
 }
 
-/* Caratteri del dossier: condensato pesante per nomi e titoli, larghezza normale per i valori */
+/* Titoli: peso pieno e tracking negativo, più stretto quanto più sono grandi */
 .wordmark,
 .sheet__title,
 .part__title,
@@ -134,10 +142,14 @@ input[type='search']::-webkit-search-cancel-button {
 .stamp__title,
 .state__title,
 .tray__title {
-  font-stretch: 68%;
-  font-weight: 800;
-  letter-spacing: 0;
-  word-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page__title,
+.dossier-head__name,
+.results__count {
+  letter-spacing: -0.035em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -148,5 +160,26 @@ input[type='search']::-webkit-search-cancel-button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Preferenze di sistema: vetro sostituito da superfici piene, contrasto dei filetti e dei testi secondari più alto */
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  :root[data-theme='dark'] {
+    --glass: var(--sheet);
+    --glass-border: var(--rule-strong);
+  }
+
+  * {
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  :root[data-theme='dark'] {
+    --rule: var(--rule-strong);
+    --ink-3: var(--ink-2);
   }
 }
