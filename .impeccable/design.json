@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T00:00:00.000Z",
+  "title": "Design System: ScoutAI",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Cool Paper", "canonical": "#f4f6fa", "tonalRamp": ["#0b1324", "#14233f", "#44526f", "#62708d", "#7a89a6", "#cfd6e4", "#f4f6fa", "#fbfcfe"] },
+      "sheet": { "role": "neutral", "displayName": "Sheet", "canonical": "#fbfcfe", "tonalRamp": ["#101a2e", "#14233f", "#44526f", "#62708d", "#7a89a6", "#cfd6e4", "#f4f6fa", "#fbfcfe"] },
+      "ink": { "role": "neutral", "displayName": "Dossier Ink", "canonical": "#14233f", "tonalRamp": ["#0b1324", "#14233f", "#2a3a58", "#44526f", "#62708d", "#7a89a6", "#cfd6e4", "#e8edf7"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink 2", "canonical": "#44526f", "tonalRamp": ["#14233f", "#2a3a58", "#44526f", "#62708d", "#7a89a6", "#a9b6cf", "#cfd6e4", "#e8edf7"] },
+      "ink-3": { "role": "neutral", "displayName": "Ink 3", "canonical": "#62708d", "tonalRamp": ["#14233f", "#44526f", "#62708d", "#7a89a6", "#8a99b6", "#a9b6cf", "#cfd6e4", "#e8edf7"] },
+      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#cfd6e4", "tonalRamp": ["#27375a", "#44526f", "#7a89a6", "#a9b6cf", "#cfd6e4", "#e4ebfc", "#f4f6fa", "#fbfcfe"] },
+      "rule-strong": { "role": "neutral", "displayName": "Rule Strong", "canonical": "#7a89a6", "tonalRamp": ["#27375a", "#44526f", "#5a6d96", "#7a89a6", "#a9b6cf", "#cfd6e4", "#e4ebfc", "#f4f6fa"] },
+      "pen": { "role": "primary", "displayName": "Biro Pen Blue", "canonical": "#2455d9", "tonalRamp": ["#0d2262", "#143494", "#1b44bd", "#2455d9", "#5a82f2", "#8fa9ff", "#c4d3fb", "#e4ebfc"] },
+      "pen-wash": { "role": "primary", "displayName": "Pen Wash", "canonical": "#e4ebfc", "tonalRamp": ["#1a2a52", "#2455d9", "#5a82f2", "#8fa9ff", "#c4d3fb", "#e4ebfc", "#f0f4fe", "#fbfcfe"] },
+      "stamp": { "role": "secondary", "displayName": "Rubber Stamp Red", "canonical": "#c8312b", "tonalRamp": ["#3a1d22", "#7a1b17", "#a12621", "#c8312b", "#e8624f", "#f0766a", "#f6b5ae", "#fbebe9"] },
+      "stamp-wash": { "role": "secondary", "displayName": "Stamp Wash", "canonical": "#fbebe9", "tonalRamp": ["#3a1d22", "#a12621", "#c8312b", "#e8624f", "#f0a8a1", "#f6cfcb", "#fbebe9", "#fef7f6"] },
+      "mark-1": { "role": "tertiary", "displayName": "Compare Mark 1 (X, blue)", "canonical": "#2455d9", "tonalRamp": ["#0d2262", "#143494", "#1b44bd", "#2455d9", "#5a82f2", "#8fa9ff", "#c4d3fb", "#e4ebfc"] },
+      "mark-2": { "role": "tertiary", "displayName": "Compare Mark 2 (circle, red)", "canonical": "#c8312b", "tonalRamp": ["#3a1d22", "#7a1b17", "#a12621", "#c8312b", "#e8624f", "#f0766a", "#f6b5ae", "#fbebe9"] },
+      "mark-3": { "role": "tertiary", "displayName": "Compare Mark 3 (square, green)", "canonical": "#0e8a6b", "tonalRamp": ["#05352a", "#09533f", "#0b6f56", "#0e8a6b", "#25a27b", "#5cc09f", "#a6dfc9", "#e1f4ec"] }
+    },
+    "typographyMeta": {
+      "name-display": { "displayName": "Name display", "purpose": "Player name in the dossier head, Archivo 68% width, weight 800." },
+      "page-title": { "displayName": "Page title", "purpose": "Reading and compare page titles." },
+      "form-heading": { "displayName": "Form heading", "purpose": "Sheet title and dossier part titles over a 2px ink rule." },
+      "value-core": { "displayName": "Core value", "purpose": "Headline stats in the core field grid, condensed heavy." },
+      "value": { "displayName": "Value", "purpose": "Printed values at normal width with tabular figures." },
+      "body": { "displayName": "Body", "purpose": "Running text, 15px, tabular figures on." },
+      "field-label": { "displayName": "Field label", "purpose": "Sentence-case 12.5px bold labels and register column heads." }
+    },
+    "shadows": [
+      { "name": "lift", "value": "0 1px 0 rgb(20 35 63 / 6%), 0 8px 24px -12px rgb(20 35 63 / 22%)", "purpose": "The single soft sheet lift under the floating compare tray. Night: 0 1px 0 rgb(0 0 0 / 30%), 0 10px 28px -12px rgb(0 0 0 / 60%)." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "All transitions and the pen-stroke draw-in." },
+      { "name": "pen-stroke", "value": "0.5s ease-out, delay 100ms + 40ms per mark, stroke-dashoffset 1 to 0", "purpose": "The only authored motion: marks are drawn once. Disabled under prefers-reduced-motion." },
+      { "name": "state-transition", "value": "0.15s var(--ease-out)", "purpose": "Color and border changes on buttons, nav links, register busy state." }
+    ],
+    "breakpoints": [
+      { "name": "wide-trim", "value": "1180px" },
+      { "name": "sheet-collapse", "value": "900px" },
+      { "name": "topbar-wrap", "value": "760px" },
+      { "name": "register-compact-row", "value": "700px" },
+      { "name": "compare-head-row", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "custom",
+      "refersTo": "button",
+      "description": "Default hairline button; primary is solid pen.",
+      "html": "<button class=\"ds-btn\">Apri scheda</button> <button class=\"ds-btn ds-btn-primary\">Confronta</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;font:600 14px 'Archivo Variable','Segoe UI',system-ui,sans-serif;color:var(--ink,#14233f);background:var(--sheet,#fbfcfe);border:1px solid var(--rule-strong,#7a89a6);border-radius:2px;cursor:pointer;transition:background-color .15s,border-color .15s}.ds-btn:hover{background:var(--pen-wash,#e4ebfc);border-color:var(--pen,#2455d9)}.ds-btn:focus-visible{outline:2px solid var(--focus,#2455d9);outline-offset:2px}.ds-btn:active{transform:translateY(1px)}.ds-btn-primary{background:var(--pen,#2455d9);border-color:var(--pen,#2455d9);color:var(--pen-on,#fff)}.ds-btn-primary:hover{background:var(--pen,#2455d9);filter:brightness(1.08)}"
+    },
+    {
+      "name": "Field input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Ruled field box with a sentence-case label above.",
+      "html": "<label class=\"ds-field\"><span>Nome</span><input class=\"ds-input\" placeholder=\"Cerca un giocatore\"></label>",
+      "css": ".ds-field{display:block;font:700 12.5px 'Archivo Variable','Segoe UI',system-ui,sans-serif;color:var(--ink-2,#44526f)}.ds-field span{display:block;margin-bottom:6px}.ds-input{width:100%;height:38px;padding:0 10px;font:400 14px 'Archivo Variable','Segoe UI',system-ui,sans-serif;color:var(--ink,#14233f);background:var(--paper,#f4f6fa);border:1px solid var(--rule-strong,#7a89a6);border-radius:2px}.ds-input:hover{border-color:var(--ink-2,#44526f)}.ds-input:focus-visible{outline:2px solid var(--focus,#2455d9);outline-offset:0;border-color:var(--pen,#2455d9)}"
+    },
+    {
+      "name": "X-ticked box",
+      "kind": "custom",
+      "refersTo": "field-cell",
+      "description": "Checkbox drawn as a ruled box with a pen X when ticked.",
+      "html": "<label class=\"ds-box\"><input type=\"checkbox\" checked><svg class=\"ds-box-x\" viewBox=\"0 0 18 18\" aria-hidden=\"true\"><path d=\"M4.5 4.5 L13.5 13.5 M13.5 4.5 L4.5 13.5\"/></svg>Centrocampista</label>",
+      "css": ".ds-box{position:relative;display:flex;align-items:center;min-height:28px;padding-left:26px;font:400 14px 'Archivo Variable','Segoe UI',system-ui,sans-serif;color:var(--ink,#14233f);cursor:pointer}.ds-box::before{content:'';position:absolute;left:0;top:50%;width:18px;height:18px;transform:translateY(-50%);background:var(--paper,#f4f6fa);border:1.5px solid var(--rule-strong,#7a89a6);border-radius:2px}.ds-box:has(input:checked)::before{border-color:var(--pen,#2455d9);background:var(--pen-wash,#e4ebfc)}.ds-box input{position:absolute;inset:0;margin:0;opacity:0;cursor:inherit}.ds-box-x{position:absolute;left:0;top:50%;width:18px;height:18px;transform:translateY(-50%);fill:none;stroke:var(--pen,#2455d9);stroke-width:2.8;stroke-linecap:round;opacity:0;pointer-events:none}.ds-box input:checked~.ds-box-x{opacity:1}.ds-box:has(input:focus-visible)::before{outline:2px solid var(--focus,#2455d9);outline-offset:2px}"
+    },
+    {
+      "name": "Scale row",
+      "kind": "custom",
+      "refersTo": "field-cell",
+      "description": "0-100 ruled scale with ticks every 10 and a pen X at the percentile; circle and square for compare.",
+      "html": "<div class=\"ds-scale\"><div class=\"ds-track\"><span class=\"ds-ticks\"></span><span class=\"ds-tick\" style=\"left:0\"></span><span class=\"ds-tick\" style=\"left:50%\"></span><span class=\"ds-tick\" style=\"left:100%\"></span><span class=\"ds-mark\" style=\"left:72%\"><svg viewBox=\"-8 -8 16 16\" width=\"16\" height=\"16\"><path d=\"M-5 -5 L5 5 M5 -5 L-5 5\" stroke=\"var(--mark-1,#2455d9)\" stroke-width=\"2.8\" stroke-linecap=\"round\" fill=\"none\"/></svg></span></div></div>",
+      "css": ".ds-scale{position:relative;height:28px;width:260px}.ds-track{position:absolute;inset:0 8px}.ds-track::before{content:'';position:absolute;inset:50% 0 auto;height:1.5px;background:var(--rule-strong,#7a89a6);transform:translateY(-50%)}.ds-ticks{position:absolute;inset:50% 0 auto;height:8px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,var(--rule-strong,#7a89a6) 0 1px,transparent 1px 10%)}.ds-tick{position:absolute;top:50%;width:1.5px;height:16px;background:var(--ink-3,#62708d);transform:translate(-50%,-50%)}.ds-mark{position:absolute;top:50%;display:grid;transform:translate(-50%,-50%)}"
+    },
+    {
+      "name": "Rubber stamp",
+      "kind": "custom",
+      "refersTo": "stamp",
+      "description": "Red double-ruled stamp block owning an uncertain state.",
+      "html": "<aside class=\"ds-stamp\"><p class=\"ds-stamp-title\">Percentili non disponibili</p><p class=\"ds-stamp-body\">Campione troppo piccolo per questa stagione.</p></aside>",
+      "css": ".ds-stamp{max-width:560px;padding:12px 16px 14px;color:var(--stamp,#c8312b);border:2px solid var(--stamp,#c8312b);border-radius:2px;outline:1px solid var(--stamp,#c8312b);outline-offset:3px;transform:rotate(-.7deg);font-family:'Archivo Variable','Segoe UI',system-ui,sans-serif}.ds-stamp p{margin:0}.ds-stamp-title{font-stretch:68%;font-weight:800;font-size:1.45rem;line-height:1.1;text-transform:uppercase;letter-spacing:.04em}.ds-stamp-body{margin-top:4px;font-size:14px;color:var(--ink,#14233f)}"
+    },
+    {
+      "name": "N/D chip",
+      "kind": "chip",
+      "refersTo": "chip-stamp",
+      "description": "Inline stamp chip for a missing percentile in a register cell.",
+      "html": "<span class=\"ds-nd\">N/D</span>",
+      "css": ".ds-nd{display:inline-block;padding:0 6px;font:800 11.5px/18px 'Archivo Variable','Segoe UI',system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--stamp,#c8312b);border:1.5px solid var(--stamp,#c8312b);border-radius:2px;transform:rotate(-2deg)}"
+    },
+    {
+      "name": "Ruled field grid",
+      "kind": "card",
+      "refersTo": "field-cell",
+      "description": "Dossier facts in a hairline grid, label over value.",
+      "html": "<dl class=\"ds-fields\"><div class=\"ds-cell\"><dt>Minuti</dt><dd>2.340</dd></div><div class=\"ds-cell\"><dt>Gol</dt><dd>9</dd></div><div class=\"ds-cell\"><dt>Assist</dt><dd>4</dd></div></dl>",
+      "css": ".ds-fields{display:grid;grid-template-columns:repeat(3,1fr);margin:0;border-top:1px solid var(--rule-strong,#7a89a6);border-left:1px solid var(--rule-strong,#7a89a6);font-family:'Archivo Variable','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums}.ds-cell{padding:8px 12px 10px;background:var(--sheet,#fbfcfe);border-right:1px solid var(--rule-strong,#7a89a6);border-bottom:1px solid var(--rule-strong,#7a89a6)}.ds-cell dt{font-size:12.5px;color:var(--ink-3,#62708d)}.ds-cell dd{margin:1px 0 0;font-size:16px;font-weight:700;color:var(--ink,#14233f)}"
+    },
+    {
+      "name": "Top bar navigation",
+      "kind": "nav",
+      "refersTo": "button",
+      "description": "One-line top bar: condensed heavy wordmark, nav with pen underline on the current page.",
+      "html": "<header class=\"ds-topbar\"><span class=\"ds-wordmark\">Scout<span>AI</span></span><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Cerca</a><a href=\"#\">Confronta</a></nav></header>",
+      "css": ".ds-topbar{display:flex;align-items:center;gap:32px;height:56px;padding:0 24px;background:var(--sheet,#fbfcfe);border-bottom:1px solid var(--rule-strong,#7a89a6);font-family:'Archivo Variable','Segoe UI',system-ui,sans-serif}.ds-wordmark{font-stretch:68%;font-weight:800;font-size:1.85rem;line-height:1;color:var(--ink,#14233f)}.ds-wordmark span{color:var(--pen,#2455d9)}.ds-nav{display:flex;align-self:stretch;gap:4px}.ds-nav a{display:inline-flex;align-items:center;padding:0 12px;font-weight:600;text-decoration:none;color:var(--ink-2,#44526f);border-bottom:3px solid transparent;margin-bottom:-1px}.ds-nav a:hover{color:var(--ink,#14233f)}.ds-nav a[aria-current='page']{color:var(--ink,#14233f);border-bottom-color:var(--pen,#2455d9)}.ds-nav a:focus-visible{outline:2px solid var(--focus,#2455d9);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Dossier dello scout",
+    "overview": "ScoutAI is a scout's observation dossier made interactive. Measured facts are typeset in printed ink; every judgment is a mark placed on a scale. The surface is cool white paper with hairline rules, ruled field boxes at 2px radius, and a single soft lift under the floating comparison tray. It is a working tool for long, repeated sessions: dense, quiet, and honest about thin data.\n\nThree accents, one meaning each. Ink is printed fact. Pen blue is whatever the user marks or selects. Stamp red is any uncertain state (missing percentile, small sample, error). Nothing else carries color. The night variant keeps the same rules on desk-lamp navy paper with brighter pen and stamp.\n\nThe system refuses the dark dashboard with radar chart and the grid of identical tiles. Facts live in ruled grids and a register table; judgments live on 0 to 100 scale rows.",
+    "keyCharacteristics": [
+      "Cool paper and sheet surfaces, ink text, 1px hairlines, 2px corners.",
+      "Archivo Variable only: condensed 68% width at weight 800 for names and headings, normal width with tabular figures for values.",
+      "Pen marks (X, circle, square) on a ruled scale are the signature; red rubber stamps own every uncertain state.",
+      "Italian and English, light and dark, keyboard focus always visible."
+    ],
+    "rules": [
+      { "name": "The One Meaning Rule", "body": "Pen = user marks and selection. Stamp red = uncertain state. Ink = printed facts. A new accent or a second use of an accent for decoration is a defect.", "section": "colors" },
+      { "name": "The Night Twin Rule", "body": "Every token has a night value in :root[data-theme='dark']; components reference tokens only, never raw hex.", "section": "colors" },
+      { "name": "The Two Widths Rule", "body": "Names and headings are condensed 68% at 800. Values are normal width with tabular figures. Never swap them, never add a second family.", "section": "typography" },
+      { "name": "The Sentence Case Rule", "body": "Labels are sentence case. Uppercase with tracking appears only inside the red stamp and the N/D chip, where the stamp is the object.", "section": "typography" },
+      { "name": "The One Lift Rule", "body": "Only the floating tray lifts. Cards, buttons and sheets stay flat; no hard offset shadows, no glow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use ink for printed facts, pen for what the user marks or selects, stamp red only for uncertain or failed states.",
+      "Do set names and headings in Archivo at 68% width, weight 800; set values at normal width with tabular figures.",
+      "Do show missing percentiles and small cohorts with a red stamp or N/D chip rather than an empty cell.",
+      "Do keep corners at 2px, borders at 1px hairlines, heading rules at 2px ink.",
+      "Do pair every compare color with its shape (X, circle, square) and use the validated mark-1..3 values.",
+      "Do keep the pen-stroke draw-in the single animated moment and honor prefers-reduced-motion.",
+      "Do write labels in sentence case and keep Italian and English strings equally short."
+    ],
+    "donts": [
+      "Don't add kickers, eyebrows or small uppercase section labels above headings.",
+      "Don't use decorative gradients, glow, glass, or card grids of identical tiles.",
+      "Don't use em dashes in interface copy.",
+      "Don't introduce a second accent or color a state with pen; do not use stamp red for emphasis or branding.",
+      "Don't add shadows beyond the single tray lift, or hard offset shadows.",
+      "Don't use a second typeface, or widen names and condense values.",
+      "Don't present fake AI output; AI treatment is not built and has no visual slot yet."
+    ]
+  }
+}

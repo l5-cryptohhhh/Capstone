@@ -7,6 +7,7 @@ import org.example.capstone.ingestion.source.PlayerDataSource;
 import org.example.capstone.ingestion.source.SourcePlayerPage;
 import org.example.capstone.league.League;
 import org.example.capstone.league.LeagueRepository;
+import org.example.capstone.stats.StatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,15 +30,18 @@ public class ImportService {
     private final ImportTaskRepository tasks;
     private final LeagueRepository leagues;
     private final ImportProperties properties;
+    private final StatsService statsService;
 
     public ImportService(PlayerDataSource source, PagePersister persister, QuotaService quota,
-                         ImportTaskRepository tasks, LeagueRepository leagues, ImportProperties properties) {
+                         ImportTaskRepository tasks, LeagueRepository leagues, ImportProperties properties,
+                         StatsService statsService) {
         this.source = source;
         this.persister = persister;
         this.quota = quota;
         this.tasks = tasks;
         this.leagues = leagues;
         this.properties = properties;
+        this.statsService = statsService;
     }
 
     public ImportRunResult run() {
@@ -64,6 +68,9 @@ public class ImportService {
                 }
 
                 status = persister.persistPage(task.getId(), page);
+                if (status == TaskStatus.DONE) {
+                    statsService.recompute(task.getLeague().getId(), task.getSeason());
+                }
                 task.setNextPage(page.page() + 1);
                 pages++;
                 log.info("Importato {} {} pagina {}/{}", task.getLeague().getName(), task.getSeason(),
