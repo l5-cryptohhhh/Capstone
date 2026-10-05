@@ -80,3 +80,16 @@ Ogni errore ha lo stesso formato:
 | `UPSTREAM_FOOTBALL_API_ERROR` | 502 |
 | `AI_UNAVAILABLE` | 503 |
 | `DATABASE_ERROR`, `INTERNAL_ERROR` | 500 |
+
+## Account e accesso
+
+Le sessioni usano un token casuale nell'header `Authorization: Bearer <token>` (nel database resta solo il suo hash SHA-256, validità 30 giorni). Le password sono salvate con BCrypt.
+
+| Metodo | Percorso | Descrizione |
+|---|---|---|
+| `POST` | `/auth/register` con `{email, displayName, password}` (password 8 to 72 caratteri) | Crea l'account e apre la sessione: `{token, user}`. `409 EMAIL_ALREADY_REGISTERED` se l'email esiste |
+| `POST` | `/auth/login` con `{email, password}` | `{token, user}`, oppure `401 UNAUTHORIZED` |
+| `POST` | `/auth/logout` | Chiude la sessione (204) |
+| `GET` | `/auth/me` | Utente corrente, 401 se non autenticato |
+
+**Cosa vede chi non ha fatto l'accesso:** `GET /players` è pubblico ma restituisce in chiaro solo i primi 3 giocatori per voto di ogni campionato; le altre righe hanno `locked: true` e nessun dato oltre a ruolo, squadra, campionato e stagione. `GET /players/{id}` e `/ai/**` rispondono `401` senza login.

@@ -6,6 +6,7 @@ import './styles/base.css'
 import './styles/shell.css'
 import './styles/search.css'
 import './styles/dossier.css'
+import './styles/auth.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

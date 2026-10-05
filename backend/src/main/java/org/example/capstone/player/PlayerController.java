@@ -1,5 +1,7 @@
 package org.example.capstone.player;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.example.capstone.auth.AuthInterceptor;
 import org.example.capstone.common.PageResponse;
 import org.example.capstone.player.dto.PlayerDetailDto;
 import org.example.capstone.player.dto.PlayerSummaryDto;
@@ -29,6 +31,7 @@ public class PlayerController {
     /**
      * Ricerca con filtri. Oltre ai parametri elencati accetta filtri sulle metriche:
      * pct.&lt;metrica&gt;.min|max (percentile) e val.&lt;metrica&gt;.min|max (valore).
+     * I visitatori non registrati vedono solo i primi giocatori di ogni campionato, gli altri risultano bloccati.
      * Senza season usa la stagione più recente disponibile; senza minMinutes esclude chi ha giocato troppo poco.
      */
     @GetMapping
@@ -45,11 +48,14 @@ public class PlayerController {
             @RequestParam(defaultValue = "desc") String order,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam Map<String, String> params) {
+            @RequestParam Map<String, String> params,
+            HttpServletRequest request) {
 
         SearchCriteria criteria = SearchParamParser.parse(new SearchParamParser.Request(
                 q, position, minAge, maxAge, leagueId, teamId, season, minMinutes, sort, order, page, size, params));
-        return searchService.search(criteria, page, size);
+        return AuthInterceptor.currentUser(request) != null
+                ? searchService.search(criteria, page, size)
+                : searchService.searchPreview(criteria, page, size);
     }
 
     @GetMapping("/{id}")

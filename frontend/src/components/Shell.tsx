@@ -1,14 +1,14 @@
-import { Moon, Sun } from '@phosphor-icons/react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { useTheme } from '../app/useTheme'
 import { CompareTray } from '../features/compare/CompareTray'
 import { useCompare } from '../features/compare/useCompare'
+import { useAuth } from '../features/auth/useAuth'
 import { useI18n } from '../i18n/useI18n'
+import { Tools } from './Tools'
 
 /** Cornice dell'app: barra superiore su una sola riga, contenuto e vassoio del confronto. */
 export function Shell() {
-  const { t, lang, setLang } = useI18n()
-  const { theme, toggle } = useTheme()
+  const { t } = useI18n()
+  const { user, logout } = useAuth()
   const { entries } = useCompare()
 
   return (
@@ -33,27 +33,19 @@ export function Shell() {
         </nav>
 
         <div className="topbar__tools">
-          <div className="seg" role="group" aria-label={t('nav.language')}>
-            {(['it', 'en'] as const).map((code) => (
-              <button
-                key={code}
-                type="button"
-                className="seg__btn"
-                aria-pressed={lang === code}
-                onClick={() => setLang(code)}
-              >
-                {code.toUpperCase()}
+          <Tools />
+          {user ? (
+            <>
+              <span className="topbar__user">{user.displayName}</span>
+              <button type="button" className="btn" onClick={() => void logout()}>
+                {t('nav.logout')}
               </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            className="icon-btn"
-            onClick={toggle}
-            aria-label={theme === 'dark' ? t('nav.theme.dark') : t('nav.theme.light')}
-          >
-            {theme === 'dark' ? <Sun size={20} aria-hidden="true" /> : <Moon size={20} aria-hidden="true" />}
-          </button>
+            </>
+          ) : (
+            <NavLink to="/accesso" className="btn btn--primary">
+              {t('nav.login')}
+            </NavLink>
+          )}
         </div>
       </header>
 
