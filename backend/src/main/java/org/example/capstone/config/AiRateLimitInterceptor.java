@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.capstone.common.ApiException;
 import org.example.capstone.common.ErrorCode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Map;
@@ -35,6 +36,10 @@ public class AiRateLimitInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        // Il preflight CORS del browser non è una chiamata AI: non consuma il limite
+        if (CorsUtils.isPreFlightRequest(request)) {
+            return true;
+        }
         long now = clock.getAsLong();
         if (windows.size() > MAX_TRACKED_CLIENTS) {
             windows.values().removeIf(w -> now - w.start() >= WINDOW_MS);

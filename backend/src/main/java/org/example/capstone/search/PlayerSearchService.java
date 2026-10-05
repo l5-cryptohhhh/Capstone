@@ -56,7 +56,9 @@ public class PlayerSearchService {
         Set<MetricKey> keys = EnumSet.noneOf(MetricKey.class);
         keys.add(MetricKey.RATING); // sempre presente: alimenta la scala del registro
         criteria.filters().forEach(f -> keys.add(f.metric()));
-        if (criteria.sort() != null) MetricKey.fromKey(criteria.sort()).ifPresent(keys::add);
+        if (criteria.sort() != null) {
+            MetricKey.fromKey(criteria.sort()).ifPresent(keys::add);
+        }
         if (keys.isEmpty() || rows.isEmpty()) {
             return Map.of();
         }

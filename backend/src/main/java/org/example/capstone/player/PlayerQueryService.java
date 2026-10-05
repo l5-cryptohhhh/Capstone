@@ -12,6 +12,7 @@ import org.example.capstone.stats.PlayerSeasonStatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -54,10 +55,12 @@ public class PlayerQueryService {
     }
 
     private Map<Long, List<MetricValueDto>> loadMetrics(List<PlayerSeasonStat> rows) {
-        if (rows.isEmpty()) return Map.of();
+        if (rows.isEmpty()) {
+            return Map.of();
+        }
         Map<Long, List<PlayerSeasonMetric>> grouped = new HashMap<>();
         for (PlayerSeasonMetric m : metrics.findByStatIdIn(rows.stream().map(PlayerSeasonStat::getId).toList())) {
-            grouped.computeIfAbsent(m.getStatId(), k -> new java.util.ArrayList<>()).add(m);
+            grouped.computeIfAbsent(m.getStatId(), k -> new ArrayList<>()).add(m);
         }
         Map<Long, List<MetricValueDto>> result = new HashMap<>();
         grouped.forEach((statId, list) -> result.put(statId, list.stream()

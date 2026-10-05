@@ -68,9 +68,13 @@ public class StatsService {
 
             Map<MetricKey, BigDecimal> values = new EnumMap<>(MetricKey.class);
             for (MetricKey metric : MetricKey.values()) {
-                if (!metric.appliesTo(position)) continue;
+                if (!metric.appliesTo(position)) {
+                    continue;
+                }
                 BigDecimal value = metric.compute(s);
-                if (value != null) values.put(metric, value);
+                if (value != null) {
+                    values.put(metric, value);
+                }
             }
             valuesOf.put(s.getId(), values);
         }

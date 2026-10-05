@@ -2,7 +2,7 @@ import { Plus, X } from '@phosphor-icons/react'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useTeams } from '../../api/queries'
 import type { LeagueWithSeasons, MetricInfo } from '../../api/types'
-import { useI18n } from '../../i18n/I18nProvider'
+import { useI18n } from '../../i18n/useI18n'
 import { seasonLabel } from '../../lib/format'
 import { POSITIONS, activeFilterCount, type Filters } from './filters'
 
@@ -274,7 +274,6 @@ export function FilterSheet({ filters, leagues, metrics, onChange, onReset }: Pr
           {t('filters.minutes.hint')}
         </p>
       </div>
-
     </form>
   )
 }

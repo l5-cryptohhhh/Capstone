@@ -1,80 +1,80 @@
 ---
 name: ScoutAI
-description: The scout's observation dossier made interactive. Printed facts in ink, every judgment a pen mark on a ruled scale.
+description: A calm, soft scouting tool. Premium light base with pastel glows, glass surfaces, every judgment a mark on a percentile scale.
 colors:
-  paper: "#f4f6fa"
-  sheet: "#fbfcfe"
-  ink: "#14233f"
-  ink-2: "#44526f"
-  ink-3: "#62708d"
-  rule: "#cfd6e4"
-  rule-strong: "#7a89a6"
-  pen: "#2455d9"
+  paper: "#f5f5f7"
+  sheet: "#ffffff"
+  glass: "rgb(255 255 255 / 68%)"
+  ink: "#1d1d1f"
+  ink-2: "#515154"
+  ink-3: "#6e6e73"
+  rule: "rgb(0 0 0 / 8%)"
+  rule-strong: "rgb(0 0 0 / 22%)"
+  pen: "#0071e3"
   pen-on: "#ffffff"
-  pen-wash: "#e4ebfc"
-  stamp: "#c8312b"
-  stamp-wash: "#fbebe9"
-  mark-1: "#2455d9"
+  pen-wash: "rgb(0 113 227 / 10%)"
+  stamp: "#b9380f"
+  stamp-wash: "rgb(255 149 0 / 14%)"
+  mark-1: "#0071e3"
   mark-2: "#c8312b"
   mark-3: "#0e8a6b"
-  night-paper: "#0b1324"
-  night-sheet: "#101a2e"
-  night-ink: "#e8edf7"
-  night-ink-2: "#a9b6cf"
-  night-ink-3: "#8a99b6"
-  night-rule: "#27375a"
-  night-rule-strong: "#5a6d96"
-  night-pen: "#6f93ff"
-  night-pen-on: "#0b1324"
-  night-pen-wash: "#1a2a52"
-  night-stamp: "#f0766a"
-  night-stamp-wash: "#3a1d22"
-  night-mark-1: "#5a82f2"
+  glow-lavender: "rgb(196 181 253 / 55%)"
+  glow-peach: "rgb(255 196 170 / 50%)"
+  glow-sky: "rgb(173 214 255 / 50%)"
+  glow-mint: "rgb(167 232 214 / 50%)"
+  night-paper: "#0b0b0f"
+  night-sheet: "#1c1c22"
+  night-glass: "rgb(40 40 50 / 58%)"
+  night-ink: "#f5f5f7"
+  night-ink-2: "#c7c7cc"
+  night-ink-3: "#98989d"
+  night-rule: "rgb(255 255 255 / 10%)"
+  night-rule-strong: "rgb(255 255 255 / 28%)"
+  night-pen: "#2997ff"
+  night-pen-on: "#00101f"
+  night-pen-wash: "rgb(41 151 255 / 16%)"
+  night-stamp: "#ffb27a"
+  night-stamp-wash: "rgb(255 149 0 / 16%)"
+  night-mark-1: "#5aaaff"
   night-mark-2: "#e8624f"
   night-mark-3: "#25a27b"
 typography:
   name-display:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(2.8rem, 8vw, 5.4rem)"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "0"
-    fontVariation: "'wdth' 68"
-  page-title:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(2.2rem, 5vw, 3.6rem)"
-    fontWeight: 800
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, Segoe UI Variable Text, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(2.6rem, 7vw, 4.6rem)"
+    fontWeight: 700
     lineHeight: 1
-    fontVariation: "'wdth' 68"
+    letterSpacing: "-0.035em"
+  page-title:
+    fontSize: "clamp(2.2rem, 5vw, 3.6rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "-0.035em"
   form-heading:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
-    fontSize: "1.55rem"
-    fontWeight: 800
-    lineHeight: 1.1
-    fontVariation: "'wdth' 68"
+    fontSize: "1.4rem to 1.5rem"
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: "-0.02em"
   value-core:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
-    fontSize: "1.75rem"
-    fontWeight: 800
-    lineHeight: 1.1
-    fontVariation: "'wdth' 68"
+    fontSize: "1.6rem"
+    fontWeight: 700
+    letterSpacing: "-0.02em"
   value:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 700
     fontFeature: "'tnum'"
   body:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
     fontSize: "15px"
     fontWeight: 400
     lineHeight: 1.5
     fontFeature: "'tnum'"
   field-label:
-    fontFamily: "Archivo Variable, Segoe UI, system-ui, sans-serif"
     fontSize: "12.5px"
-    fontWeight: 700
+    fontWeight: 600
 rounded:
-  hairline: "2px"
+  control: "12px"
+  card: "24px"
+  pill: "999px"
 spacing:
   xs: "6px"
   sm: "10px"
@@ -87,173 +87,163 @@ components:
   button:
     backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.hairline}"
+    rounded: "{rounded.pill}"
     height: "38px"
     padding: "0 14px"
   button-primary:
     backgroundColor: "{colors.pen}"
     textColor: "{colors.pen-on}"
-    rounded: "{rounded.hairline}"
-    height: "38px"
-  button-hover:
-    backgroundColor: "{colors.pen-wash}"
+    rounded: "{rounded.pill}"
   input:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.hairline}"
-    height: "38px"
-    padding: "0 10px"
-  stamp:
-    textColor: "{colors.stamp}"
-    rounded: "{rounded.hairline}"
-    padding: "12px 16px 14px"
-  chip-stamp:
-    textColor: "{colors.stamp}"
-    rounded: "{rounded.hairline}"
-    padding: "0 6px"
-  field-cell:
     backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink}"
-    padding: "8px 12px 10px"
-  register-row-selected:
-    backgroundColor: "{colors.pen-wash}"
+    rounded: "{rounded.control}"
+    height: "40px"
+    padding: "0 12px"
+  glass-card:
+    backgroundColor: "{colors.glass}"
+    rounded: "{rounded.card}"
+  stamp:
+    backgroundColor: "{colors.stamp-wash}"
+    textColor: "{colors.stamp}"
+    rounded: "{rounded.card}"
+  chip-stamp:
+    backgroundColor: "{colors.stamp-wash}"
+    textColor: "{colors.stamp}"
+    rounded: "{rounded.pill}"
 ---
 
 # Design System: ScoutAI
 
 ## Overview
 
-**Creative North Star: "Dossier dello scout"**
+**Creative North Star: "Strumento calmo e premium"**
 
-ScoutAI is a scout's observation dossier made interactive. Measured facts are typeset in printed ink; every judgment is a mark placed on a scale. The surface is cool white paper with hairline rules, ruled field boxes at 2px radius, and a single soft lift under the floating comparison tray. It is a working tool for long, repeated sessions: dense, quiet, and honest about thin data.
+ScoutAI is a working tool for scouts, drawn the way Apple draws its interfaces: a quiet light base, soft pastel glows in the corners, translucent glass surfaces and generous rounded corners. Nothing is hard-edged. Depth comes from blur, light borders and one family of soft shadows, never from heavy rules.
 
-Three accents, one meaning each. Ink is printed fact. Pen blue is whatever the user marks or selects. Stamp red is any uncertain state (missing percentile, small sample, error). Nothing else carries color. The night variant keeps the same rules on desk-lamp navy paper with brighter pen and stamp.
+Three accents, one meaning each. Ink is fact. Blue is whatever the user marks or selects. Orange is any uncertain state (missing percentile, small sample, error). The pastel glows are atmosphere only and never carry meaning. The night variant keeps the same rules on a near-black base with the same glows, dimmer.
 
-The system refuses the dark dashboard with radar chart and the grid of identical tiles. Facts live in ruled grids and a register table; judgments live on 0 to 100 scale rows.
+The product rule behind the look is unchanged: facts are shown as numbers, judgments as marks on a 0 to 100 percentile scale, and uncertainty is stated in plain words.
 
 **Key Characteristics:**
-- Cool paper and sheet surfaces, ink text, 1px hairlines, 2px corners.
-- Archivo Variable only: condensed 68% width at weight 800 for names and headings, normal width with tabular figures for values.
-- Pen marks (X, circle, square) on a ruled scale are the signature; red rubber stamps own every uncertain state.
+- Base `#f5f5f7` (night `#0b0b0f`) with four fixed radial glows: lavender, peach, sky, mint.
+- Glass surfaces: translucent fill, `backdrop-filter: blur(24px) saturate(180%)`, a light 1px border and a soft lift.
+- Rounded everywhere: 12px controls, 24px cards and panels, pills for buttons, tabs and chips.
+- System font stack (SF Pro on Apple devices, Segoe UI Variable on Windows), tight tracking on large text.
 - Italian and English, light and dark, keyboard focus always visible.
 
 ## Colors
 
-A cool blue-grey paper palette with one biro blue and one stamp red, nothing else.
-
 ### Primary
-- **Biro Pen Blue** (`pen`, #2455d9; night #6f93ff): the user's hand. Selected nav underline, selected segment, primary button, ticked boxes and their X, percentile numbers, hover on names, best-value underline in compare, text selection and caret. Hover and selected-row washes use **Pen Wash** (`pen-wash`); text on solid pen uses `pen-on`.
+- **Pen Blue** (`pen`, #0071e3; night #2997ff): selection and action. Active nav pill, selected segment, primary button, ticked boxes and their X, percentile numbers, best value in compare, focus ring, text selection. Hover and selected rows use **Pen Wash**; text on solid pen uses `pen-on`.
 
 ### Secondary
-- **Rubber Stamp Red** (`stamp`, #c8312b; night #f0766a): uncertain or failed state only. Red stamp block, N/D chip, error state border and title. `stamp-wash` exists as a token for tinted state backgrounds.
+- **Warning Orange** (`stamp`, #b9380f; night #ffb27a): uncertain or failed state only. The warning card, the N/D chip, the error state border and title. Tinted backgrounds use `stamp-wash`.
 
 ### Tertiary
-- **Compare Marks** (`mark-1` #2455d9, `mark-2` #c8312b, `mark-3` #0e8a6b; night #5a82f2, #e8624f, #25a27b): identity of players 1, 2, 3 in compare, always paired with a shape (X, circle, square) so color is never the only signal. Dataviz validation run: light on #fbfcfe and dark on #101a2e, both pass all pairs. Marks are a separate identity channel and do not replace the pen and stamp meanings elsewhere.
+- **Compare Marks** (`mark-1` #0071e3, `mark-2` #c8312b, `mark-3` #0e8a6b; night #5aaaff, #e8624f, #25a27b): identity of players 1, 2, 3 in compare, always paired with a shape (X, circle, square) so color is never the only signal. `mark-2` and `mark-3` keep their previously validated values; `mark-1` follows the pen.
 
 ### Neutral
-- **Cool Paper** (`paper`, #f4f6fa; night #0b1324): page ground, input fill, sticky register header.
-- **Sheet** (`sheet`, #fbfcfe; night #101a2e): top bar, filter sheet, field cells, compare heads, tray, buttons.
-- **Dossier Ink** (`ink`, #14233f; night #e8edf7): printed facts, heavy 2px heading rules.
-- **Ink 2 / Ink 3** (`ink-2` #44526f, `ink-3` #62708d; night #a9b6cf, #8a99b6): labels and secondary text; hints, units and placeholders.
-- **Rule / Rule Strong** (`rule` #cfd6e4, `rule-strong` #7a89a6; night #27375a, #5a6d96): row dividers; box borders, field grids, scale track and ticks.
+- **Paper** (`paper`) is the page base and **Sheet** (`sheet`) the solid fill for inputs, buttons and boxes. **Glass** is the translucent fill of the top bar, filter panel, tray, cards and field groups.
+- **Ink / Ink 2 / Ink 3** (#1d1d1f, #515154, #6e6e73; night #f5f5f7, #c7c7cc, #98989d): text, labels, hints. All pass AA on the base.
+- **Rule / Rule Strong**: black at 8% and 22% (night white at 10% and 28%). Dividers and control borders.
+
+### Glows
+`glow-lavender`, `glow-peach`, `glow-sky`, `glow-mint` are the four radial gradients of the page background, fixed while the page scrolls. They are decoration and must stay low in contrast.
 
 ### Named Rules
-**The One Meaning Rule.** Pen = user marks and selection. Stamp red = uncertain state. Ink = printed facts. A new accent or a second use of an accent for decoration is a defect.
-**The Night Twin Rule.** Every token has a night value in `:root[data-theme='dark']`; components reference tokens only, never raw hex.
+**The One Meaning Rule.** Pen = user marks and selection. Orange = uncertain state. Ink = fact. Glows are atmosphere. A new accent or a decorative second use of an accent is a defect.
+**The Night Twin Rule.** Every token has a night value in `:root[data-theme='dark']`; components reference tokens only, never raw colors.
 
 ## Typography
 
-**Display Font:** Archivo Variable (Segoe UI, system-ui fallback), width axis via `@fontsource-variable/archivo/wdth.css`
-**Body Font:** Archivo Variable at normal width
-**Label/Mono Font:** none; tabular figures from the same family
-
-**Character:** One family, two widths. The condensed heavy cut reads like stamped typewriter headings on a form; the normal width keeps numbers wide, even and comparable.
+**Font:** system stack (`-apple-system`, `BlinkMacSystemFont`, `SF Pro Text`, `Segoe UI Variable Text`, `Segoe UI`, `system-ui`). No web font is loaded.
 
 ### Hierarchy
-- **Name display** (800, 68% width, clamp(2.8rem, 8vw, 5.4rem), 0.92): the player's name in the dossier head.
-- **Page title** (800, 68%, clamp(2.2rem, 5vw, 3.6rem), 1): reading pages and compare title.
-- **Form heading** (800, 68%, 1.55 to 1.6rem, 1.1): sheet title, dossier part titles over a 2px ink rule; results count uses clamp(1.8rem, 3vw, 2.4rem). Group titles 1.1rem in ink-2.
-- **Core value** (800, 68%, 1.75rem): the headline stats in the core field grid.
-- **Value** (700, normal width, 16px, tabular): field values, register metrics, compare cells (15px).
+- **Name display** (700, clamp(2.6rem, 7vw, 4.6rem), line-height 1, tracking -0.035em): the player's name in the head.
+- **Page title** (700, clamp(2.2rem, 5vw, 3.6rem), tracking -0.035em): compare and reading pages. The results count uses the same tracking.
+- **Form heading** (700, 1.4 to 1.5rem, tracking -0.02em): panel title, part titles. Group titles are 1.05rem in ink-2.
+- **Core value** (700, 1.6rem): the headline stats in the core group.
+- **Value** (700, 16px, tabular figures): field values, register metrics, compare cells.
 - **Body** (400, 15px, 1.5): running text; reading pages 66ch at 1.65.
-- **Label** (700, 12.5px, ink-2, sentence case): field labels, register column heads, hints in ink-3 12.5px.
+- **Label** (600, 12.5px, ink-2): field labels and register column heads.
 
 ### Named Rules
-**The Two Widths Rule.** Names and headings are condensed 68% at 800. Values are normal width with tabular figures. Never swap them, never add a second family.
-**The Sentence Case Rule.** Labels are sentence case. Uppercase with tracking appears only inside the red stamp and the N/D chip, where the stamp is the object.
+**The Tracking Rule.** Large text is tightened, small text is left alone. Never use one letter-spacing for every size.
+**The Sentence Case Rule.** Labels and chips are sentence case; there is no uppercase styling.
 
 ## Layout
 
-Two working layouts. Search: a 320px sticky form sheet on the left (filters stack 18px apart, role boxes in two columns) and a fluid results register on the right (24px 28px padding, 120px bottom room for the tray). Dossier and compare: a centered page, 980px (compare 1120px, reading 760px), 24px 28px padding, parts separated by 36px. The top bar is one line at 56px with wordmark, nav Cerca and Confronta, then IT/EN and theme controls.
+Search: a sticky floating glass panel on the left (320px column, 16px inset) and a fluid results register on the right (24px 28px padding, 120px bottom room for the tray). Dossier and compare: a centered page, 980px (compare 1120px, reading 760px), 24px 28px padding, parts separated by 36px. The top bar is one line at 56px with the wordmark, the nav pills, then the IT/EN and theme controls.
 
-Data grids are ruled, not carded. Bio and stat fields sit in a fixed-column hairline grid (6 columns on desktop, 2 on phone) with empty cells completing the last row. Metric rows are a four-part line: label, scale, value, percentile, with dotted rule dividers.
+Facts sit in rounded glass groups, divided by 1px rules, not in loose cards. Bio and stat fields use a fixed-column grid (6 columns on desktop, 2 on phone) with empty cells completing the last row. Metric rows are a four-part line: label, scale, value, percentile.
 
-Responsive: at 1180px optional register columns drop; at 900px the sheet collapses behind a toggle above the results; at 760px the top bar wraps to two rows (92px) and metric rows put the scale on its own full-width line; at 700px every register row becomes a compact multi-line row (check, name, role, team, labeled values); at 560px compare heads become one-line rows.
+Responsive: at 1180px optional register columns drop; at 900px the panel collapses behind a toggle above the results; at 760px the top bar wraps to two rows (92px) and metric rows put the scale on its own line; at 700px every register row becomes a compact multi-line row; at 560px compare heads become one-line rows.
 
 ## Elevation & Depth
 
-Flat. Depth is carried by hairline borders and the paper/sheet tonal step. The single exception is the compare tray, which floats at the bottom with a 1px ink border and one soft sheet lift (`0 1px 0 rgb(20 35 63 / 6%), 0 8px 24px -12px rgb(20 35 63 / 22%)`; night is darker and stronger).
+Depth is blur plus one soft shadow family. `--lift` (`0 1px 2px rgb(0 0 0 / 4%), 0 12px 32px -8px rgb(60 50 120 / 14%)`) is used by panels, cards, the tray and field groups; `--lift-hover` is reserved for raised hover states. Night uses darker, stronger values. The register header and the top bar are glass with a hairline, not a shadow.
 
 ### Named Rules
-**The One Lift Rule.** Only the floating tray lifts. Cards, buttons and sheets stay flat; no hard offset shadows, no glow.
+**The Glass Rule.** A translucent surface sits on the base or on a glow, never on another translucent surface. Do not stack glass on glass.
 
 ## Shapes
 
-Printed-form geometry. Radius is 2px everywhere (`rounded.hairline`); there are no pills and no circles except the compare circle mark. Borders are 1px (`rule-strong` for boxes and grids, `rule` for dividers), 1.5px on checkbox boxes and the error state, 2px ink for heading rules. The rubber stamp is a 2px red border with a second 1px outline offset 3px, rotated -0.7deg; the N/D chip is rotated -2deg. Portraits are passport-format boxes (30x38, 56x72, 104x134) with top-aligned crop and initials in condensed heavy as fallback.
+Radius tokens: `--radius` 12px (inputs, selects), `--radius-lg` 24px (panels, cards, tray, field groups, warning card), `--radius-pill` for buttons, tabs, segmented selectors, counters and chips. Icon buttons and compare swatches are circles. Check boxes are 6px. Portraits keep the passport format (30x38, 56x72, 104x134) with 10px corners (16px for the large one) and a top-aligned crop, with initials as fallback.
 
 ## Components
 
 ### Buttons
-- **Shape:** 2px corners, 38px tall, 1px `rule-strong` border, 14px semibold.
-- **Default:** sheet fill, ink text. Hover: pen-wash fill and pen border. Active: 1px downward nudge. Disabled: 50% opacity.
-- **Primary:** solid pen with pen-on text. **On:** pen-wash with pen border and text. **Quiet:** transparent, pen text, underlined. **Add:** dashed border, pen text.
-- **Icon button:** 40px (32px small), transparent, pen-wash on hover. Segmented selector (language, season, team): joined hairline box, selected segment solid pen.
+- 38px tall pills, 1px `rule-strong` border, 14px semibold. Hover: pen-wash fill and pen border. Press: scale 0.97 in 100ms. Disabled: 50% opacity.
+- **Primary:** solid pen. **On:** pen-wash with pen text. **Quiet:** transparent with pen text and a wash on hover. **Add:** same as default with pen text.
+- **Icon button:** 40px circle (32px small), grey wash on hover, scales down on press.
+- **Segmented selector** (language, season, team): glass pill track, selected segment solid pen.
 
-### Inputs / Fields
-- **Style:** 38px, paper fill, 1px `rule-strong` border, 2px radius; sentence-case 12.5px bold label above.
-- **Focus:** 2px pen-colored outline (`focus`) plus pen border; the same 2px outline offset 2px on every focusable element.
-- **Disabled:** 55% opacity, transparent fill.
+### Inputs
+40px, sheet fill, 1px `rule` border, 12px radius, 12.5px semibold label above. Focus: pen border plus a 4px pen-wash ring. Disabled: 55% opacity.
 
-### X-ticked boxes (checkbox and radio)
-18px paper box, 1.5px `rule-strong` border. Checked: pen border, pen-wash fill, and a hand-drawn pen X (2.8px round stroke). Role filters use labeled boxes in two columns; the register check uses a 32px touch target around the 18px box (44px column).
+### Ticked boxes
+18px boxes with a 6px radius and a pen X when checked. The register check keeps a 32px touch target. Role filters are labeled boxes in two columns.
 
 ### Scale row
-The signature. A 28px row with a 1.5px `rule-strong` baseline, hairline tick every 10, taller ticks at 0, 50 and 100, and a mark at the exact percentile: pen X, or circle and square in compare. Marks are 16px, 2.4 to 2.8px strokes in `mark-1..3`. Unknown percentile: dashed baseline, no ticks, no mark (the stamp explains why). Compact variant 104px wide (96px on phone) inside the register with a bold pen percentile of fixed width. Each scale is `role="img"` with a spoken description of owners and values.
+A 28px row with a 4px rounded baseline, faint ticks every 10, taller faint ticks at 0, 50 and 100, and a mark at the exact percentile: pen X, or circle and square in compare. Marks are 16px with 2.4 to 2.8px strokes. Unknown percentile: dashed baseline, no mark. Each scale is `role="img"` with a spoken description.
 
-### Stamp and N/D chip
-The Stamp is the only way uncertainty is stated: red border block with condensed uppercase title and an ink body line. The N/D chip is the inline version in a register cell. Error states use a 1.5px red border and red title; empty states use a dashed `rule-strong` border.
+### Warning card and N/D chip
+Uncertainty is always stated. The warning card is an orange-wash rounded card with a semibold title and an ink body line. The N/D chip is its inline pill in a register cell. Error states use an orange border and title on a glass card.
 
-### Ruled field grids
-Dossier facts sit in a hairline grid: sheet cells, 12.5px ink-3 label over 16px bold value; core stats use the condensed 1.75rem cut. No shadows, no gaps between cells.
+### Field groups
+Rounded glass groups with 1px dividers: 12.5px ink-3 label over a 16px bold value; core stats use the 1.6rem cut.
 
 ### Register table
-Dense rows (8px 10px padding, 1px `rule` dividers) under a sticky paper header that sticks below the top bar. Columns: tick, passport photo, name (bold, pen underline on hover) with age line, role, team, minutes, goals, assists, rating, chosen metric cells with scale and percentile. Hover is a 6% pen tint; selected rows are pen-wash. While loading the table drops to 55% opacity and skeleton rows pulse. On phone the header hides and each player is a compact flex row with labeled values.
+Dense rows (8px 10px, 1px `rule` dividers) under a sticky glass header that sits below the top bar. Hover is a 6% pen tint, selected rows use pen-wash, and the table dims to 55% while loading. On phone the header hides and each player is a compact row with labeled values.
 
-### Compare columns
-Player heads in sheet boxes with a mark-shape swatch, name in condensed heavy, team line, remove button. Rows share a grid: label, a shared scale carrying every player's mark, then one right-aligned value and percentile cell per player (up to 3). The best value is bold with a 2px pen underline. A legend pairs shape and name; on phone it is dropped in favor of column heads. The tray offsets to center on the results column when the filter sheet is open on desktop.
+### Compare
+Player heads are glass cards with a circular mark swatch. Rows share a grid: label, a shared scale with every player's mark, then one value and percentile per player (up to 3). The best value is shown in pen blue. The tray floats centered on the results column when the panel is open.
 
 ### Navigation
-Top bar on sheet with a 1px `rule-strong` bottom border. Wordmark in condensed heavy with a pen-colored letter span. Nav links 600 weight in ink-2; the current page is ink with a 3px pen underline. On phone the nav drops to a second row.
+Glass top bar with a hairline. Nav links are pills: ink-2 text, a grey wash on hover, pen text on a pen-wash pill for the current page.
 
 ### Motion
-The only authored motion is the pen-stroke draw-in of scale marks: 0.5s `cubic-bezier(0.16, 1, 0.3, 1)`, staggered 40ms per mark after 100ms. Hover and state transitions are 0.15s on color. Skeleton pulse is also gated. Everything is removed under `prefers-reduced-motion: reduce`.
+Hover and state transitions are 0.2s with `cubic-bezier(0.22, 1, 0.36, 1)`; presses are 100ms. Scale marks draw in once (0.5s, staggered 40ms). Everything is reduced to near zero under `prefers-reduced-motion: reduce`. Under `prefers-reduced-transparency` glass becomes solid sheet fills with a stronger border, and under `prefers-contrast: more` dividers and secondary text use their strong values.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** use ink for printed facts, pen for what the user marks or selects, stamp red only for uncertain or failed states.
-- **Do** set names and headings in Archivo at 68% width, weight 800; set values at normal width with tabular figures.
-- **Do** show missing percentiles and small cohorts with a red stamp or N/D chip rather than an empty cell.
-- **Do** keep corners at 2px, borders at 1px hairlines, heading rules at 2px ink.
-- **Do** pair every compare color with its shape (X, circle, square) and use the validated `mark-1..3` values.
-- **Do** keep the pen-stroke draw-in the single animated moment and honor `prefers-reduced-motion`.
+- **Do** use ink for facts, blue for what the user marks or selects, orange only for uncertain or failed states.
+- **Do** keep corners soft: 12px controls, 24px cards, pills for buttons and tabs.
+- **Do** pair every compare color with its shape (X, circle, square).
+- **Do** state missing percentiles and small cohorts in the warning card or N/D chip rather than leaving an empty cell.
+- **Do** tighten tracking as text grows and keep body text near zero.
 - **Do** write labels in sentence case and keep Italian and English strings equally short.
 
 ### Don't:
-- **Don't** add kickers, eyebrows or small uppercase section labels above headings.
-- **Don't** use decorative gradients, glow, glass, or card grids of identical tiles.
+- **Don't** put glass on glass, or glass over busy content without a border.
+- **Don't** use hard rules heavier than 1px, uppercase labels, rotated stamps or dashed boxes.
+- **Don't** make the glows brighter or add a fifth one; they must not compete with content.
 - **Don't** use em dashes in interface copy.
-- **Don't** introduce a second accent or color a state with pen; do not use stamp red for emphasis or branding.
-- **Don't** add shadows beyond the single tray lift, or hard offset shadows.
-- **Don't** use a second typeface, or widen names and condense values.
-- **Don't** present fake AI output; AI treatment is not built and has no visual slot yet.
+- **Don't** introduce a second accent or color a state with blue.
+- **Don't** present fake AI output; the AI is not in the interface yet.
+
+## Open points
+
+- `.impeccable/design.json` and `.impeccable/surfaces/frontend-src-app-tsx.md` were generated for the previous "dossier" direction and are out of date. Regenerate them rather than editing by hand.

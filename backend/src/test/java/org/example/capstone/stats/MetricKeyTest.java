@@ -4,6 +4,7 @@ import org.example.capstone.player.Position;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -85,7 +86,7 @@ class MetricKeyTest {
 
     @Test
     void publicKeysAreUnique() {
-        long distinct = java.util.Arrays.stream(MetricKey.values()).map(MetricKey::key).distinct().count();
+        long distinct = Arrays.stream(MetricKey.values()).map(MetricKey::key).distinct().count();
 
         assertThat(distinct).isEqualTo(MetricKey.values().length);
     }

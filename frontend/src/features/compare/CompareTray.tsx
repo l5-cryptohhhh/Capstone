@@ -1,8 +1,8 @@
 import { X } from '@phosphor-icons/react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PlayerPhoto } from '../../components/PlayerPhoto'
-import { useI18n } from '../../i18n/I18nProvider'
-import { useCompare } from './CompareProvider'
+import { useI18n } from '../../i18n/useI18n'
+import { useCompare } from './useCompare'
 
 /** Vassoio fisso in basso con i giocatori scelti per il confronto. */
 export function CompareTray() {

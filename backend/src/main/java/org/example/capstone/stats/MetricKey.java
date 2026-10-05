@@ -108,7 +108,9 @@ public enum MetricKey {
 
     public static Optional<MetricKey> fromKey(String key) {
         for (MetricKey m : values()) {
-            if (m.key.equals(key)) return Optional.of(m);
+            if (m.key.equals(key)) {
+                return Optional.of(m);
+            }
         }
         return Optional.empty();
     }
@@ -119,7 +121,9 @@ public enum MetricKey {
 
     private static BigDecimal per90(Integer value, PlayerSeasonStat s) {
         Integer minutes = s.getMinutes();
-        if (value == null || minutes == null || minutes <= 0) return null;
+        if (value == null || minutes == null || minutes <= 0) {
+            return null;
+        }
         return BigDecimal.valueOf(value).multiply(BigDecimal.valueOf(90))
                 .divide(BigDecimal.valueOf(minutes), 3, RoundingMode.HALF_UP);
     }
@@ -130,7 +134,9 @@ public enum MetricKey {
 
     /** Percentuale, calcolata solo se il campione (denominatore) è abbastanza grande. */
     private static BigDecimal pct(Integer part, Integer total, int minTotal) {
-        if (part == null || total == null || total < minTotal) return null;
+        if (part == null || total == null || total < minTotal) {
+            return null;
+        }
         return BigDecimal.valueOf(part).multiply(BigDecimal.valueOf(100))
                 .divide(BigDecimal.valueOf(total), 3, RoundingMode.HALF_UP);
     }

@@ -1,9 +1,9 @@
 import { Moon, Sun } from '@phosphor-icons/react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { useTheme } from '../app/ThemeProvider'
+import { useTheme } from '../app/useTheme'
 import { CompareTray } from '../features/compare/CompareTray'
-import { useCompare } from '../features/compare/CompareProvider'
-import { useI18n } from '../i18n/I18nProvider'
+import { useCompare } from '../features/compare/useCompare'
+import { useI18n } from '../i18n/useI18n'
 
 /** Cornice dell'app: barra superiore su una sola riga, contenuto e vassoio del confronto. */
 export function Shell() {

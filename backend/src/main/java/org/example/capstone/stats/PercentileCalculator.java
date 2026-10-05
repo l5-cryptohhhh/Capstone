@@ -26,10 +26,15 @@ public final class PercentileCalculator {
             int less = 0;
             int equalOthers = 0;
             for (Map.Entry<Long, BigDecimal> other : values.entrySet()) {
-                if (other == entry) continue;
+                if (other == entry) {
+                    continue;
+                }
                 int cmp = other.getValue().compareTo(entry.getValue());
-                if (cmp < 0) less++;
-                else if (cmp == 0) equalOthers++;
+                if (cmp < 0) {
+                    less++;
+                } else if (cmp == 0) {
+                    equalOthers++;
+                }
             }
             double pct = (less + 0.5 * equalOthers) / (n - 1) * 100.0;
             int rounded = (int) Math.round(pct);
