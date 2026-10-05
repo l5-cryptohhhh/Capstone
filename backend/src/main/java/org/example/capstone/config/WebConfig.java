@@ -11,11 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AdminKeyInterceptor adminKeyInterceptor;
-    private final SecurityProperties securityProperties;
+    private final AiRateLimitInterceptor aiRateLimitInterceptor;
+    private final SecurityProperties security;
 
-    public WebConfig(AdminKeyInterceptor adminKeyInterceptor, SecurityProperties securityProperties) {
+    public WebConfig(AdminKeyInterceptor adminKeyInterceptor, AiRateLimitInterceptor aiRateLimitInterceptor,
+                     SecurityProperties security) {
         this.adminKeyInterceptor = adminKeyInterceptor;
-        this.securityProperties = securityProperties;
+        this.aiRateLimitInterceptor = aiRateLimitInterceptor;
+        this.security = security;
     }
 
     @Override
@@ -31,14 +34,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(security.corsAllowedOrigin())
                 .allowedMethods("GET", "POST", "OPTIONS")
                 .allowedHeaders("Content-Type", "X-Admin-Key");
-    }
-
-    /** Solo il frontend configurato può chiamare l'API dal browser; nessun "*". */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-                .allowedOrigins(securityProperties.corsAllowedOrigin())
-                .allowedMethods("GET", "POST", "OPTIONS")
-                .allowedHeaders("*");
     }
 }
