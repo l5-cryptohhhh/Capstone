@@ -17,11 +17,17 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 3. Backend: `cd backend && ./mvnw spring-boot:run`
 4. Frontend: `cd frontend && npm install && npm run dev`
 
-5. Admin: per importare i dati (limite API-Football: 100 richieste/giorno) `POST /api/v1/admin/import/run` con header `X-Admin-Key`; lo stato è su `GET /api/v1/admin/import/status`.
-6. Test: `cd backend && ./mvnw test` e `cd frontend && npm test`.
+## API backend
 
-Il file `.env` è ignorato da git: non committare mai le chiavi. Le variabili del database hanno prefisso `SCOUTAI_` per non collidere con quelle di sistema.
+| Endpoint | Descrizione |
+|---|---|
+| `GET /api/v1/players?name&position&team&league&season&minAge&maxAge&minMinutes&sort&page&size` | Ricerca giocatori (`sort`: rating, goals, assists, minutes, appearances) |
+| `GET /api/v1/players/{id}` | Scheda giocatore con statistiche per stagione |
+| `GET /api/v1/leagues` | Campionati abilitati |
+| `POST /api/v1/ai/search` `{"query": "..."}` | Ricerca in linguaggio naturale (l'AI produce i filtri, i dati vengono dal DB) |
+| `GET /api/v1/ai/players/{id}/report` | Report AI basato solo sulle statistiche reali |
+| `POST /api/v1/admin/import/run`, `GET /api/v1/admin/import/status` | Import da API-Football (header `X-Admin-Key`) |
 
-## Design
+Le chiamate `/api/v1/ai/**` sono limitate a 20 al minuto per IP.
 
-Contesto di prodotto in [PRODUCT.md](PRODUCT.md), sistema visivo ("Dossier dello scout") in [DESIGN.md](DESIGN.md). Il frontend è in italiano e inglese, con tema chiaro e scuro.
+Il file `.env` è ignorato da git: non committare mai le chiavi.
