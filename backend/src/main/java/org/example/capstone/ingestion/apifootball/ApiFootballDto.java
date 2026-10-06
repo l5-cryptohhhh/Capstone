@@ -15,6 +15,15 @@ final class ApiFootballDto {
     record PlayersEnvelope(Object errors, Paging paging, List<PlayerEntry> response) {
     }
 
+    /** Forma grezza di GET /teams. */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    record TeamsEnvelope(Object errors, List<TeamEntry> response) {
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    record TeamEntry(TeamRef team) {
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     record Paging(int current, int total) {
     }

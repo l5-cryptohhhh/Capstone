@@ -10,12 +10,16 @@ public interface ImportTaskRepository extends JpaRepository<ImportTask, Long> {
 
     boolean existsByLeagueIdAndSeason(Long leagueId, Integer season);
 
-    /** Task da completare: prima la stagione più recente, poi i campionati per priorità. */
+    boolean existsByLeagueIdAndSeasonAndTeamApiId(Long leagueId, Integer season, int teamApiId);
+
+    long countByLeagueIdAndSeasonAndStatusNot(Long leagueId, Integer season, TaskStatus status);
+
+    /** Task da completare: prima la stagione più recente, poi i campionati per priorità; in ogni campionato l'elenco squadre (id 0) precede le rose. */
     @Query("""
             select t from ImportTask t join fetch t.league l
             where t.status <> org.example.capstone.ingestion.TaskStatus.DONE
               and l.enabled = true and t.season in :seasons
-            order by t.season desc, l.priority asc
+            order by t.season desc, l.priority asc, t.teamApiId asc
             """)
     List<ImportTask> findPending(@Param("seasons") List<Integer> seasons);
 

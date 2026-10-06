@@ -5,6 +5,7 @@ import org.example.capstone.common.ErrorCode;
 import org.example.capstone.ingestion.apifootball.ApiFootballDto.PlayerEntry;
 import org.example.capstone.ingestion.apifootball.ApiFootballDto.PlayersEnvelope;
 import org.example.capstone.ingestion.apifootball.ApiFootballDto.StatEntry;
+import org.example.capstone.ingestion.apifootball.ApiFootballDto.TeamsEnvelope;
 import org.example.capstone.ingestion.quota.QuotaService;
 import org.example.capstone.ingestion.source.PlayerDataSource;
 import org.example.capstone.ingestion.source.SourcePlayer;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,22 +55,59 @@ public class ApiFootballSource implements PlayerDataSource {
     }
 
     @Override
-    public SourcePlayerPage fetchPlayersPage(int leagueApiId, int season, int page) {
+    public List<Integer> fetchTeamIds(int leagueApiId, int season) {
+        TeamsEnvelope envelope = call(() -> client.get()
+                .uri("/teams?league={league}&season={season}", leagueApiId, season)
+                .retrieve()
+                .body(TeamsEnvelope.class));
+        return toTeamIds(envelope);
+    }
+
+    @Override
+    public SourcePlayerPage fetchPlayersPage(int leagueApiId, int season, int teamApiId, int page) {
+        PlayersEnvelope envelope = call(() -> client.get()
+                .uri("/players?league={league}&season={season}&team={team}&page={page}",
+                        leagueApiId, season, teamApiId, page)
+                .retrieve()
+                .body(PlayersEnvelope.class));
+        return toPage(envelope, page);
+    }
+
+    /** Il piano Free consente 10 richieste al minuto: una ogni 7 secondi resta sotto il limite. */
+    private static final long MIN_INTERVAL_MS = 7_000;
+
+    private long lastRequestAt;
+
+    /** Conta la richiesta sulla quota, rispetta il limite al minuto e converte gli errori di rete nel nostro errore. */
+    private synchronized <T> T call(Supplier<T> request) {
         if (!keyConfigured) {
             throw new ApiException(ErrorCode.UPSTREAM_FOOTBALL_API_ERROR, "API_FOOTBALL_KEY non configurata");
         }
-
-        quota.recordRequest();
-        PlayersEnvelope envelope;
-        try {
-            envelope = client.get()
-                    .uri("/players?league={league}&season={season}&page={page}", leagueApiId, season, page)
-                    .retrieve()
-                    .body(PlayersEnvelope.class);
-        } catch (RestClientException e) {
-            throw new ApiException(ErrorCode.UPSTREAM_FOOTBALL_API_ERROR, "API-Football non raggiungibile", e);
+        long wait = lastRequestAt + MIN_INTERVAL_MS - System.currentTimeMillis();
+        if (wait > 0) {
+            try {
+                Thread.sleep(wait);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new ApiException(ErrorCode.UPSTREAM_FOOTBALL_API_ERROR, "Import interrotto", e);
+            }
         }
-        return toPage(envelope, page);
+        quota.recordRequest();
+        lastRequestAt = System.currentTimeMillis();
+        try {
+            return request.get();
+        } catch (RestClientException e) {
+            throw new ApiException(ErrorCode.UPSTREAM_FOOTBALL_API_ERROR, "API-Football non raggiungibile: " + e.getMessage(), e);
+        }
+    }
+
+    static List<Integer> toTeamIds(TeamsEnvelope envelope) {
+        if (envelope == null) {
+            throw new ApiException(ErrorCode.UPSTREAM_FOOTBALL_API_ERROR, "Risposta vuota da API-Football");
+        }
+        checkErrors(envelope.errors());
+        return envelope.response() == null ? List.of()
+                : envelope.response().stream().map(e -> e.team().id()).toList();
     }
 
     static SourcePlayerPage toPage(PlayersEnvelope envelope, int requestedPage) {
@@ -101,7 +140,7 @@ public class ApiFootballSource implements PlayerDataSource {
         List<SourceStat> stats = entry.statistics() == null ? List.of()
                 : entry.statistics().stream().map(ApiFootballSource::toStat).toList();
         return new SourcePlayer(
-                p.id(), p.name(), p.firstname(), p.lastname(),
+                p.id(), unescape(p.name()), unescape(p.firstname()), unescape(p.lastname()),
                 parseDate(p.birth() == null ? null : p.birth().date()),
                 p.nationality(), parseInt(p.height()), parseInt(p.weight()), p.photo(), stats);
     }
@@ -119,7 +158,7 @@ public class ApiFootballSource implements PlayerDataSource {
 
         return new SourceStat(
                 s.league() == null || s.league().id() == null ? -1 : s.league().id(),
-                s.team().id(), s.team().name(), s.team().logo(),
+                s.team().id(), unescape(s.team().name()), s.team().logo(),
                 Position.fromApi(g.position()),
                 g.appearences(), g.lineups(), g.minutes(), parseRating(g.rating()),
                 go.total(), go.assists(), go.conceded(), go.saves(),
@@ -127,6 +166,15 @@ public class ApiFootballSource implements PlayerDataSource {
                 ta.total(), ta.blocks(), ta.interceptions(),
                 du.total(), du.won(), dr.attempts(), dr.success(),
                 fo.drawn(), fo.committed(), ca.yellow(), ca.red());
+    }
+
+    /** API-Football invia alcuni nomi con entità HTML (es. "D&amp;apos;Ambrosio"): si decodificano prima di salvarli. */
+    static String unescape(String value) {
+        if (value == null) {
+            return null;
+        }
+        return value.replace("&apos;", "'").replace("&#39;", "'").replace("&quot;", "\"")
+                .replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&");
     }
 
     private static <T> T orElse(T value, T fallback) {
