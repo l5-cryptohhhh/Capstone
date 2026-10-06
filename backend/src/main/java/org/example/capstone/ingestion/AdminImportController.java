@@ -44,11 +44,12 @@ public class AdminImportController {
                                   int dailyBudget, List<TaskDto> tasks) {
     }
 
-    public record TaskDto(String league, int season, TaskStatus status, int nextPage, Integer totalPages,
+    /** teamApiId 0 = elenco squadre del campionato. */
+    public record TaskDto(String league, int season, int teamApiId, TaskStatus status, int nextPage, Integer totalPages,
                           int playersImported, String lastError) {
 
         static TaskDto from(ImportTask t) {
-            return new TaskDto(t.getLeague().getName(), t.getSeason(), t.getStatus(), t.getNextPage(),
+            return new TaskDto(t.getLeague().getName(), t.getSeason(), t.getTeamApiId(), t.getStatus(), t.getNextPage(),
                     t.getTotalPages(), t.getPlayersImported(), t.getLastError());
         }
     }

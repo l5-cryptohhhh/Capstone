@@ -7,12 +7,14 @@ import org.example.capstone.league.League;
 
 import java.time.Instant;
 
-/** Avanzamento dell'import di un campionato in una stagione. */
+/** Avanzamento dell'import della rosa di una squadra in una stagione (o dell'elenco squadre di un campionato). */
 @Entity
 @Table(name = "import_task")
 @Getter
 @Setter
 public class ImportTask {
+
+    public static final int LEAGUE_TEAMS = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +26,10 @@ public class ImportTask {
 
     @Column(nullable = false)
     private Integer season;
+
+    /** Squadra (id API-Football) di cui importare la rosa; {@link #LEAGUE_TEAMS} = task che elenca le squadre del campionato. */
+    @Column(name = "team_api_id", nullable = false)
+    private int teamApiId = LEAGUE_TEAMS;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

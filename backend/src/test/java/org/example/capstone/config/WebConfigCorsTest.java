@@ -1,5 +1,8 @@
 package org.example.capstone.config;
 
+import org.example.capstone.auth.AuthInterceptor;
+import org.example.capstone.auth.AuthService;
+import org.example.capstone.auth.RequireAuthInterceptor;
 import org.example.capstone.ingestion.AdminImportController;
 import org.example.capstone.ingestion.ImportRunner;
 import org.example.capstone.ingestion.ImportService;
@@ -19,7 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AdminImportController.class)
-@Import({WebConfig.class, AdminKeyInterceptor.class, AiRateLimitInterceptor.class})
+@Import({WebConfig.class, AdminKeyInterceptor.class, AiRateLimitInterceptor.class, AuthInterceptor.class,
+        RequireAuthInterceptor.class})
 @EnableConfigurationProperties(SecurityProperties.class)
 @TestPropertySource(properties = {
         "scoutai.security.admin-key=secret",
@@ -33,6 +37,8 @@ class WebConfigCorsTest {
     @Autowired
     private MockMvc mvc;
 
+    @MockitoBean
+    private AuthService authService;
     @MockitoBean
     private ImportRunner runner;
     @MockitoBean

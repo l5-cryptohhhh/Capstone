@@ -8,6 +8,7 @@ import org.example.capstone.player.Player;
 import org.example.capstone.player.PlayerRepository;
 import org.example.capstone.stats.PlayerSeasonStat;
 import org.example.capstone.stats.PlayerSeasonStatRepository;
+import org.example.capstone.stats.StatsProperties;
 import org.example.capstone.team.Team;
 import org.example.capstone.team.TeamRepository;
 import org.springframework.stereotype.Component;
@@ -27,13 +28,18 @@ import java.util.Map;
 @Component
 public class PagePersister {
 
+    /** Il piano Free di API-Football non serve pagine oltre la 3 (le rose più lunghe si fermano lì). */
+    static final int MAX_PAGE = 3;
+
+    private final int minMinutes;
     private final ImportTaskRepository tasks;
     private final PlayerRepository players;
     private final TeamRepository teams;
     private final PlayerSeasonStatRepository stats;
 
     public PagePersister(ImportTaskRepository tasks, PlayerRepository players, TeamRepository teams,
-                         PlayerSeasonStatRepository stats) {
+                         PlayerSeasonStatRepository stats, StatsProperties statsProperties) {
+        this.minMinutes = statsProperties.minMinutes();
         this.tasks = tasks;
         this.players = players;
         this.teams = teams;
@@ -50,7 +56,7 @@ public class PagePersister {
         for (SourcePlayer source : page.players()) {
             List<SourceStat> usable = usableStats(source, league);
             if (usable.isEmpty()) {
-                continue; // giocatore senza minuti giocati: nessuna statistica da salvare
+                continue; // giocatore con meno minuti della soglia: non si salva
             }
             Player player = upsertPlayer(source, usable, now);
             for (SourceStat stat : usable) {
@@ -62,10 +68,37 @@ public class PagePersister {
         task.setNextPage(page.page() + 1);
         task.setTotalPages(page.totalPages());
         task.setPlayersImported(task.getPlayersImported() + saved);
-        task.setStatus(page.page() >= page.totalPages() ? TaskStatus.DONE : TaskStatus.IN_PROGRESS);
+        task.setStatus(page.page() >= Math.min(page.totalPages(), MAX_PAGE) ? TaskStatus.DONE : TaskStatus.IN_PROGRESS);
         task.setLastError(null);
         task.setUpdatedAt(now);
         return task.getStatus();
+    }
+
+    /** Crea un task per ogni squadra del campionato e chiude il task "elenco squadre". */
+    @Transactional
+    public void persistTeams(Long taskId, List<Integer> teamApiIds) {
+        ImportTask discovery = tasks.findById(taskId).orElseThrow();
+        for (Integer teamApiId : teamApiIds) {
+            if (!tasks.existsByLeagueIdAndSeasonAndTeamApiId(discovery.getLeague().getId(), discovery.getSeason(), teamApiId)) {
+                ImportTask team = new ImportTask();
+                team.setLeague(discovery.getLeague());
+                team.setSeason(discovery.getSeason());
+                team.setTeamApiId(teamApiId);
+                tasks.save(team);
+            }
+        }
+        discovery.setStatus(TaskStatus.DONE);
+        discovery.setLastError(null);
+        discovery.setUpdatedAt(Instant.now());
+    }
+
+    /** Chiude un task che ha già raggiunto l'ultima pagina servita dal piano Free. */
+    @Transactional
+    public void markDone(Long taskId) {
+        ImportTask task = tasks.findById(taskId).orElseThrow();
+        task.setStatus(TaskStatus.DONE);
+        task.setLastError(null);
+        task.setUpdatedAt(Instant.now());
     }
 
     @Transactional
@@ -75,12 +108,12 @@ public class PagePersister {
         task.setUpdatedAt(Instant.now());
     }
 
-    /** Solo statistiche del campionato richiesto, con minuti > 0, una per squadra. */
-    private static List<SourceStat> usableStats(SourcePlayer source, League league) {
+    /** Solo statistiche del campionato richiesto, con almeno i minuti minimi (scoutai.stats.min-minutes), una per squadra. */
+    private List<SourceStat> usableStats(SourcePlayer source, League league) {
         Map<Integer, SourceStat> byTeam = new LinkedHashMap<>();
         for (SourceStat s : source.stats()) {
             boolean sameLeague = league.getApiId().equals(s.leagueApiId());
-            if (sameLeague && s.minutes() != null && s.minutes() > 0) {
+            if (sameLeague && s.minutes() != null && s.minutes() >= minMinutes) {
                 byTeam.putIfAbsent(s.teamApiId(), s);
             }
         }

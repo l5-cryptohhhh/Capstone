@@ -48,39 +48,53 @@ public class ImportService {
         ensureTasks();
         int pages = 0;
 
-        for (ImportTask task : tasks.findPending(properties.seasons())) {
-            TaskStatus status = task.getStatus();
-            while (status != TaskStatus.DONE) {
-                if (quota.remainingToday() <= 0) {
-                    return result(RunOutcome.QUOTA_REACHED, pages, "Budget giornaliero raggiunto");
+        // Si rilegge l'elenco a ogni giro: l'elenco squadre di un campionato crea nuovi task da eseguire subito dopo.
+        List<ImportTask> pending;
+        while (!(pending = tasks.findPending(properties.seasons())).isEmpty()) {
+            ImportTask task = pending.get(0);
+            if (quota.remainingToday() <= 0) {
+                return result(RunOutcome.QUOTA_REACHED, pages, "Budget giornaliero raggiunto");
+            }
+
+            try {
+                if (task.getTeamApiId() == ImportTask.LEAGUE_TEAMS) {
+                    persister.persistTeams(task.getId(),
+                            source.fetchTeamIds(task.getLeague().getApiId(), task.getSeason()));
+                    log.info("Squadre di {} {} registrate", task.getLeague().getName(), task.getSeason());
+                    pages++;
+                    continue;
                 }
 
-                SourcePlayerPage page;
-                try {
-                    page = source.fetchPlayersPage(task.getLeague().getApiId(), task.getSeason(), task.getNextPage());
-                } catch (ApiException e) {
-                    persister.markError(task.getId(), e.getMessage());
-                    if (e.getCode() == ErrorCode.QUOTA_EXCEEDED) {
-                        return result(RunOutcome.QUOTA_REACHED, pages, e.getMessage());
-                    }
-                    log.warn("Import fermato: {}", e.getMessage());
-                    return result(RunOutcome.ERROR, pages, e.getMessage());
+                if (task.getNextPage() > PagePersister.MAX_PAGE) {
+                    persister.markDone(task.getId()); // oltre la pagina 3 il piano Free non risponde
+                    continue;
                 }
 
-                status = persister.persistPage(task.getId(), page);
-                if (status == TaskStatus.DONE) {
-                    statsService.recompute(task.getLeague().getId(), task.getSeason());
-                }
+                SourcePlayerPage page = source.fetchPlayersPage(task.getLeague().getApiId(), task.getSeason(),
+                        task.getTeamApiId(), task.getNextPage());
+                TaskStatus status = persister.persistPage(task.getId(), page);
                 task.setNextPage(page.page() + 1);
                 pages++;
-                log.info("Importato {} {} pagina {}/{}", task.getLeague().getName(), task.getSeason(),
-                        page.page(), page.totalPages());
+                log.info("Importato {} {} squadra {} pagina {}/{}", task.getLeague().getName(), task.getSeason(),
+                        task.getTeamApiId(), page.page(), page.totalPages());
+                if (status == TaskStatus.DONE
+                        && tasks.countByLeagueIdAndSeasonAndStatusNot(task.getLeague().getId(), task.getSeason(),
+                        TaskStatus.DONE) == 0) {
+                    statsService.recompute(task.getLeague().getId(), task.getSeason()); // campionato completo
+                }
+            } catch (ApiException e) {
+                persister.markError(task.getId(), e.getMessage());
+                if (e.getCode() == ErrorCode.QUOTA_EXCEEDED) {
+                    return result(RunOutcome.QUOTA_REACHED, pages, e.getMessage());
+                }
+                log.warn("Import fermato: {}", e.getMessage());
+                return result(RunOutcome.ERROR, pages, e.getMessage());
             }
         }
         return result(RunOutcome.COMPLETED, pages, "Import completato");
     }
 
-    /** Crea i task mancanti per ogni campionato abilitato e stagione configurata. */
+    /** Crea il task "elenco squadre" per ogni campionato abilitato e stagione configurata che non ha ancora task. */
     void ensureTasks() {
         for (League league : leagues.findByEnabledTrueOrderByPriorityAsc()) {
             for (Integer season : properties.seasons()) {
