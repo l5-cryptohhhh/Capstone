@@ -8,7 +8,6 @@ import org.example.capstone.player.Player;
 import org.example.capstone.player.PlayerRepository;
 import org.example.capstone.stats.PlayerSeasonStat;
 import org.example.capstone.stats.PlayerSeasonStatRepository;
-import org.example.capstone.stats.StatsProperties;
 import org.example.capstone.team.Team;
 import org.example.capstone.team.TeamRepository;
 import org.springframework.stereotype.Component;
@@ -31,15 +30,13 @@ public class PagePersister {
     /** Il piano Free di API-Football non serve pagine oltre la 3 (le rose più lunghe si fermano lì). */
     static final int MAX_PAGE = 3;
 
-    private final int minMinutes;
     private final ImportTaskRepository tasks;
     private final PlayerRepository players;
     private final TeamRepository teams;
     private final PlayerSeasonStatRepository stats;
 
     public PagePersister(ImportTaskRepository tasks, PlayerRepository players, TeamRepository teams,
-                         PlayerSeasonStatRepository stats, StatsProperties statsProperties) {
-        this.minMinutes = statsProperties.minMinutes();
+                         PlayerSeasonStatRepository stats) {
         this.tasks = tasks;
         this.players = players;
         this.teams = teams;
@@ -108,12 +105,15 @@ public class PagePersister {
         task.setUpdatedAt(Instant.now());
     }
 
-    /** Solo statistiche del campionato richiesto, con almeno i minuti minimi (scoutai.stats.min-minutes), una per squadra. */
-    private List<SourceStat> usableStats(SourcePlayer source, League league) {
+    /**
+     * Solo statistiche del campionato richiesto, con minuti > 0, una per squadra. Si salvano anche i giocatori con
+     * pochi minuti (i giovani da scoutare): i percentili restano riservati a chi supera la soglia (StatsService).
+     */
+    private static List<SourceStat> usableStats(SourcePlayer source, League league) {
         Map<Integer, SourceStat> byTeam = new LinkedHashMap<>();
         for (SourceStat s : source.stats()) {
             boolean sameLeague = league.getApiId().equals(s.leagueApiId());
-            if (sameLeague && s.minutes() != null && s.minutes() >= minMinutes) {
+            if (sameLeague && s.minutes() != null && s.minutes() > 0) {
                 byTeam.putIfAbsent(s.teamApiId(), s);
             }
         }

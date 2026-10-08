@@ -101,6 +101,104 @@ select.input {
   background-repeat: no-repeat;
 }
 
+/* Selezione personalizzata: anche la lista che si apre è nel tema (Chrome/Edge; altrove resta la lista del browser) */
+@supports (appearance: base-select) {
+  select.input,
+  select.input::picker(select) {
+    appearance: base-select;
+  }
+
+  select.input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 12px;
+    background-image: none;
+    cursor: pointer;
+  }
+
+  select.input:disabled {
+    cursor: not-allowed;
+  }
+
+  select.input::picker-icon {
+    content: '';
+    width: 7px;
+    height: 7px;
+    margin-top: -3px;
+    border-right: 1.75px solid var(--ink-2);
+    border-bottom: 1.75px solid var(--ink-2);
+    transform: rotate(45deg);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  select.input:open::picker-icon {
+    margin-top: 3px;
+    transform: rotate(225deg);
+  }
+
+  /* Il pannello della lista */
+  select.input::picker(select) {
+    margin-top: 6px;
+    padding: 6px;
+    max-height: min(340px, 50vh);
+    background: var(--sheet);
+    color: var(--ink);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 40px rgb(0 0 0 / 28%);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.18s var(--ease-out),
+      transform 0.18s var(--ease-out),
+      display 0.18s allow-discrete,
+      overlay 0.18s allow-discrete;
+  }
+
+  select.input:open::picker(select) {
+    opacity: 1;
+    transform: none;
+  }
+
+  @starting-style {
+    select.input:open::picker(select) {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Le voci */
+  select.input option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    font-size: 14px;
+    color: var(--ink);
+    border-radius: calc(var(--radius) - 4px);
+    cursor: pointer;
+  }
+
+  select.input option:hover,
+  select.input option:focus-visible {
+    background: var(--pen-wash);
+    outline: none;
+  }
+
+  select.input option:checked {
+    font-weight: 700;
+    color: var(--pen);
+  }
+
+  select.input option::checkmark {
+    order: 1;
+    margin-left: auto;
+    color: var(--pen);
+  }
+}
+
 .input:hover:not(:disabled) {
   border-color: var(--rule-strong);
 }
