@@ -527,6 +527,12 @@
   white-space: nowrap;
 }
 
+/* I valori delle metriche sono allineati a destra: il nome sta sopra il suo valore, sullo stesso bordo */
+.cmp-colheads .cmp-colhead {
+  justify-content: flex-end;
+  text-align: right;
+}
+
 .cmp-colheads {
   display: grid;
   grid-template-columns: var(--first-col) minmax(170px, 2fr) repeat(var(--n, 2), minmax(0, 1fr));
@@ -563,6 +569,12 @@
 
   .cmp-colheads > :nth-child(-n + 2) {
     display: none;
+  }
+
+  .cmp-colheads .cmp-colhead {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
   }
 
   .cmp-table thead tr {

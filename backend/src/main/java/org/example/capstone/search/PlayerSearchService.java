@@ -55,7 +55,8 @@ public class PlayerSearchService {
         if (season == null) {
             return PageResponse.empty(page, size); // nessun dato ancora importato
         }
-        int minMinutes = criteria.minMinutes() != null ? criteria.minMinutes() : statsProperties.minMinutes();
+        // Senza filtro esplicito si vedono tutti: per lo scouting contano anche i giovani con pochi minuti
+        int minMinutes = criteria.minMinutes() != null ? criteria.minMinutes() : 0;
 
         Page<PlayerSeasonStat> result = stats.findAll(
                 PlayerSearchSpecs.from(criteria, season, minMinutes, LocalDate.now()), PageRequest.of(page, size));

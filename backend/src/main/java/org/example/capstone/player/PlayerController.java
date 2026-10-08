@@ -32,7 +32,7 @@ public class PlayerController {
      * Ricerca con filtri. Oltre ai parametri elencati accetta filtri sulle metriche:
      * pct.&lt;metrica&gt;.min|max (percentile) e val.&lt;metrica&gt;.min|max (valore).
      * I visitatori non registrati vedono solo i primi giocatori di ogni campionato, gli altri risultano bloccati.
-     * Senza season usa la stagione più recente disponibile; senza minMinutes esclude chi ha giocato troppo poco.
+     * Senza season usa la stagione più recente disponibile; senza minMinutes non esclude nessuno.
      */
     @GetMapping
     public PageResponse<PlayerSummaryDto> search(
