@@ -7,6 +7,7 @@ import './styles/shell.css'
 import './styles/search.css'
 import './styles/dossier.css'
 import './styles/auth.css'
+import './styles/ai.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

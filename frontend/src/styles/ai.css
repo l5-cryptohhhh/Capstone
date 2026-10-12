@@ -1,0 +1,128 @@
+/* Parti scritte o interpretate dall'AI: sempre separate e dichiarate, i dati restano dei dati */
+.ai-box {
+  margin: 0 auto 28px;
+  padding: 18px 20px;
+  max-width: 1100px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lift);
+  backdrop-filter: blur(18px);
+}
+
+.ai-box__label,
+.ai-box__guest {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.ai-box__guest {
+  font-weight: 400;
+  flex-wrap: wrap;
+}
+
+.ai-box__row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ai-box__input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--sheet);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+}
+
+.ai-box__input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.ai-box__note {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.ai-box__result {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.ai-box__understood {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.ai-box__understood-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.ai-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-chip {
+  padding: 4px 10px;
+  font-size: 13px;
+  color: var(--pen);
+  background: var(--pen-wash);
+  border-radius: var(--radius-pill);
+}
+
+.ai-report__body {
+  max-width: 62ch;
+  margin: 4px 0 16px;
+  padding: 16px 18px;
+  background: var(--pen-wash);
+  border-radius: var(--radius-lg);
+}
+
+/* Il modello separa titolo e testo con un a capo singolo: va mantenuto */
+.ai-report__body p {
+  white-space: pre-line;
+}
+
+.ai-report__body p + p {
+  margin-top: 10px;
+}
+
+.ai-report__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pen);
+}
+
+.ai-report__note {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 560px) {
+  .ai-box__row {
+    flex-direction: column;
+  }
+}

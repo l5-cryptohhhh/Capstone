@@ -1,7 +1,16 @@
-import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query'
-import { apiGet } from './client'
+import { keepPreviousData, useMutation, useQueries, useQuery } from '@tanstack/react-query'
+import { apiGet, apiPost } from './client'
 import { useAuth } from '../features/auth/useAuth'
-import type { LeagueWithSeasons, MetricInfo, PageResponse, PlayerDetail, PlayerRow, TeamRef } from './types'
+import type {
+  AiSearchResult,
+  LeagueWithSeasons,
+  MetricInfo,
+  PageResponse,
+  PlayerDetail,
+  PlayerReport,
+  PlayerRow,
+  TeamRef,
+} from './types'
 
 const FIVE_MINUTES = 5 * 60 * 1000
 
@@ -58,4 +67,14 @@ export function usePlayer(id: number) {
 
 export function usePlayersByIds(ids: number[]) {
   return useQueries({ queries: ids.map(playerQuery) })
+}
+
+/** Ricerca in linguaggio naturale: è una mutation perché ogni invio costa una chiamata al modello. */
+export function useAiSearch() {
+  return useMutation({ mutationFn: (query: string) => apiPost<AiSearchResult>('/ai/search', { query }) })
+}
+
+/** Il report si genera su richiesta (non al caricamento della pagina) per non consumare chiamate inutili. */
+export function useAiReport(playerId: number) {
+  return useMutation({ mutationFn: () => apiGet<PlayerReport>(`/ai/players/${playerId}/report`) })
 }

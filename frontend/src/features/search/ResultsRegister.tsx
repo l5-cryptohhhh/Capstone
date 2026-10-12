@@ -15,8 +15,10 @@ interface Props {
   filters: Filters
   metricKeys: string[]
   busy: boolean
-  onSort: (sort: string) => void
-  onPage: (page: number) => void
+  /** Senza onSort le intestazioni non sono cliccabili (ordine fisso, come nella ricerca AI). */
+  onSort?: (sort: string) => void
+  /** Senza onPage non c'è paginazione. */
+  onPage?: (page: number) => void
 }
 
 const BASE_COLUMNS: { sort: string; labelKey: TranslationKey; className: string }[] = [
@@ -33,14 +35,14 @@ export function ResultsRegister({ data, filters, metricKeys, busy, onSort, onPag
   const compare = useCompare()
   const location = useLocation()
 
-  const ariaSort = (sort: string): 'ascending' | 'descending' | 'none' =>
-    filters.sort === sort ? (filters.order === 'asc' ? 'ascending' : 'descending') : 'none'
+  const ariaSort = (sort: string): 'ascending' | 'descending' | 'none' | undefined =>
+    !onSort ? undefined : filters.sort === sort ? (filters.order === 'asc' ? 'ascending' : 'descending') : 'none'
 
-  const sortButton = (sort: string, label: string, className?: string) => (
+  const sortControl = (sort: string, label: string, className?: string) => (
     <button
       type="button"
       className={`sort ${className ?? ''}`}
-      onClick={() => onSort(sort)}
+      onClick={() => onSort?.(sort)}
       aria-label={t('results.sort', { column: label })}
     >
       <span>{label}</span>
@@ -52,6 +54,10 @@ export function ResultsRegister({ data, filters, metricKeys, busy, onSort, onPag
         ))}
     </button>
   )
+
+  // Senza onSort (ordine fisso) l'intestazione è solo testo
+  const sortButton = (sort: string, label: string, className?: string) =>
+    onSort ? sortControl(sort, label, className) : label
 
   const totalPages = Math.max(1, data.totalPages)
 
@@ -191,20 +197,22 @@ export function ResultsRegister({ data, filters, metricKeys, busy, onSort, onPag
         </table>
       </div>
 
-      <nav className="pager" aria-label={t('results.pager')}>
-        <button type="button" className="btn" disabled={data.page <= 0} onClick={() => onPage(data.page - 1)}>
-          {t('results.prev')}
-        </button>
-        <span className="pager__info">{t('results.page', { page: data.page + 1, total: totalPages })}</span>
-        <button
-          type="button"
-          className="btn"
-          disabled={data.page + 1 >= totalPages}
-          onClick={() => onPage(data.page + 1)}
-        >
-          {t('results.next')}
-        </button>
-      </nav>
+      {onPage && (
+        <nav className="pager" aria-label={t('results.pager')}>
+          <button type="button" className="btn" disabled={data.page <= 0} onClick={() => onPage(data.page - 1)}>
+            {t('results.prev')}
+          </button>
+          <span className="pager__info">{t('results.page', { page: data.page + 1, total: totalPages })}</span>
+          <button
+            type="button"
+            className="btn"
+            disabled={data.page + 1 >= totalPages}
+            onClick={() => onPage(data.page + 1)}
+          >
+            {t('results.next')}
+          </button>
+        </nav>
+      )}
     </>
   )
 }

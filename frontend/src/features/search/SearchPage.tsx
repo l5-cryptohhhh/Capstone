@@ -7,6 +7,7 @@ import { StateMessage } from '../../components/StateMessage'
 import { useAuth } from '../auth/useAuth'
 import { useI18n } from '../../i18n/useI18n'
 import { seasonLabel } from '../../lib/format'
+import { AiSearch } from './AiSearch'
 import { FilterSheet } from './FilterSheet'
 import { ResultsRegister } from './ResultsRegister'
 import { EMPTY_FILTERS, activeFilterCount, parseFilters, serializeFilters, toApiParams, type Filters } from './filters'
@@ -94,6 +95,8 @@ export function SearchPage() {
           {t('search.hero.lead')}
         </p>
       </header>
+
+      <AiSearch />
 
       <div className="search">
         <button
