@@ -328,3 +328,81 @@ See this log for the ancestor stack trace.
 [2m19:06:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
 [2m19:07:00[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
 [2m19:09:12[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m19:13:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SearchPage.tsx, /src/features/search/AiSearch.tsx, /src/features/search/FilterSheet.tsx[22m
+[2m19:13:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m19:13:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SearchPage.tsx[22m
+[2m19:13:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/search.css[22m
+[2m19:13:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m19:14:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SortBar.tsx[22m
+[2m19:14:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/features/search/SortBar.tsx[22m Could not Fast Refresh (export removed)
+[2m19:14:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SearchPage.tsx[22m
+[2m19:14:11[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/leagues[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:11[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/leagues[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:11[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/metrics[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:11[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:12[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/leagues[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:12[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/metrics[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:12[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:13[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:15[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:15[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:16[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:22[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:23[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=rating&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:14:24[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/logout[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m19:20:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m19:20:51[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:21:38[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:31:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m19:31:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:43:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:43:15[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
+[2m19:43:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:44:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:45:01[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:45:24[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:46:05[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:46:28[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m
+[2m19:48:44[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/LaserFlow.tsx[22m

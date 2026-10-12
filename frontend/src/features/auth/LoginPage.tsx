@@ -1,8 +1,20 @@
 import { CheckCircle, LockSimple } from '@phosphor-icons/react'
-import { lazy, Suspense, useCallback, useEffect, useId, useState, type FormEvent } from 'react'
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { ApiError } from '../../api/client'
+import { useTheme } from '../../app/useTheme'
 import { BrandMark, Wordmark } from '../../components/Brand'
+import { LaserFlow } from '../../components/LaserFlow'
 import { Tools } from '../../components/Tools'
 import { useI18n } from '../../i18n/useI18n'
 import type { TranslationKey } from '../../i18n/it'
@@ -27,6 +39,28 @@ function messageKey(error: unknown): TranslationKey {
 /** Accesso e registrazione: è la prima pagina per chi non ha ancora una sessione. */
 export function LoginPage() {
   const { t } = useI18n()
+  const { theme } = useTheme()
+  // Il fascio di luce cade sul bordo superiore del modulo: la sua posizione segue la card
+  const stageRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLElement>(null)
+  const [beam, setBeam] = useState(0.5)
+  useLayoutEffect(() => {
+    const stage = stageRef.current
+    const card = cardRef.current
+    if (!stage || !card) return
+    const update = () => {
+      const stageBox = stage.getBoundingClientRect()
+      const cardBox = card.getBoundingClientRect()
+      if (stageBox.width === 0) return
+      // Su schermi stretti il logo sta sopra la card: il fascio scende vicino al bordo sinistro, fuori dal logo
+      const narrow = window.matchMedia('(max-width: 959px)').matches
+      setBeam((cardBox.left - stageBox.left + cardBox.width * (narrow ? 0.12 : 0.5)) / stageBox.width)
+    }
+    const observer = new ResizeObserver(update)
+    observer.observe(stage)
+    observer.observe(card)
+    return () => observer.disconnect()
+  }, [])
   const { user, login, register, continueAsGuest } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -89,6 +123,19 @@ export function LoginPage() {
 
   return (
     <div className={leaving ? 'auth is-leaving' : 'auth'}>
+      <div className="auth__laser" ref={stageRef} aria-hidden="true">
+        <LaserFlow
+          surfaceRef={cardRef}
+          beamPosition={beam}
+          color={theme === 'light' ? '#14803a' : '#39d353'}
+          theme={theme}
+          intensity={1.7}
+          fog={0.2}
+          dust={1.4}
+          paused={leaving}
+        />
+      </div>
+
       <div className="auth__tools">
         <Tools />
       </div>
@@ -117,7 +164,7 @@ export function LoginPage() {
         </ul>
       </section>
 
-      <main className="auth__card" id="content">
+      <main className="auth__card" id="content" ref={cardRef}>
         <p className="wordmark">
           <Wordmark />
         </p>
