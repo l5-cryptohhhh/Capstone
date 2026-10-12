@@ -15,6 +15,7 @@ import { countryName } from '../../lib/countries'
 import { formatDate, formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { useCompare } from '../compare/useCompare'
+import { AiReport } from './AiReport'
 import { MIN_COHORT, MIN_MINUTES_FOR_PERCENTILES, formatMetricValue } from './helpers'
 
 const STAT_ROWS: { key: keyof StatLine; labelKey: TranslationKey; decimals?: number }[] = [
@@ -291,6 +292,7 @@ function PlayerView({ playerId }: { playerId: number }) {
           <Bio player={player} entry={entry} />
           <Profile entry={entry} />
           <Stats entry={entry} />
+          <AiReport playerId={player.id} />
           {syncedAt && <p className="source">{t('player.source', { date: syncedAt })}</p>}
         </>
       )}

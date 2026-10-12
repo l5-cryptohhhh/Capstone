@@ -1,7 +1,17 @@
 import { ApiError } from '../api/client'
 import type { TranslationKey } from '../i18n/it'
 
-const KNOWN_CODES = ['NETWORK', 'PLAYER_NOT_FOUND', 'LEAGUE_NOT_FOUND', 'INVALID_REQUEST', 'DATABASE_ERROR'] as const
+const KNOWN_CODES = [
+  'NETWORK',
+  'PLAYER_NOT_FOUND',
+  'LEAGUE_NOT_FOUND',
+  'INVALID_REQUEST',
+  'DATABASE_ERROR',
+  'QUERY_NOT_INTERPRETABLE',
+  'INSUFFICIENT_DATA',
+  'AI_UNAVAILABLE',
+  'RATE_LIMITED',
+] as const
 // UNAUTHORIZED non è qui: la sessione scaduta rimanda alla pagina di accesso, non mostra un errore
 
 /** Chiave di traduzione del messaggio per un errore (per codice stabile del backend). */

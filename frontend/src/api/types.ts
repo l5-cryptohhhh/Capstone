@@ -133,6 +133,29 @@ export interface MetricInfo {
   positions: Position[]
 }
 
+/** Filtri che l'AI ha ricavato dalla frase: solo i campi citati sono presenti. */
+export interface AiFilters {
+  name: string | null
+  position: Position | null
+  team: string | null
+  league: string | null
+  season: number | null
+  minAge: number | null
+  maxAge: number | null
+  minMinutes: number | null
+  sort: string | null
+}
+
+export interface AiSearchResult {
+  interpreted: AiFilters
+  results: PageResponse<PlayerSummary>
+}
+
+export interface PlayerReport {
+  playerId: number
+  report: string
+}
+
 export interface ApiErrorBody {
   status: number
   code: string
