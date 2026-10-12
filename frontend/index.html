@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="ScoutAI: scouting calcistico sui dati reali. Cerca, confronta e capisci i giocatori." />
-    <title>ScoutAI</title>
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0B0F14" />
+    <meta name="description" content="Scout AI: il talento giusto, al momento giusto. Scouting calcistico sui dati reali." />
+    <title>Scout AI</title>
     <script>
       // Tema applicato prima del primo paint per evitare il lampo del tema sbagliato.
       try {
         var saved = localStorage.getItem('scoutai.theme')
-        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        var dark = saved ? saved === 'dark' : true // il brand nasce scuro: è il tema di partenza
         document.documentElement.dataset.theme = dark ? 'dark' : 'light'
         var lang = localStorage.getItem('scoutai.lang')
         if (lang === 'en' || lang === 'it') document.documentElement.lang = lang

@@ -4,13 +4,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.example.capstone.ai.AiService.AiSearchResult;
+import org.example.capstone.ai.AiService.CompareVerdict;
 import org.example.capstone.ai.AiService.PlayerReport;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/ai")
@@ -29,6 +33,12 @@ public class AiController {
     @PostMapping("/search")
     public AiSearchResult search(@Valid @RequestBody AiSearchRequest request) {
         return service.search(request.query());
+    }
+
+    /** Verdetto su 2-3 giocatori, basato solo sulle loro statistiche reali nella stessa stagione. */
+    @GetMapping("/compare")
+    public CompareVerdict compare(@RequestParam List<Long> ids, @RequestParam(required = false) Integer season) {
+        return service.compare(ids, season);
     }
 
     /** Report testuale basato solo sulle statistiche reali del giocatore. */

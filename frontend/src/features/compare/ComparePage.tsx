@@ -12,6 +12,7 @@ import { countryName } from '../../lib/countries'
 import { formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { formatMetricValue } from '../player/helpers'
+import { AiVerdict } from './AiVerdict'
 import { SLOTS, bestIndex, commonSeason, entryFor, parseIds } from './helpers'
 import { useCompare } from './useCompare'
 
@@ -270,6 +271,8 @@ export function ComparePage() {
           )
         })}
       </section>
+
+      <AiVerdict key={`${ids.join(',')}:${season ?? ''}`} ids={ids} season={season} />
     </div>
   )
 }

@@ -1,51 +1,47 @@
 /*
- * Token di ScoutAI: base chiara premium con aloni pastello, superfici in vetro, angoli morbidi.
- * Inchiostro = fatti. Blu = tutto ciò che l'utente segna o seleziona. Arancio = stati e avvisi.
- * I colori dei marcatori di confronto (--mark-*) sono validati (CVD, contrasto) per tema.
+ * Token di Scout AI: tema scuro del brand (#0B0F14 sfondo, #1F2937 superfici, #39D353 primario, #E5E7EB testo).
+ * Verde = azioni, selezione e ciò che l'utente sceglie. Ambra = stati e avvisi. Il resto è inchiostro e superfici.
+ * Il tema chiaro è la variante diurna dello stesso sistema: stessa struttura, verde più scuro per il testo.
+ * I colori dei marcatori di confronto (--mark-*) sono distinguibili anche senza colore (hanno forme diverse).
  */
 :root {
-  --paper: #f5f5f7;
-  --sheet: #ffffff;
-  --glass: rgb(255 255 255 / 58%);
-  --glass-border: rgb(255 255 255 / 85%);
-  --edge: inset 0 1px 0 rgb(255 255 255 / 80%);
-  --ink: #1d1d1f;
-  --ink-2: #515154;
-  --ink-3: #6e6e73;
-  --rule: rgb(0 0 0 / 8%);
-  --rule-strong: rgb(0 0 0 / 22%);
-  --pen: #0071e3;
-  --pen-on: #ffffff;
-  --pen-wash: rgb(0 113 227 / 10%);
-  --stamp: #b9380f;
-  --stamp-wash: rgb(255 149 0 / 14%);
-  --focus: #0071e3;
+  --paper: #0b0f14;
+  --sheet: #1f2937;
+  /* Card e pannelli: la superficie del brand, un filo più scura degli elementi interattivi */
+  --glass: #121922;
+  --glass-border: rgb(255 255 255 / 9%);
+  --edge: inset 0 1px 0 rgb(255 255 255 / 4%);
+  --ink: #e5e7eb;
+  --ink-2: #b4bac4;
+  --ink-3: #8b94a1;
+  --rule: rgb(255 255 255 / 9%);
+  --rule-strong: rgb(255 255 255 / 20%);
+  --pen: #39d353;
+  --pen-on: #04130a;
+  --pen-wash: rgb(57 211 83 / 13%);
+  --stamp: #f5b544;
+  --stamp-wash: rgb(245 181 68 / 13%);
+  --focus: #39d353;
 
-  --mark-1: #0071e3;
-  --mark-2: #c8312b;
-  --mark-3: #0e8a6b;
+  --mark-1: #39d353;
+  --mark-2: #ff8a5c;
+  --mark-3: #5aa9ff;
 
-  /* Aloni pastello dello sfondo */
-  --glow-lavender: rgb(190 172 255 / 78%);
-  --glow-peach: rgb(255 186 158 / 72%);
-  --glow-sky: rgb(150 205 255 / 72%);
-  --glow-mint: rgb(150 232 205 / 68%);
+  /* Alone del brand: un solo verde, molto basso, dietro la prima schermata */
+  --glow: rgb(57 211 83 / 11%);
 
-  /* Titolo della prima schermata: l'unico punto con un gradiente di marca */
-  --brand: linear-gradient(120deg, #1d1d1f 15%, #5e5ce6 58%, #bf5af2 100%);
+  --lift: var(--edge), 0 1px 2px rgb(0 0 0 / 30%), 0 16px 36px -14px rgb(0 0 0 / 60%);
+  --lift-hover: var(--edge), 0 2px 4px rgb(0 0 0 / 35%), 0 24px 48px -16px rgb(0 0 0 / 70%);
 
-  --lift: var(--edge), 0 1px 2px rgb(0 0 0 / 4%), 0 18px 44px -10px rgb(70 55 140 / 20%);
-  --lift-hover: var(--edge), 0 2px 4px rgb(0 0 0 / 5%), 0 30px 60px -12px rgb(70 55 140 / 30%);
-
-  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', system-ui,
-    sans-serif;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter Variable', Inter, 'Segoe UI Variable Text',
+    'Segoe UI', system-ui, sans-serif;
 
   --radius: 12px;
-  --radius-lg: 24px;
+  --radius-lg: 18px;
   --radius-pill: 999px;
-  --topbar-h: 56px;
-  /* Altezza della barra più il suo margine: serve a tutto ciò che resta fisso sotto di essa */
-  --topbar-offset: 76px;
+  --topbar-h: 64px;
+  /* Altezza della barra: serve a tutto ciò che resta fisso sotto di essa */
+  --topbar-offset: 72px;
   --sheet-w: 320px;
 
   /* Curva critica per i movimenti normali; molla con un filo di rimbalzo solo per il rilascio */
@@ -55,40 +51,35 @@
     1.101 26.5%, 1.091 29.3%, 1.065 33.4%, 1.016 40.6%, 0.996 47%, 0.991 52%, 1 63%, 1
   );
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
-:root[data-theme='dark'] {
-  --paper: #0b0b0f;
-  --sheet: #1c1c22;
-  --glass: rgb(44 44 58 / 52%);
-  --glass-border: rgb(255 255 255 / 12%);
-  --edge: inset 0 1px 0 rgb(255 255 255 / 9%);
-  --ink: #f5f5f7;
-  --ink-2: #c7c7cc;
-  --ink-3: #98989d;
-  --rule: rgb(255 255 255 / 10%);
-  --rule-strong: rgb(255 255 255 / 28%);
-  --pen: #2997ff;
-  --pen-on: #00101f;
-  --pen-wash: rgb(41 151 255 / 16%);
-  --stamp: #ffb27a;
-  --stamp-wash: rgb(255 149 0 / 16%);
-  --focus: #64b5ff;
+:root[data-theme='light'] {
+  --paper: #f3f5f7;
+  --sheet: #ffffff;
+  --glass: #ffffff;
+  --glass-border: rgb(11 15 20 / 10%);
+  --edge: inset 0 1px 0 rgb(255 255 255 / 80%);
+  --ink: #0b0f14;
+  --ink-2: #3d4652;
+  --ink-3: #5c6573;
+  --rule: rgb(11 15 20 / 9%);
+  --rule-strong: rgb(11 15 20 / 24%);
+  --pen: #14803a;
+  --pen-on: #ffffff;
+  --pen-wash: rgb(20 128 58 / 10%);
+  --stamp: #9a5b00;
+  --stamp-wash: rgb(245 181 68 / 18%);
+  --focus: #14803a;
 
-  --mark-1: #5aaaff;
-  --mark-2: #e8624f;
-  --mark-3: #25a27b;
+  --mark-1: #14803a;
+  --mark-2: #c2410c;
+  --mark-3: #1d6fd1;
 
-  --glow-lavender: rgb(140 120 255 / 56%);
-  --glow-peach: rgb(255 160 130 / 38%);
-  --glow-sky: rgb(100 170 255 / 46%);
-  --glow-mint: rgb(90 210 180 / 36%);
+  --glow: rgb(57 211 83 / 14%);
 
-  --brand: linear-gradient(120deg, #f5f5f7 15%, #a9a7ff 58%, #e0a6ff 100%);
+  --lift: var(--edge), 0 1px 2px rgb(11 15 20 / 6%), 0 14px 30px -14px rgb(11 15 20 / 22%);
+  --lift-hover: var(--edge), 0 2px 4px rgb(11 15 20 / 8%), 0 22px 44px -16px rgb(11 15 20 / 30%);
 
-  --lift: var(--edge), 0 1px 2px rgb(0 0 0 / 30%), 0 18px 44px -10px rgb(0 0 0 / 60%);
-  --lift-hover: var(--edge), 0 2px 4px rgb(0 0 0 / 35%), 0 30px 60px -12px rgb(0 0 0 / 70%);
-
-  color-scheme: dark;
+  color-scheme: light;
 }

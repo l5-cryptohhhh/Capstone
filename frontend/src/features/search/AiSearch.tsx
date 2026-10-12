@@ -25,7 +25,7 @@ export function AiSearch() {
     return (
       <section className="ai-box" aria-label={t('ai.search.label')}>
         <p className="ai-box__guest">
-          <Sparkle size={18} weight="fill" aria-hidden="true" /> {t('ai.search.guest')}{' '}
+          <Sparkle size={18} aria-hidden="true" /> {t('ai.search.guest')}{' '}
           <Link to="/accesso" state={{ from: `/${location.search}` }}>
             {t('ai.search.guest.cta')}
           </Link>
@@ -47,7 +47,7 @@ export function AiSearch() {
     <section className="ai-box" aria-label={t('ai.search.label')}>
       <form className="ai-box__form" onSubmit={onSubmit}>
         <label className="ai-box__label" htmlFor="ai-query">
-          <Sparkle size={16} weight="fill" aria-hidden="true" /> {t('ai.search.label')}
+          <Sparkle size={16} aria-hidden="true" /> {t('ai.search.label')}
         </label>
         <div className="ai-box__row">
           <input

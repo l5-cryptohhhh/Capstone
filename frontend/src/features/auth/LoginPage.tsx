@@ -1,28 +1,14 @@
-import { LockSimple } from '@phosphor-icons/react'
-import { lazy, Suspense, useCallback, useEffect, useId, useState, type FormEvent } from 'react'
+import { CheckCircle, LockSimple } from '@phosphor-icons/react'
+import { useId, useState, type FormEvent } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { ApiError } from '../../api/client'
+import { BrandMark, Wordmark } from '../../components/Brand'
 import { Tools } from '../../components/Tools'
 import { useI18n } from '../../i18n/useI18n'
 import type { TranslationKey } from '../../i18n/it'
 import { useAuth } from './useAuth'
 
 type Mode = 'login' | 'register'
-
-// three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
-const HeroModel = lazy(() => import('./HeroModel'))
-const WIDE = '(min-width: 960px)'
-
-function useWide(): boolean {
-  const [wide, setWide] = useState(() => window.matchMedia(WIDE).matches)
-  useEffect(() => {
-    const query = window.matchMedia(WIDE)
-    const update = () => setWide(query.matches)
-    query.addEventListener('change', update)
-    return () => query.removeEventListener('change', update)
-  }, [])
-  return wide
-}
 
 function messageKey(error: unknown): TranslationKey {
   if (error instanceof ApiError) {
@@ -41,29 +27,14 @@ export function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const uid = useId()
-  const wide = useWide()
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<TranslationKey | null>(null)
   const [busy, setBusy] = useState(false)
-  // Il ragazzo 3D calcia il pallone fuori scena prima di entrare: finché non ha finito si resta qui.
-  const [heroReady, setHeroReady] = useState(false)
-  const [armed, setArmed] = useState(false)
-  const [kickDone, setKickDone] = useState(false)
-  const onHeroReady = useCallback(() => setHeroReady(true), [])
-  const onKickDone = useCallback(() => setKickDone(true), [])
-  const kicking = armed && user !== null
-
-  useEffect(() => {
-    if (!kicking) return
-    const fallback = window.setTimeout(() => setKickDone(true), 4000) // es. scheda in secondo piano: non si resta bloccati
-    return () => window.clearTimeout(fallback)
-  }, [kicking])
-
   const from = (location.state as { from?: string } | null)?.from ?? '/'
-  if (user && (!armed || kickDone)) return <Navigate to={from} replace />
+  if (user) return <Navigate to={from} replace />
 
   const isLogin = mode === 'login'
 
@@ -71,13 +42,10 @@ export function LoginPage() {
     event.preventDefault()
     setError(null)
     setBusy(true)
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setArmed(wide && heroReady && !reduced) // si prenota il tiro prima della risposta, così l'accesso non ci scavalca
     try {
       if (isLogin) await login(email, password)
       else await register(email, displayName, password)
     } catch (e) {
-      setArmed(false)
       setError(messageKey(e))
       setBusy(false)
     }
@@ -94,17 +62,27 @@ export function LoginPage() {
         <Tools />
       </div>
 
-      {wide && (
-        <div className="auth__hero">
-          <Suspense fallback={null}>
-            <HeroModel kick={kicking} onReady={onHeroReady} onKickDone={onKickDone} />
-          </Suspense>
-        </div>
-      )}
+      <section className="auth__brand" aria-label={t('app.name')}>
+        <p className="auth__logo">
+          <BrandMark />
+          <span>
+            Scout <span className="wordmark__ai">AI</span>
+          </span>
+        </p>
+        <p className="auth__slogan">{t('auth.brand.slogan')}</p>
+        <ul className="auth__list">
+          {(['auth.brand.f1', 'auth.brand.f2', 'auth.brand.f3', 'auth.brand.f4'] as const).map((key) => (
+            <li key={key}>
+              <CheckCircle size={20} aria-hidden="true" />
+              {t(key)}
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <main className="auth__card" id="content">
         <p className="wordmark">
-          Scout<span>AI</span>
+          <Wordmark />
         </p>
         <h1 className="auth__title">{t(isLogin ? 'auth.title.login' : 'auth.title.register')}</h1>
         <p className="auth__lead">{t('auth.tagline')}</p>
@@ -190,7 +168,7 @@ export function LoginPage() {
             {t('auth.guest')}
           </button>
           <p>
-            <LockSimple size={14} weight="bold" aria-hidden="true" /> {t('auth.guest.note', { n: 3 })}
+            <LockSimple size={14} aria-hidden="true" /> {t('auth.guest.note', { n: 3 })}
           </p>
         </div>
       </main>

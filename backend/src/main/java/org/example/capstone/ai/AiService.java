@@ -8,13 +8,16 @@ import org.example.capstone.player.PlayerQueryService;
 import org.example.capstone.player.Position;
 import org.example.capstone.player.dto.PlayerDetailDto;
 import org.example.capstone.player.dto.PlayerSummaryDto;
+import org.example.capstone.player.dto.SeasonDto;
 import org.example.capstone.search.PlayerSearchService;
 import org.example.capstone.search.SearchCriteria;
 import org.springframework.stereotype.Service;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.json.JsonMapper;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * L'AI interpreta, non inventa: traduce una frase in filtri strutturati (poi eseguiti sul DB)
@@ -53,6 +56,18 @@ public class AiService {
             aspetta da quel ruolo e segnala quando il campione (minuti giocati) è piccolo.
             """;
 
+    private static final String COMPARE_PROMPT = """
+            Sei un analista di scouting calcistico. Confronta i giocatori descritti dal JSON fornito (stessa
+            stagione) e scrivi in italiano un verdetto breve (max 220 parole) usando ESCLUSIVAMENTE quei dati:
+            non inventare statistiche, infortuni, valori di mercato o fatti esterni.
+            Struttura: Differenze chiave, Chi è più adatto a cosa, Verdetto.
+            Cita i numeri e i percentili solo se presenti (null = non commentare). Se i ruoli sono diversi, dillo
+            e non dichiarare un vincitore assoluto. Segnala quando i minuti giocati rendono il campione piccolo.
+            """;
+
+    private static final int MIN_COMPARE = 2;
+    private static final int MAX_COMPARE = 3;
+
     private final OpenRouterClient llm;
     private final PlayerSearchService search;
     private final PlayerQueryService players;
@@ -87,6 +102,9 @@ public class AiService {
     }
 
     public record PlayerReport(Long playerId, String report) {
+    }
+
+    public record CompareVerdict(List<Long> playerIds, int season, String verdict) {
     }
 
     public AiSearchResult search(String query) {
@@ -125,6 +143,50 @@ public class AiService {
             throw new ApiException(ErrorCode.INTERNAL_ERROR, "Errore interno", e);
         }
         return new PlayerReport(playerId, llm.complete(REPORT_PROMPT, data, false));
+    }
+
+    /**
+     * Verdetto su 2-3 giocatori nella stessa stagione (quella indicata, o la più recente in comune).
+     * L'AI riceve solo le schede reali e non può usare altre fonti.
+     */
+    public CompareVerdict compare(List<Long> ids, Integer season) {
+        if (ids == null || ids.size() < MIN_COMPARE || ids.size() > MAX_COMPARE
+                || ids.stream().distinct().count() != ids.size()) {
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Servono da 2 a 3 giocatori diversi");
+        }
+        List<PlayerDetailDto> all = ids.stream().map(id -> players.detail(id, null)).toList();
+        Integer chosen = season != null ? season : commonSeason(all);
+        if (chosen == null) {
+            throw new ApiException(ErrorCode.INSUFFICIENT_DATA,
+                    "I giocatori non hanno una stagione in comune da confrontare");
+        }
+        final int target = chosen;
+        List<PlayerDetailDto> inSeason = ids.stream().map(id -> players.detail(id, target)).toList();
+        if (inSeason.stream().anyMatch(d -> d.seasons().isEmpty())) {
+            throw new ApiException(ErrorCode.INSUFFICIENT_DATA,
+                    "Un giocatore non ha statistiche per la stagione " + target);
+        }
+        String data;
+        try {
+            data = mapper.writeValueAsString(inSeason);
+        } catch (JacksonException e) {
+            throw new ApiException(ErrorCode.INTERNAL_ERROR, "Errore interno", e);
+        }
+        return new CompareVerdict(ids, target, llm.complete(COMPARE_PROMPT, data, false));
+    }
+
+    /** Stagione più recente presente in tutti i giocatori, null se non ce n'è. */
+    private static Integer commonSeason(List<PlayerDetailDto> details) {
+        Set<Integer> common = null;
+        for (PlayerDetailDto d : details) {
+            Set<Integer> seasons = d.seasons().stream().map(SeasonDto::season).collect(Collectors.toSet());
+            if (common == null) {
+                common = seasons;
+            } else {
+                common.retainAll(seasons);
+            }
+        }
+        return common == null ? null : common.stream().max(Integer::compare).orElse(null);
     }
 
     private static ApiException notInterpretable() {

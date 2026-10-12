@@ -11,12 +11,10 @@ html {
 
 body {
   margin: 0;
-  /* Base chiara premium con aloni pastello sfumati, fissi mentre la pagina scorre */
+  /* Fondo scuro del brand con un solo alone verde, fisso mentre la pagina scorre */
   background:
-    radial-gradient(75rem 52rem at 8% -14%, var(--glow-lavender), transparent 62%),
-    radial-gradient(65rem 46rem at 98% 2%, var(--glow-peach), transparent 62%),
-    radial-gradient(70rem 50rem at 85% 108%, var(--glow-sky), transparent 62%),
-    radial-gradient(62rem 44rem at -4% 104%, var(--glow-mint), transparent 62%),
+    radial-gradient(60rem 34rem at 78% -14%, var(--glow), transparent 65%),
+    radial-gradient(46rem 28rem at -8% 108%, var(--glow), transparent 65%),
     var(--paper);
   background-attachment: fixed;
   color: var(--ink);
@@ -69,7 +67,7 @@ select:disabled {
   cursor: not-allowed;
 }
 
-/* Focus visibile sempre, nel colore della penna */
+/* Focus visibile sempre, nel verde del brand */
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;

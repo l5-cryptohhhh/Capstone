@@ -6,29 +6,36 @@
 
 .topbar {
   position: sticky;
-  top: 12px;
+  top: 0;
   z-index: 20;
   display: flex;
   align-items: center;
   gap: 32px;
   height: var(--topbar-h);
-  margin: 12px 16px 0;
-  padding: 0 16px 0 28px;
-  background: var(--glass);
-  backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--lift);
+  padding: 0 clamp(16px, 3vw, 32px);
+  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .wordmark {
-  font-size: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
   line-height: 1;
   text-decoration: none;
   color: var(--ink);
 }
 
-.wordmark span {
+.wordmark__mark {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  color: var(--pen);
+}
+
+.wordmark__ai {
   color: var(--pen);
 }
 
@@ -39,10 +46,11 @@
 }
 
 .topbar__nav a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
-  font-weight: 600;
+  padding: 8px 14px;
+  font-weight: 500;
   text-decoration: none;
   color: var(--ink-2);
   border-radius: var(--radius-pill);
@@ -57,8 +65,19 @@
 }
 
 .topbar__nav a[aria-current='page'] {
-  color: var(--pen);
-  background: var(--pen-wash);
+  color: var(--ink);
+}
+
+/* Pagina corrente: filetto verde sul bordo inferiore della barra */
+.topbar__nav a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -14px;
+  height: 2px;
+  background: var(--pen);
+  border-radius: 2px;
 }
 
 .topbar__tools {
@@ -90,7 +109,6 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
   background: var(--glass);
-  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .seg--wide {
@@ -167,10 +185,9 @@
   font-weight: 600;
   text-decoration: none;
   color: var(--ink);
-  background: var(--sheet);
+  background: transparent;
   border: 1px solid var(--rule-strong);
   border-radius: var(--radius-pill);
-  box-shadow: var(--edge);
   transition:
     background-color 0.2s var(--ease-out),
     border-color 0.2s var(--ease-out),
@@ -306,9 +323,11 @@
     flex-wrap: wrap;
     gap: 0 12px;
     height: auto;
-    margin: 8px 8px 0;
     padding: 8px 12px;
-    border-radius: var(--radius-lg);
+  }
+
+  .topbar__nav a[aria-current='page']::after {
+    bottom: -8px;
   }
 
   .topbar__nav {
@@ -323,7 +342,7 @@
   }
 
   .wordmark {
-    font-size: 1.55rem;
+    font-size: 1.2rem;
   }
 
   .tray {
@@ -346,7 +365,38 @@
 /* Su telefono la barra va su due righe: marchio e strumenti sopra, navigazione sotto */
 @media (max-width: 760px) {
   :root {
-    --topbar-h: 92px;
-    --topbar-offset: 108px;
+    --topbar-h: 96px;
+    --topbar-offset: 104px;
   }
+}
+
+/* Piè di pagina: marchio, motto e fonte dei dati */
+.footer {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 40px 16px 120px;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+.footer__brand {
+  display: flex;
+  font-weight: 700;
+}
+
+.footer__brand .wordmark__mark {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+}
+
+.footer__tagline {
+  color: var(--ink-2);
+}
+
+.footer__source {
+  max-width: 60ch;
+  font-size: 12.5px;
+  color: var(--ink-3);
 }
