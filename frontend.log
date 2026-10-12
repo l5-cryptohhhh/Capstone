@@ -261,3 +261,70 @@ AggregateError [ECONNREFUSED]:
 [2m18:53:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.tsx[22m
 [2m18:54:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
 [2m18:54:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/similar.css[22m
+[2m19:01:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m19:01:33[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:01:34[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mIn HTML, <div> cannot be a descendant of <p>.
+This will cause a hydration error.
+
+  ...
+    <ThemeProvider>
+      <CompareProvider>
+        <BrowserRouter>
+          <Router basename={undefined} location={{pathname:"...", ...}} navigationType="POP" ...>
+            <Routes>
+              <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                <LoginPage>
+                  <div className="auth">
+                    <div>
+                    <section className="auth__brand" aria-label="Scout AI">
+>                     <p className="auth__logo">
+                        <BrandMark>
+                        <span>
+                          <span className="wordmark__...">
+                            <Suspense fallback={null}>
+                              <BouncingBall>
+>                               <div ref={{current:null}} className="ball" aria-hidden="true">
+                      ...
+                    ...
+
+[2m19:01:34[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m<p> cannot contain a nested <div>.
+See this log for the ancestor stack trace.
+[2m19:01:44[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/BouncingBall.tsx[22m
+[2m19:01:50[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mIn HTML, <div> cannot be a descendant of <p>.
+This will cause a hydration error.
+
+  ...
+    <ThemeProvider>
+      <CompareProvider>
+        <BrowserRouter>
+          <Router basename={undefined} location={{pathname:"...", ...}} navigationType="POP" ...>
+            <Routes>
+              <RenderedRoute match={{params:{}, ...}} routeContext={{outlet:null, ...}}>
+                <LoginPage>
+                  <div className="auth">
+                    <div>
+                    <section className="auth__brand" aria-label="Scout AI">
+>                     <p className="auth__logo">
+                        <BrandMark>
+                        <span>
+                          <span className="wordmark__...">
+                            <Suspense fallback={null}>
+                              <BouncingBall>
+>                               <div ref={{current:null}} className="ball" aria-hidden="true">
+                      ...
+                    ...
+
+[2m19:01:50[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m<p> cannot contain a nested <div>.
+See this log for the ancestor stack trace.
+[2m19:01:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/BouncingBall.tsx[22m
+[2m19:02:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/BouncingBall.tsx[22m
+[2m19:02:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:06:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/BouncingBall.tsx[22m
+[2m19:06:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
+[2m19:06:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m19:06:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m19:06:41[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/shell.css[22m
+[2m19:06:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx, /src/features/auth/LoginPage.tsx[22m
+[2m19:06:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
+[2m19:07:00[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
+[2m19:09:12[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m

@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { CompareTray } from '../features/compare/CompareTray'
 import { useCompare } from '../features/compare/useCompare'
+import { isEntering, markEntering } from '../features/auth/entry'
 import { useAuth } from '../features/auth/useAuth'
 import { useI18n } from '../i18n/useI18n'
 import { Wordmark } from './Brand'
@@ -11,6 +13,8 @@ export function Shell() {
   const { t } = useI18n()
   const { user, logout } = useAuth()
   const { entries } = useCompare()
+  // Arrivando dalla transizione del pallone si parte da un fondo uniforme che si dissolve sulla dashboard
+  const [entering, setEntering] = useState(isEntering)
 
   return (
     <div className="shell">
@@ -61,6 +65,16 @@ export function Shell() {
         <p className="footer__source">{t('footer.source')}</p>
       </footer>
       <CompareTray />
+      {entering && (
+        <div
+          className="curtain"
+          aria-hidden="true"
+          onAnimationEnd={() => {
+            markEntering(false)
+            setEntering(false)
+          }}
+        />
+      )}
     </div>
   )
 }
