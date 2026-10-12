@@ -34,7 +34,7 @@ export const en: Record<TranslationKey, string> = {
   'auth.error.invalid': 'Check your details: the email must be valid and the password at least 8 characters.',
 
   'auth.brand.slogan': 'The right talent, at the right time.',
-  'auth.brand.f1': 'Search players across the top 5 European leagues',
+  'auth.brand.f1': 'Search players across the top leagues in the world',
   'auth.brand.f2': 'Read per-90 statistics and percentiles by role',
   'auth.brand.f3': 'Compare up to 3 players side by side',
   'auth.brand.f4': 'Ask the AI: natural-language search, reports and verdicts on real data',

@@ -32,7 +32,7 @@ export const it = {
   'auth.error.invalid': 'Controlla i dati: l\'email deve essere valida e la password di almeno 8 caratteri.',
 
   'auth.brand.slogan': 'Il talento giusto, al momento giusto.',
-  'auth.brand.f1': 'Cerca giocatori nei top 5 campionati europei',
+  'auth.brand.f1': 'Cerca giocatori nei top campionati mondiali',
   'auth.brand.f2': 'Leggi statistiche per 90 minuti e percentili per ruolo',
   'auth.brand.f3': 'Confronta fino a 3 giocatori affiancati',
   'auth.brand.f4': 'Chiedi all\'AI: ricerca in linguaggio naturale, report e verdetti sui dati reali',
