@@ -11,6 +11,7 @@ import { seasonLabel } from '../../lib/format'
 import { AiSearch } from './AiSearch'
 import { FilterSheet } from './FilterSheet'
 import { ResultsRegister } from './ResultsRegister'
+import { SortBar } from './SortBar'
 import { EMPTY_FILTERS, activeFilterCount, parseFilters, serializeFilters, toApiParams, type Filters } from './filters'
 
 function SkeletonRows() {
@@ -73,6 +74,11 @@ export function SearchPage() {
         page: 0,
       }),
     [filters.sort, filters.order, onChange],
+  )
+
+  const onSortChange = useCallback(
+    (sort: string, order: 'asc' | 'desc') => onChange({ sort, order, page: 0 }),
+    [onChange],
   )
 
   const metricKeys = useMemo(() => {
@@ -142,6 +148,8 @@ export function SearchPage() {
                   <p className="results__season">{t('results.season', { season: seasonLabel(shownSeason) })}</p>
                 )}
               </div>
+
+              <SortBar filters={filters} onChange={onSortChange} />
 
               {!user && players.data.content.some((row) => row.locked) && (
                 <aside className="locked-banner" role="note">

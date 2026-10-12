@@ -885,3 +885,29 @@ select.input {
 .metric__pct {
   min-width: 4ch;
 }
+
+/* Ordine della lista: sopra i risultati, i filtri restano nel pannello */
+.sortbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 14px;
+}
+
+.sortbar__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.sortbar .seg {
+  flex-wrap: wrap;
+}
+
+.sortbar__note {
+  flex-basis: 100%;
+  max-width: 70ch;
+  font-size: 12.5px;
+  color: var(--ink-3);
+}

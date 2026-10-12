@@ -11,20 +11,8 @@ import { useAuth } from './useAuth'
 
 type Mode = 'login' | 'register'
 
-// three.js e il pallone 3D si scaricano solo quando servono (schermi larghi, dove c'è il pannello del brand)
+// three.js e il pallone 3D si scaricano solo nella pagina di accesso, dopo il resto
 const BouncingBall = lazy(() => import('./BouncingBall'))
-const WIDE = '(min-width: 960px)'
-
-function useWide(): boolean {
-  const [wide, setWide] = useState(() => window.matchMedia(WIDE).matches)
-  useEffect(() => {
-    const query = window.matchMedia(WIDE)
-    const update = () => setWide(query.matches)
-    query.addEventListener('change', update)
-    return () => query.removeEventListener('change', update)
-  }, [])
-  return wide
-}
 
 function messageKey(error: unknown): TranslationKey {
   if (error instanceof ApiError) {
@@ -43,7 +31,6 @@ export function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const uid = useId()
-  const wide = useWide()
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
   const [displayName, setDisplayName] = useState('')
@@ -83,7 +70,7 @@ export function LoginPage() {
     setBusy(true)
     markEntering(true)
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setArmed(wide && ballReady && !reduced) // si prenota il lancio prima della risposta, così l'accesso non ci scavalca
+    setArmed(ballReady && !reduced) // si prenota il lancio prima della risposta, così l'accesso non ci scavalca
     try {
       if (isLogin) await login(email, password)
       else await register(email, displayName, password)
@@ -113,11 +100,9 @@ export function LoginPage() {
             Scout{' '}
             <span className="wordmark__ai auth__ai">
               AI
-              {wide && (
-                <Suspense fallback={null}>
-                  <BouncingBall launch={leaving} onReady={onBallReady} onLaunched={onLaunched} />
-                </Suspense>
-              )}
+              <Suspense fallback={null}>
+                <BouncingBall launch={leaving} onReady={onBallReady} onLaunched={onLaunched} />
+              </Suspense>
             </span>
           </span>
         </p>
@@ -215,7 +200,7 @@ export function LoginPage() {
             onClick={() => {
               markEntering(true)
               const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-              if (wide && ballReady && !reduced) {
+              if (ballReady && !reduced) {
                 setArmed(true)
                 setGuestGo(true)
               } else {

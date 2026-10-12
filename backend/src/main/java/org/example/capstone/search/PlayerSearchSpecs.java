@@ -111,7 +111,9 @@ final class PlayerSearchSpecs {
             case "age" -> orders.add(direction(cb, player.<LocalDate>get("birthDate"), !desc));
             case "minutes" -> orders.add(direction(cb, root.<Integer>get("minutes"), desc));
             case "appearances" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("appearances"), 0), desc));
-            case "rating" -> orders.add(direction(cb, cb.coalesce(root.<BigDecimal>get("rating"), BigDecimal.ZERO), desc));
+            // senza voto: in fondo sia dal migliore sia dal peggiore
+            case "rating" -> orders.add(direction(cb,
+                    cb.coalesce(root.<BigDecimal>get("rating"), desc ? BigDecimal.ZERO : BigDecimal.valueOf(99)), desc));
             case "goals" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("goals"), 0), desc));
             case "assists" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("assists"), 0), desc));
             default -> {

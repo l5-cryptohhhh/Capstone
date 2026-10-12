@@ -21,7 +21,8 @@ export interface Filters {
   page: number
 }
 
-export const DEFAULT_SORT = 'minutes'
+/** Dal migliore al peggiore: l'ordine di partenza di ogni ricerca. */
+export const DEFAULT_SORT = 'rating'
 export const PAGE_SIZE = 25
 export const POSITIONS: Position[] = ['GK', 'DEF', 'MID', 'ATT']
 
