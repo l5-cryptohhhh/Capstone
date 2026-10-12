@@ -1,5 +1,6 @@
 package org.example.capstone.stats;
 
+import org.example.capstone.player.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,6 +37,13 @@ public interface PlayerSeasonStatRepository
             order by s.rating desc nulls last, s.id asc""")
     List<Long> findTopIds(@Param("leagueId") long leagueId, @Param("season") int season,
                           @Param("minMinutes") int minMinutes, Pageable pageable);
+
+    /** Giocatori dello stesso ruolo e stagione con minuti sufficienti (tutti i campionati), per i simili. */
+    @Query("""
+            select s from PlayerSeasonStat s join fetch s.player join fetch s.team join fetch s.league
+            where s.season = :season and s.position = :position and s.minutes >= :minMinutes""")
+    List<PlayerSeasonStat> findCohort(@Param("season") int season, @Param("position") Position position,
+                                      @Param("minMinutes") int minMinutes);
 
     @Query("select max(s.season) from PlayerSeasonStat s")
     Integer findMaxSeason();

@@ -3,6 +3,7 @@ import { CompareTray } from '../features/compare/CompareTray'
 import { useCompare } from '../features/compare/useCompare'
 import { useAuth } from '../features/auth/useAuth'
 import { useI18n } from '../i18n/useI18n'
+import { Wordmark } from './Brand'
 import { Tools } from './Tools'
 
 /** Cornice dell'app: barra superiore su una sola riga, contenuto e vassoio del confronto. */
@@ -18,7 +19,7 @@ export function Shell() {
       </a>
       <header className="topbar">
         <NavLink to="/" className="wordmark" aria-label={t('app.name')}>
-          Scout<span>AI</span>
+          <Wordmark />
         </NavLink>
 
         <nav className="topbar__nav" aria-label={t('nav.main')}>
@@ -52,6 +53,13 @@ export function Shell() {
       <main id="content" className="main" tabIndex={-1}>
         <Outlet />
       </main>
+      <footer className="footer">
+        <p className="footer__brand">
+          <Wordmark />
+        </p>
+        <p className="footer__tagline">{t('footer.tagline')}</p>
+        <p className="footer__source">{t('footer.source')}</p>
+      </footer>
       <CompareTray />
     </div>
   )

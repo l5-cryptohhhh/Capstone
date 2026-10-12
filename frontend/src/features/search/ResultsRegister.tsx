@@ -97,7 +97,7 @@ export function ResultsRegister({ data, filters, metricKeys, busy, onSort, onPag
                     <th scope="row" className="who">
                       <Link to="/accesso" className="who__link" state={{ from: `/${location.search}` }}>
                         <span className="lock-badge">
-                          <LockSimple size={16} weight="bold" aria-hidden="true" />
+                          <LockSimple size={16} aria-hidden="true" />
                         </span>
                         <span className="who__text">
                           <span className="who__name">{t('locked.row')}</span>

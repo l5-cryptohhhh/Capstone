@@ -36,7 +36,8 @@ class PlayerControllerTest {
     void setUp() {
         searchService = mock(PlayerSearchService.class);
         queryService = mock(PlayerQueryService.class);
-        mvc = MockMvcBuilders.standaloneSetup(new PlayerController(searchService, queryService))
+        mvc = MockMvcBuilders.standaloneSetup(new PlayerController(searchService, queryService,
+                mock(SimilarPlayerService.class)))
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
     }

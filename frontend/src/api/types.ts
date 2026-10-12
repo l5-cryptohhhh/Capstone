@@ -156,6 +156,28 @@ export interface PlayerReport {
   report: string
 }
 
+/** Giocatore statisticamente vicino: similarity 0-100, calcolata su commonMetrics percentili. */
+export interface SimilarPlayer {
+  id: number
+  name: string
+  age: number | null
+  nationality: string | null
+  position: Position | null
+  photoUrl: string | null
+  team: TeamRef
+  league: LeagueRef
+  season: number
+  minutes: number | null
+  similarity: number
+  commonMetrics: number
+}
+
+export interface CompareVerdict {
+  playerIds: number[]
+  season: number
+  verdict: string
+}
+
 export interface ApiErrorBody {
   status: number
   code: string

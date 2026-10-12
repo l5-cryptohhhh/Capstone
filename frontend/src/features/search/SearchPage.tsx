@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useLeagues, useMetrics, usePlayers } from '../../api/queries'
 import { ErrorState } from '../../components/ErrorState'
+import { Emphasis } from '../../components/Emphasis'
 import { StateMessage } from '../../components/StateMessage'
 import { useAuth } from '../auth/useAuth'
 import { useI18n } from '../../i18n/useI18n'
@@ -90,7 +91,7 @@ export function SearchPage() {
   return (
     <>
       <header className="hero">
-        <h1 className="hero__title rise">{t('search.hero.title')}</h1>
+        <h1 className="hero__title rise"><Emphasis text={t('search.hero.title')} /></h1>
         <p className="hero__lead rise" style={{ ['--d' as string]: 1 }}>
           {t('search.hero.lead')}
         </p>
@@ -144,7 +145,7 @@ export function SearchPage() {
 
               {!user && players.data.content.some((row) => row.locked) && (
                 <aside className="locked-banner" role="note">
-                  <LockSimple size={20} weight="bold" aria-hidden="true" />
+                  <LockSimple size={20} aria-hidden="true" />
                   <p>
                     {t('locked.banner', { n: 3 })}{' '}
                     <Link to="/accesso" state={{ from: `/${location.search}` }}>

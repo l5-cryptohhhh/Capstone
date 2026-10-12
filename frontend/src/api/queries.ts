@@ -3,12 +3,14 @@ import { apiGet, apiPost } from './client'
 import { useAuth } from '../features/auth/useAuth'
 import type {
   AiSearchResult,
+  CompareVerdict,
   LeagueWithSeasons,
   MetricInfo,
   PageResponse,
   PlayerDetail,
   PlayerReport,
   PlayerRow,
+  SimilarPlayer,
   TeamRef,
 } from './types'
 
@@ -77,4 +79,25 @@ export function useAiSearch() {
 /** Il report si genera su richiesta (non al caricamento della pagina) per non consumare chiamate inutili. */
 export function useAiReport(playerId: number) {
   return useMutation({ mutationFn: () => apiGet<PlayerReport>(`/ai/players/${playerId}/report`) })
+}
+
+/** Verdetto sul confronto: le stesse schede mostrate nella pagina, nella stessa stagione. */
+export function useAiCompare(ids: number[], season: number | undefined) {
+  return useMutation({
+    mutationFn: () => {
+      const params = new URLSearchParams({ ids: ids.join(',') })
+      if (season !== undefined) params.set('season', String(season))
+      return apiGet<CompareVerdict>('/ai/compare', params)
+    },
+  })
+}
+
+export function useSimilarPlayers(playerId: number, season: number) {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: ['similar', playerId, season, user?.id ?? null],
+    queryFn: ({ signal }) =>
+      apiGet<SimilarPlayer[]>(`/players/${playerId}/similar`, new URLSearchParams({ season: String(season) }), signal),
+    staleTime: FIVE_MINUTES,
+  })
 }

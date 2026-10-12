@@ -5,6 +5,7 @@ import org.example.capstone.auth.AuthInterceptor;
 import org.example.capstone.common.PageResponse;
 import org.example.capstone.player.dto.PlayerDetailDto;
 import org.example.capstone.player.dto.PlayerSummaryDto;
+import org.example.capstone.player.dto.SimilarPlayerDto;
 import org.example.capstone.search.PlayerSearchService;
 import org.example.capstone.search.SearchCriteria;
 import org.example.capstone.search.SearchParamParser;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,10 +24,13 @@ public class PlayerController {
 
     private final PlayerSearchService searchService;
     private final PlayerQueryService queryService;
+    private final SimilarPlayerService similarService;
 
-    public PlayerController(PlayerSearchService searchService, PlayerQueryService queryService) {
+    public PlayerController(PlayerSearchService searchService, PlayerQueryService queryService,
+                            SimilarPlayerService similarService) {
         this.searchService = searchService;
         this.queryService = queryService;
+        this.similarService = similarService;
     }
 
     /**
@@ -56,6 +61,13 @@ public class PlayerController {
         return AuthInterceptor.currentUser(request) != null
                 ? searchService.search(criteria, page, size)
                 : searchService.searchPreview(criteria, page, size);
+    }
+
+    /** Giocatori statisticamente vicini (stesso ruolo e stagione, profilo dei percentili). */
+    @GetMapping("/{id}/similar")
+    public List<SimilarPlayerDto> similar(@PathVariable Long id, @RequestParam(required = false) Integer season,
+                                          @RequestParam(defaultValue = "6") int limit) {
+        return similarService.similar(id, season, limit);
     }
 
     @GetMapping("/{id}")

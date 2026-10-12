@@ -29,7 +29,8 @@ Data comes from API-Football (free plan: 100 requests/day, seasons 2022-2024 onl
 ## Capabilities and Constraints
 
 - Backend endpoints available now: `GET /players` (filters: q, position, age, league, team, season, minutes, metric value/percentile filters, sort, paging), `GET /players/{id}`, `GET /leagues`, `GET /leagues/{id}/teams`, `GET /metrics`.
-- Not available yet (do not fake in the UI): natural-language search, AI scout report, AI comparison verdict, similar players, auth, shortlist sync.
+- Also available: `POST /ai/search` (natural-language search), `GET /ai/players/{id}/report`, `GET /ai/compare` (verdict), `GET /players/{id}/similar`, auth (registration, login, guest preview).
+- Not available yet (do not fake in the UI): shortlist sync, pricing or plans.
 - Missing values are null, never 0. Percentiles may be null (cohort or minutes too small): the UI must say why.
 - Player age is computed today, while statistics belong to a past season: label seasons explicitly ("2024/25").
 - Players who changed team appear once per team.
@@ -38,7 +39,7 @@ Data comes from API-Football (free plan: 100 requests/day, seasons 2022-2024 onl
 
 ## Brand Commitments
 
-Name: ScoutAI. No logo or brand assets exist yet. The user asked for the visual identity (colors, style) to be chosen by the designer's own judgment.
+Name: Scout AI. Slogan: "Il talento giusto, al momento giusto." The visual identity is the user-supplied Scout AI brand board: near-black base #0B0F14, surface #1F2937, primary green #39D353, text #E5E7EB, SF Pro Display / Inter, outline icons, pill buttons, a slanted green S as the mark. It is applied to the product screens (see DESIGN.md); landing and pricing layouts on the board are not part of the product.
 
 ## Evidence on Hand
 

@@ -44,7 +44,6 @@
   gap: 28px;
   padding: 24px 28px;
   background: var(--glass);
-  backdrop-filter: blur(28px) saturate(190%);
   border: 1px solid var(--glass-border);
   border-radius: 32px;
   box-shadow: var(--lift);
@@ -106,7 +105,6 @@
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   overflow: hidden;
   background: var(--glass);
-  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--lift);
@@ -298,7 +296,6 @@
 .compare-head {
   padding: 14px 16px 16px;
   background: var(--glass);
-  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--lift);

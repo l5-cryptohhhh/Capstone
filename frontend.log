@@ -7,3 +7,257 @@
 
   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
 [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m18:23:15[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/player/AiReport.tsx[22m
+[2m18:23:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/player/PlayerPage.tsx, /src/features/search/SearchPage.tsx, /src/features/compare/ComparePage.tsx, /src/features/player/AiReport.tsx, /src/features/search/AiSearch.tsx, /src/features/search/FilterSheet.tsx[22m
+[2m18:23:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/compare/ComparePage.tsx[22m
+[2m18:23:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:23:20[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:23:21[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/leagues[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:23:21[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=minutes&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:35:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/player/PlayerPage.tsx, /src/features/search/SearchPage.tsx, /src/features/compare/ComparePage.tsx, /src/features/player/AiReport.tsx, /src/features/search/AiSearch.tsx, /src/features/search/FilterSheet.tsx, /src/features/compare/AiVerdict.tsx[22m
+[2m18:35:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.tsx[22m
+[2m18:35:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/player/PlayerPage.tsx[22m
+[2m18:35:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:35:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:35:30[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/leagues[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:35:30[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/players?sort=minutes&order=desc&page=0&size=25[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:35:30[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/me[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:35:30[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/v1/auth/me[39m
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1339:18)
+    at afterConnectMultiple (node:net:1942:7)
+[2m18:35:31[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.WebGLProgram: Program Info Log: (210,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision
+(209,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
+(210,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision
+(209,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
+(210,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision
+[2m18:51:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/HeroModel.tsx[22m
+[2m18:51:51[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /src/features/auth/HeroModel.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m18:52:02[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/tokens.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/base.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/shell.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/shell.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/search.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/AiSearch.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AiText.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/auth/LoginPage.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/dossier.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/ResultsRegister.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SearchPage.tsx[22m
+[2m18:53:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26423:18)
+      at async file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26493:30
+      at async Promise.all (index 8)
+      at async TransformPluginContext.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26459:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:19988:26)
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22m[vite] Failed to reload /src/features/auth/LoginPage.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:08[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26423:18)
+      at async file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26493:30
+      at async Promise.all (index 8)
+      at async TransformPluginContext.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26459:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:19988:26)
+[2m18:53:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m18:53:14[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:14[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:15[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26423:18)
+      at async file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26493:30
+      at async Promise.all (index 8)
+      at async TransformPluginContext.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26459:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:19988:26)
+      at async viteTransformMiddleware (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:20207:20)
+[2m18:53:15[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:15[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:16[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m18:53:16[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:16[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:16[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:16[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+[2m18:53:16[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./HeroModel" from "src/features/auth/LoginPage.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/nunzi/OneDrive/Desktop/Corso Epicode/Capstone/frontend/src/features/auth/LoginPage.tsx[39m:13:36
+[33m  10 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  11 |  // three.js e il modello 3D si scaricano solo quando servono (schermi larghi)
+  12 |  const HeroModel = lazy(_c = () => import("./HeroModel"));
+     |                                           ^
+  13 |  _c2 = HeroModel;
+  14 |  const WIDE = "(min-width: 960px)";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26423:18)
+      at async file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26493:30
+      at async Promise.all (index 8)
+      at async TransformPluginContext.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:26459:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Users/nunzi/OneDrive/Desktop/Corso%20Epicode/Capstone/frontend/node_modules/vite/dist/node/chunks/node.js:19988:26)
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/shell.css[22m
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Shell.tsx[22m
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/features/search/SearchPage.tsx[22m
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/i18n/I18nProvider.tsx[22m
+[2m18:53:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.tsx[22m
+[2m18:53:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.tsx[22m
+[2m18:54:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/auth.css[22m
+[2m18:54:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/similar.css[22m
