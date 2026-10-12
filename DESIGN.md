@@ -149,7 +149,7 @@ The night theme is the brand and the default. The light theme is its daytime twi
 
 ## Layout
 
-Search: top bar, centered hero (headline with a green key word, one line of context), the AI search card (max 1100px), then a sticky 320px filter panel on the left and a fluid results register on the right. Dossier and compare: a centered page (980px; compare 1120px; reading 760px). Login: on 960px and wider a brand panel on the left (mark, wordmark, slogan, four feature lines) and the form card on the right; below that, the form card alone. A footer closes every app page: mark, slogan and the data-source line.
+Search: top bar, centered hero (headline with a green key word, one line of context), the AI search card (max 1100px), then a sticky 320px filter panel on the left and a fluid results register on the right. Dossier and compare: a centered page (980px; compare 1120px; reading 760px). Login: on 960px and wider a brand panel on the left (mark, wordmark, slogan, four feature lines) and the form card on the right; below that, the brand block (mark, wordmark, slogan) stacked above the form card. A footer closes every app page: mark, slogan and the data-source line.
 
 Responsive: at 1180px optional register columns drop; at 900px the filter panel collapses behind a toggle; at 760px the top bar wraps to two rows (96px) and metric rows put the scale on its own line; at 700px each register row becomes a compact multi-line row.
 
@@ -163,7 +163,7 @@ Depth is a hairline border plus one dark shadow family. `--edge` is a 4% white i
 
 ## Components
 
-- **Bouncing ball** (login, wide screens only): the 3D ball from the former hero model, alone, hops between the A and the I of "AI" in the large wordmark. Decorative, transparent, loaded lazily, still under `prefers-reduced-motion`. After a successful login it becomes the page transition: the ball leaves the wordmark, spirals (1.75 turns, 1.7s) to the center while growing to cover the screen, dissolves into `--paper`, and the app shell fades that same flat color out over the dashboard (`.curtain`). Skipped under reduced motion and below 960px, where the route changes at once.
+- **Bouncing ball** (login, every width): the 3D ball from the former hero model, alone, hops between the A and the I of "AI" in the large wordmark. Decorative, transparent, loaded lazily, still under `prefers-reduced-motion`. After a successful login it becomes the page transition: the ball leaves the wordmark, spirals (1.75 turns, 1.7s) to the center while growing to cover the screen, dissolves into `--paper`, and the app shell fades that same flat color out over the dashboard (`.curtain`). Skipped under reduced motion, where the route changes at once. On narrow screens the brand block (mark, wordmark, slogan) sits above the form so the ball has its own letters; the feature list appears from 960px.
 - **Wordmark**: the S mark (a single slanted stroke, `BrandMark`) in green, then "Scout" in ink and "AI" in green. Favicon: the mark on `#0b0f14`.
 - **Buttons**: 38px pills, 1px `rule-strong` outline, transparent; hover pen-wash fill with a green border; press scales to 0.96 and returns through the spring curve. Primary: solid green. On: pen-wash with green text. Quiet: transparent with green text.
 - **Segmented selector** (language, season, team, login mode): pill track on `glass`, selected segment solid green.

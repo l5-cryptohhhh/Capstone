@@ -55,8 +55,11 @@ public class PlayerSearchService {
         if (season == null) {
             return PageResponse.empty(page, size); // nessun dato ancora importato
         }
-        // Senza filtro esplicito si vedono tutti: per lo scouting contano anche i giovani con pochi minuti
-        int minMinutes = criteria.minMinutes() != null ? criteria.minMinutes() : 0;
+        // Senza filtro esplicito si vedono tutti: per lo scouting contano anche i giovani con pochi minuti.
+        // Fa eccezione l'ordine per valutazione: una media su pochi minuti non dice nulla, quindi "i migliori"
+        // sono scelti tra chi ha giocato abbastanza (la stessa soglia dei percentili), salvo filtro esplicito.
+        int minMinutes = criteria.minMinutes() != null ? criteria.minMinutes()
+                : "rating".equals(criteria.sort()) ? statsProperties.minMinutes() : 0;
 
         Page<PlayerSeasonStat> result = stats.findAll(
                 PlayerSearchSpecs.from(criteria, season, minMinutes, LocalDate.now()), PageRequest.of(page, size));

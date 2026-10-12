@@ -51,7 +51,7 @@ describe('filtri di ricerca', () => {
   it('i parametri per l\'API includono sempre ordine e dimensione pagina', () => {
     const p = toApiParams(EMPTY_FILTERS)
 
-    expect(p.get('sort')).toBe('minutes')
+    expect(p.get('sort')).toBe('rating')
     expect(p.get('order')).toBe('desc')
     expect(p.get('size')).toBe('25')
   })
