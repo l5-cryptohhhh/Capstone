@@ -163,6 +163,7 @@ Depth is a hairline border plus one dark shadow family. `--edge` is a 4% white i
 
 ## Components
 
+- **Bouncing ball** (login, wide screens only): the 3D ball from the former hero model, alone, hops between the A and the I of "AI" in the large wordmark. Decorative, transparent, loaded lazily, still under `prefers-reduced-motion`. After a successful login it becomes the page transition: the ball leaves the wordmark, spirals (1.75 turns, 1.7s) to the center while growing to cover the screen, dissolves into `--paper`, and the app shell fades that same flat color out over the dashboard (`.curtain`). Skipped under reduced motion and below 960px, where the route changes at once.
 - **Wordmark**: the S mark (a single slanted stroke, `BrandMark`) in green, then "Scout" in ink and "AI" in green. Favicon: the mark on `#0b0f14`.
 - **Buttons**: 38px pills, 1px `rule-strong` outline, transparent; hover pen-wash fill with a green border; press scales to 0.96 and returns through the spring curve. Primary: solid green. On: pen-wash with green text. Quiet: transparent with green text.
 - **Segmented selector** (language, season, team, login mode): pill track on `glass`, selected segment solid green.

@@ -1,14 +1,30 @@
 import { CheckCircle, LockSimple } from '@phosphor-icons/react'
-import { useId, useState, type FormEvent } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useId, useState, type FormEvent } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { ApiError } from '../../api/client'
 import { BrandMark, Wordmark } from '../../components/Brand'
 import { Tools } from '../../components/Tools'
 import { useI18n } from '../../i18n/useI18n'
 import type { TranslationKey } from '../../i18n/it'
+import { markEntering } from './entry'
 import { useAuth } from './useAuth'
 
 type Mode = 'login' | 'register'
+
+// three.js e il pallone 3D si scaricano solo quando servono (schermi larghi, dove c'è il pannello del brand)
+const BouncingBall = lazy(() => import('./BouncingBall'))
+const WIDE = '(min-width: 960px)'
+
+function useWide(): boolean {
+  const [wide, setWide] = useState(() => window.matchMedia(WIDE).matches)
+  useEffect(() => {
+    const query = window.matchMedia(WIDE)
+    const update = () => setWide(query.matches)
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+  return wide
+}
 
 function messageKey(error: unknown): TranslationKey {
   if (error instanceof ApiError) {
@@ -27,14 +43,37 @@ export function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const uid = useId()
+  const wide = useWide()
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<TranslationKey | null>(null)
   const [busy, setBusy] = useState(false)
+  // Dopo l'accesso il pallone parte in spirale e riempie lo schermo: finché non ha finito si resta qui.
+  const [ballReady, setBallReady] = useState(false)
+  const [armed, setArmed] = useState(false)
+  const [launched, setLaunched] = useState(false)
+  const [guestGo, setGuestGo] = useState(false) // "Continua senza accedere" ha prenotato il lancio
+  const onBallReady = useCallback(() => setBallReady(true), [])
+  const onLaunched = useCallback(() => setLaunched(true), [])
+  const leaving = armed && (user !== null || guestGo)
+
+  useEffect(() => {
+    if (!leaving) return
+    const fallback = window.setTimeout(() => setLaunched(true), 4000) // es. scheda in secondo piano: non si resta bloccati
+    return () => window.clearTimeout(fallback)
+  }, [leaving])
   const from = (location.state as { from?: string } | null)?.from ?? '/'
-  if (user) return <Navigate to={from} replace />
+  // Il visitatore entra alla fine del lancio, come chi accede
+  useEffect(() => {
+    if (guestGo && launched) {
+      continueAsGuest()
+      navigate('/')
+    }
+  }, [guestGo, launched, continueAsGuest, navigate])
+
+  if (user && (!armed || launched)) return <Navigate to={from} replace />
 
   const isLogin = mode === 'login'
 
@@ -42,10 +81,15 @@ export function LoginPage() {
     event.preventDefault()
     setError(null)
     setBusy(true)
+    markEntering(true)
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setArmed(wide && ballReady && !reduced) // si prenota il lancio prima della risposta, così l'accesso non ci scavalca
     try {
       if (isLogin) await login(email, password)
       else await register(email, displayName, password)
     } catch (e) {
+      markEntering(false)
+      setArmed(false)
       setError(messageKey(e))
       setBusy(false)
     }
@@ -57,7 +101,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="auth">
+    <div className={leaving ? 'auth is-leaving' : 'auth'}>
       <div className="auth__tools">
         <Tools />
       </div>
@@ -66,7 +110,15 @@ export function LoginPage() {
         <p className="auth__logo">
           <BrandMark />
           <span>
-            Scout <span className="wordmark__ai">AI</span>
+            Scout{' '}
+            <span className="wordmark__ai auth__ai">
+              AI
+              {wide && (
+                <Suspense fallback={null}>
+                  <BouncingBall launch={leaving} onReady={onBallReady} onLaunched={onLaunched} />
+                </Suspense>
+              )}
+            </span>
           </span>
         </p>
         <p className="auth__slogan">{t('auth.brand.slogan')}</p>
@@ -161,8 +213,15 @@ export function LoginPage() {
             type="button"
             className="btn btn--quiet"
             onClick={() => {
-              continueAsGuest()
-              navigate('/')
+              markEntering(true)
+              const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+              if (wide && ballReady && !reduced) {
+                setArmed(true)
+                setGuestGo(true)
+              } else {
+                continueAsGuest()
+                navigate('/')
+              }
             }}
           >
             {t('auth.guest')}
