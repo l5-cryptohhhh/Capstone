@@ -1,9 +1,11 @@
-import { X } from '@phosphor-icons/react'
+import { SoccerBall, X } from '@phosphor-icons/react'
+import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useMetrics, usePlayersByIds } from '../../api/queries'
 import type { MetricValue, PlayerDetail, SeasonEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
 import { PlayerPhoto } from '../../components/PlayerPhoto'
+import { ShinyButton } from '../../components/ShinyButton'
 import { MarkGlyph, ScaleRow } from '../../components/ScaleRow'
 import { Stamp } from '../../components/Stamp'
 import { StateMessage } from '../../components/StateMessage'
@@ -12,6 +14,7 @@ import { countryName } from '../../lib/countries'
 import { formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { formatMetricValue } from '../player/helpers'
+import { Partitella } from '../match/Partitella'
 import { AiVerdict } from './AiVerdict'
 import { SLOTS, bestIndex, commonSeason, entryFor, parseIds } from './helpers'
 import { useCompare } from './useCompare'
@@ -24,6 +27,7 @@ export function ComparePage() {
   const compare = useCompare()
   const navigate = useNavigate()
   const metricsInfo = useMetrics()
+  const [playing, setPlaying] = useState(false)
 
   const urlIds = parseIds(params.get('ids'))
   const ids = urlIds.length > 0 ? urlIds : compare.entries.map((e) => e.id)
@@ -124,7 +128,17 @@ export function ComparePage() {
 
   return (
     <div className="page page--wide" style={{ ['--n' as string]: players.length }}>
-      <h1 className="page__title">{t('compare.title')}</h1>
+      <div className="page__head">
+        <h1 className="page__title">{t('compare.title')}</h1>
+        <ShinyButton
+          disabled={players.length < 3}
+          title={players.length < 3 ? t('match.need3') : undefined}
+          onClick={() => setPlaying(true)}
+        >
+          <SoccerBall size={18} weight="bold" aria-hidden="true" />
+          {t('match.open')}
+        </ShinyButton>
+      </div>
 
       {season !== undefined && <p className="results__season">{t('compare.season')} {seasonLabel(season)}</p>}
 
@@ -271,6 +285,8 @@ export function ComparePage() {
           )
         })}
       </section>
+
+      {playing && <Partitella yours={players} season={season} onClose={() => setPlaying(false)} />}
 
       <AiVerdict key={`${ids.join(',')}:${season ?? ''}`} ids={ids} season={season} />
     </div>

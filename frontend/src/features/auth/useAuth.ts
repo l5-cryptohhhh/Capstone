@@ -4,6 +4,14 @@ export interface User {
   id: number
   email: string
   displayName: string
+  bio: string | null
+  location: string | null
+  favoriteTeam: string | null
+  favoritePosition: 'GK' | 'DEF' | 'MID' | 'ATT' | null
+  /** Percorso della foto (con la versione nell'indirizzo), o null se non ne ha una */
+  avatarUrl: string | null
+  /** ISO 8601 */
+  createdAt: string | null
 }
 
 export interface AuthValue {
@@ -16,6 +24,10 @@ export interface AuthValue {
   register: (email: string, displayName: string, password: string) => Promise<void>
   logout: () => Promise<void>
   continueAsGuest: () => void
+  /** Aggiorna l'utente dopo una modifica del profilo (il backend restituisce l'utente aggiornato). */
+  updateUser: (user: User) => void
+  /** Dopo l'eliminazione dell'account: chiude la sessione in locale senza chiamare il backend. */
+  closeAccount: () => void
 }
 
 export const AuthContext = createContext<AuthValue | null>(null)

@@ -26,7 +26,8 @@ final class PlayerSearchSpecs {
     private PlayerSearchSpecs() {
     }
 
-    static Specification<PlayerSeasonStat> from(SearchCriteria c, int season, int minMinutes, LocalDate today) {
+    static Specification<PlayerSeasonStat> from(SearchCriteria c, int season, int minMinutes, int ratingMinutes,
+                                                LocalDate today) {
         return (root, query, cb) -> {
             Join<PlayerSeasonStat, Player> player = root.join("player");
             List<Predicate> where = new ArrayList<>();
@@ -66,7 +67,7 @@ final class PlayerSearchSpecs {
             }
 
             if (!isCountQuery(query.getResultType())) {
-                query.orderBy(order(c, root, player, query, cb, where));
+                query.orderBy(order(c, root, player, query, cb, where, ratingMinutes));
             }
             return cb.and(where.toArray(Predicate[]::new));
         };
@@ -100,7 +101,7 @@ final class PlayerSearchSpecs {
     }
 
     private static List<Order> order(SearchCriteria c, Root<PlayerSeasonStat> root, Join<PlayerSeasonStat, Player> player,
-                                     CriteriaQuery<?> query, CriteriaBuilder cb, List<Predicate> where) {
+                                     CriteriaQuery<?> query, CriteriaBuilder cb, List<Predicate> where, int ratingMinutes) {
         String sort = c.sort() == null ? "minutes" : c.sort();
         boolean desc = c.descending();
         List<Order> orders = new ArrayList<>();
@@ -111,9 +112,16 @@ final class PlayerSearchSpecs {
             case "age" -> orders.add(direction(cb, player.<LocalDate>get("birthDate"), !desc));
             case "minutes" -> orders.add(direction(cb, root.<Integer>get("minutes"), desc));
             case "appearances" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("appearances"), 0), desc));
-            // senza voto: in fondo sia dal migliore sia dal peggiore
-            case "rating" -> orders.add(direction(cb,
-                    cb.coalesce(root.<BigDecimal>get("rating"), desc ? BigDecimal.ZERO : BigDecimal.valueOf(99)), desc));
+            // Prima chi ha giocato abbastanza perché la media voto significhi qualcosa, poi gli altri (visibili
+            // comunque: per lo scouting contano anche loro). Senza voto: in fondo sia dal migliore sia dal peggiore.
+            case "rating" -> {
+                orders.add(cb.desc(cb.<Integer>selectCase()
+                        .when(cb.greaterThanOrEqualTo(root.<Integer>get("minutes"), ratingMinutes), 1)
+                        .otherwise(0)));
+                orders.add(direction(cb,
+                        cb.coalesce(root.<BigDecimal>get("rating"), desc ? BigDecimal.ZERO : BigDecimal.valueOf(99)),
+                        desc));
+            }
             case "goals" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("goals"), 0), desc));
             case "assists" -> orders.add(direction(cb, cb.coalesce(root.<Integer>get("assists"), 0), desc));
             default -> {

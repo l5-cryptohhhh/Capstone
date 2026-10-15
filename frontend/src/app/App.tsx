@@ -10,6 +10,7 @@ import { CompareProvider } from '../features/compare/CompareProvider'
 import { ComparePage } from '../features/compare/ComparePage'
 import { MethodPage } from '../features/method/MethodPage'
 import { PlayerPage } from '../features/player/PlayerPage'
+import { ProfilePage } from '../features/profile/ProfilePage'
 import { SearchPage } from '../features/search/SearchPage'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
@@ -77,6 +78,14 @@ export default function App() {
                       element={
                         <RequireAuth>
                           <ComparePage />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="profilo"
+                      element={
+                        <RequireAuth>
+                          <ProfilePage />
                         </RequireAuth>
                       }
                     />

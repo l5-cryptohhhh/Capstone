@@ -5,6 +5,7 @@ import { useCompare } from '../features/compare/useCompare'
 import { isEntering, markEntering } from '../features/auth/entry'
 import { useAuth } from '../features/auth/useAuth'
 import { useI18n } from '../i18n/useI18n'
+import { Avatar } from './Avatar'
 import { Wordmark } from './Brand'
 import { Tools } from './Tools'
 
@@ -41,7 +42,10 @@ export function Shell() {
           <Tools />
           {user ? (
             <>
-              <span className="topbar__user">{user.displayName}</span>
+              <NavLink to="/profilo" className="topbar__user" aria-label={t('profile.open')}>
+                <Avatar name={user.displayName} url={user.avatarUrl} size="xs" />
+                <span>{user.displayName}</span>
+              </NavLink>
               <button type="button" className="btn" onClick={() => void logout()}>
                 {t('nav.logout')}
               </button>

@@ -10,6 +10,8 @@ public enum ErrorCode {
     QUERY_NOT_INTERPRETABLE(HttpStatus.UNPROCESSABLE_ENTITY),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED),
     EMAIL_ALREADY_REGISTERED(HttpStatus.CONFLICT),
+    // Non 401: il frontend lo leggerebbe come sessione scaduta e farebbe uscire l'utente
+    WRONG_PASSWORD(HttpStatus.FORBIDDEN),
     RATE_LIMITED(HttpStatus.TOO_MANY_REQUESTS),
     QUOTA_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS),
     UPSTREAM_FOOTBALL_API_ERROR(HttpStatus.BAD_GATEWAY),

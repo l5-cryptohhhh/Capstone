@@ -10,6 +10,9 @@ import './styles/dossier.css'
 import './styles/auth.css'
 import './styles/ai.css'
 import './styles/similar.css'
+import './styles/match.css'
+import './styles/shiny-button.css'
+import './styles/profile.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
