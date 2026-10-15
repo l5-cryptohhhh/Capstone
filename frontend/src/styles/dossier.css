@@ -99,10 +99,10 @@
   color: var(--ink-3);
 }
 
-/* Campi dell'anagrafica e delle statistiche: griglia a filetto */
+/* Campi dell'anagrafica e delle statistiche: griglia a filetto, colonne fisse (--cols-d / --cols-m) */
 .fields {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(var(--cols-d, 6), minmax(0, 1fr));
   overflow: hidden;
   background: var(--glass);
   border: 1px solid var(--glass-border);
@@ -111,7 +111,7 @@
 }
 
 .fields--stats {
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  margin-top: 0;
 }
 
 .fields__item {
@@ -151,7 +151,7 @@
 }
 
 .metric-row {
-  grid-template-columns: minmax(150px, 1.1fr) minmax(190px, 2.4fr) 76px 34px;
+  grid-template-columns: minmax(150px, 1.1fr) minmax(190px, 2.4fr) 76px 48px;
 }
 
 .metric-row__label {
@@ -167,6 +167,7 @@
   text-align: right;
   font-weight: 700;
   color: var(--pen);
+  white-space: nowrap;
 }
 
 /* Scala 0-100: tratto, tacche ogni 10, segno al percentile esatto */
@@ -481,20 +482,7 @@
   }
 }
 
-/* Griglie a righe piene: nessuna casella orfana, le statistiche principali un gradino sopra */
-.fields {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.fields__item {
-  flex: 1 1 150px;
-}
-
-.fields--bio .fields__item {
-  flex-basis: 28%;
-}
-
+/* Le statistiche principali un gradino sopra */
 .fields--core {
   margin-bottom: 16px;
 }
@@ -556,10 +544,6 @@
 }
 
 @media (max-width: 760px) {
-  .fields--bio .fields__item {
-    flex-basis: 45%;
-  }
-
   .cmp-colheads {
     grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr));
   }
@@ -580,30 +564,13 @@
   }
 }
 
-/* Griglie dell'anagrafica e delle statistiche: colonne fisse, riga finale completata da caselle vuote */
-.fields {
-  display: grid;
-  grid-template-columns: repeat(var(--cols-d, 6), minmax(0, 1fr));
-}
-
-.fields--stats {
-  margin-top: 0;
-}
-
+/* Riga finale completata da caselle vuote */
 .fields__item--empty {
   display: none;
 }
 
 .fields__item--empty.f-d {
   display: block;
-}
-
-.metric-row {
-  grid-template-columns: minmax(150px, 1.1fr) minmax(190px, 2.4fr) 76px 48px;
-}
-
-.metric-row__pct {
-  white-space: nowrap;
 }
 
 @media (max-width: 760px) {
@@ -618,19 +585,9 @@
   .fields__item--empty.f-m {
     display: block;
   }
-
-  .metric-row {
-    grid-template-columns: minmax(0, 1fr) auto auto;
-  }
 }
 
-/* Confronto su telefono: schede in riga compatta, valori che vanno a capo, una sola legenda */
-.cmp-table td,
-.cmp-table th {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
+/* Confronto su telefono: una sola legenda */
 @media (max-width: 760px) {
   .cmp-legend {
     display: none;
@@ -686,10 +643,37 @@
 /* Le parole lunghe (es. "Centrocampista") si sillabano invece di spezzarsi a metà */
 .cmp-table td,
 .cmp-table th {
+  min-width: 0;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
 .page__title + .results__season {
   margin-top: 6px;
+}
+
+/* Telefono: una scala tipografica sola per titoli e schede, niente parole spezzate a metà */
+@media (max-width: 560px) {
+  .page__title {
+    font-size: clamp(2.1rem, 10vw, 2.6rem);
+  }
+
+  .part__title {
+    font-size: 1.5rem;
+  }
+
+  .dossier-head {
+    padding: 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .dossier-head__name {
+    font-size: clamp(1.7rem, 8.4vw, 2.2rem);
+    overflow-wrap: break-word;
+  }
+
+  .cmp-table td,
+  .cmp-table th {
+    font-size: 13px;
+  }
 }

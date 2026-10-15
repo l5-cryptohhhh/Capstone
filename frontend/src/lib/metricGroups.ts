@@ -1,6 +1,6 @@
 import type { TranslationKey } from '../i18n/it'
 
-export interface MetricGroup {
+interface MetricGroup {
   id: string
   labelKey: TranslationKey
   metrics: string[]

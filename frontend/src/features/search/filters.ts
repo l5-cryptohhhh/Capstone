@@ -1,7 +1,7 @@
 import type { Position } from '../../api/types'
 
 /** Una caratteristica richiesta: la metrica deve essere almeno al percentile indicato rispetto ai pari ruolo. */
-export interface FeatureFilter {
+interface FeatureFilter {
   metric: string
   minPercentile: number
 }
@@ -23,7 +23,7 @@ export interface Filters {
 
 /** Dal migliore al peggiore: l'ordine di partenza di ogni ricerca. */
 export const DEFAULT_SORT = 'rating'
-export const PAGE_SIZE = 25
+const PAGE_SIZE = 25
 export const POSITIONS: Position[] = ['GK', 'DEF', 'MID', 'ATT']
 
 export const EMPTY_FILTERS: Filters = {

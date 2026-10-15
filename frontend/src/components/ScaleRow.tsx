@@ -3,7 +3,7 @@ import { scalePosition } from '../lib/scale'
 
 export type MarkShape = 'x' | 'circle' | 'square'
 
-export interface ScaleMark {
+interface ScaleMark {
   id: string
   /** 0-100, null se il percentile non è disponibile */
   percentile: number | null

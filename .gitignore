@@ -42,3 +42,6 @@ node_modules/
 .impeccable/review/
 .impeccable/mocks/
 .impeccable/build/
+
+### Log locali ###
+*.log

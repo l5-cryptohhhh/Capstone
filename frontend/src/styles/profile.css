@@ -315,3 +315,10 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Su desktop l'uscita sta già nella barra in alto */
+@media (min-width: 561px) {
+  .profile__logout {
+    display: none;
+  }
+}

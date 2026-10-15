@@ -23,11 +23,6 @@ public class AuthService {
 
     public record UserDto(Long id, String email, String displayName, String bio, String location,
                           String favoriteTeam, String favoritePosition, String avatarUrl, Instant createdAt) {
-
-        /** Solo i dati di base (usato dove il profilo non serve). */
-        public UserDto(Long id, String email, String displayName) {
-            this(id, email, displayName, null, null, null, null, null, null);
-        }
     }
 
     public record AuthResponse(String token, UserDto user) {

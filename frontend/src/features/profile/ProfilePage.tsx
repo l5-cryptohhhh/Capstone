@@ -1,4 +1,4 @@
-import { Camera, Trash } from '@phosphor-icons/react'
+import { Camera, SignOut, Trash } from '@phosphor-icons/react'
 import { useMutation } from '@tanstack/react-query'
 import { useRef, useState, type FormEvent } from 'react'
 import { apiSend, apiUpload } from '../../api/client'
@@ -21,14 +21,14 @@ const POSITIONS = ['GK', 'DEF', 'MID', 'ATT'] as const
 export function ProfilePage() {
   const { t, lang, setLang, locale } = useI18n()
   const { theme, toggle } = useTheme()
-  const { user, updateUser } = useAuth()
+  const { user, updateUser, logout } = useAuth()
   if (!user) return null
 
   return (
     <div className="page profile">
       <h1 className="page__title">{t('profile.title')}</h1>
 
-      <Header user={user} onChange={updateUser} />
+      <Header user={user} onChange={updateUser} onLogout={() => void logout()} />
 
       <section className="part" aria-labelledby="pf-personal">
         <h2 id="pf-personal" className="part__title">
@@ -77,7 +77,7 @@ export function ProfilePage() {
   )
 }
 
-function Header({ user, onChange }: { user: User; onChange: (user: User) => void }) {
+function Header({ user, onChange, onLogout }: { user: User; onChange: (user: User) => void; onLogout: () => void }) {
   const { t, locale } = useI18n()
   const fileRef = useRef<HTMLInputElement>(null)
   const [notice, setNotice] = useState<Notice>(null)
@@ -142,6 +142,10 @@ function Header({ user, onChange }: { user: User; onChange: (user: User) => void
               {t('profile.photo.remove')}
             </button>
           )}
+          <button type="button" className="btn btn--quiet profile__logout" onClick={onLogout}>
+            <SignOut size={16} aria-hidden="true" />
+            {t('nav.logout')}
+          </button>
         </div>
         <p className="note">{t('profile.photo.hint')}</p>
         <FormNotice notice={notice} />

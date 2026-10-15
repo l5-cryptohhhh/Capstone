@@ -29,7 +29,7 @@ class AuthInterceptorTest {
 
     @Test
     void validTokenSetsUser() {
-        UserDto user = new UserDto(1L, "a@b.it", "Anna");
+        UserDto user = new UserDto(1L, "a@b.it", "Anna", null, null, null, null, null, null);
         Mockito.when(service.authenticate("tok")).thenReturn(Optional.of(user));
         MockHttpServletRequest r = request("Bearer tok");
 

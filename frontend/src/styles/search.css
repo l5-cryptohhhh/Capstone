@@ -458,8 +458,8 @@ select.input {
 }
 
 .register .check {
-  width: 36px;
-  padding-right: 0;
+  width: 44px;
+  padding-inline: 0;
 }
 
 .register .pos {
@@ -578,10 +578,6 @@ select.input {
   border-radius: 10px;
 }
 
-.photo--lg {
-  border-radius: 16px;
-}
-
 .photo img {
   width: 100%;
   height: 100%;
@@ -602,6 +598,7 @@ select.input {
 .photo--lg {
   width: 104px;
   height: 134px;
+  border-radius: 16px;
 }
 
 .photo__initials {
@@ -783,11 +780,6 @@ select.input {
   transform: translate(-50%, -50%);
 }
 
-.register .check {
-  width: 44px;
-  padding-left: 0;
-}
-
 /* Su telefono ogni giocatore è una riga compatta: nessun valore resta mai a metà */
 @media (max-width: 700px) {
   .register thead {
@@ -832,6 +824,7 @@ select.input {
   }
 
   .register td.pos {
+    min-width: 3.5ch;
     margin-left: 52px;
   }
 
@@ -878,12 +871,8 @@ select.input {
 /* Percentile a larghezza fissa: la scala non slitta quando passa da p38 a p100 */
 .metric__pct {
   display: inline-block;
-  min-width: 3.2ch;
-  text-align: right;
-}
-
-.metric__pct {
   min-width: 4ch;
+  text-align: right;
 }
 
 /* Ordine della lista: sopra i risultati, i filtri restano nel pannello */
