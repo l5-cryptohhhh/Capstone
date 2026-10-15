@@ -464,7 +464,7 @@ interface Surface {
   real: boolean
 }
 
-export interface LaserFlowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'color'> {
+interface LaserFlowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'color'> {
   /** Elemento su cui atterra il fascio: la luce si apre lungo il suo bordo superiore. */
   surfaceRef?: RefObject<HTMLElement | null>
   beamPosition?: number

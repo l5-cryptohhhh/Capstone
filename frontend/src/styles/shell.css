@@ -345,6 +345,10 @@
     font-size: 1.2rem;
   }
 
+  .topbar__tools {
+    gap: 8px;
+  }
+
   .tray {
     flex-wrap: wrap;
     gap: 8px 12px;
@@ -414,5 +418,12 @@
 @keyframes curtain-out {
   to {
     opacity: 0;
+  }
+}
+
+/* Sul telefono l'uscita sta nel profilo: la barra tiene marchio e strumenti su una sola riga */
+@media (max-width: 560px) {
+  .topbar__logout {
+    display: none;
   }
 }

@@ -47,7 +47,7 @@ class PlayerControllerTest {
         when(searchService.search(any(), anyInt(), anyInt())).thenReturn(PageResponse.empty(0, 20));
 
         mvc.perform(get("/api/v1/players")
-                        .requestAttr(AuthInterceptor.USER_ATTRIBUTE, new UserDto(1L, "a@b.it", "Anna"))
+                        .requestAttr(AuthInterceptor.USER_ATTRIBUTE, new UserDto(1L, "a@b.it", "Anna", null, null, null, null, null, null))
                         .param("position", "MID").param("maxAge", "22").param("season", "2024")
                         .param("pct.def_actions_p90.min", "70").param("sort", "def_actions_p90"))
                 .andExpect(status().isOk())

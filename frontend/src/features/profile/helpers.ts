@@ -1,12 +1,12 @@
 /** Lato della foto profilo dopo il ridimensionamento. */
-export const AVATAR_SIZE = 256
+const AVATAR_SIZE = 256
 /** Limite oltre il quale il backend rifiuta la foto. */
-export const AVATAR_MAX_BYTES = 256 * 1024
+const AVATAR_MAX_BYTES = 256 * 1024
 /** Foto di partenza accettate dal selettore: più grandi di così non si caricano nemmeno. */
 export const AVATAR_SOURCE_MAX_BYTES = 12 * 1024 * 1024
 export const AVATAR_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 
-export interface CropRect {
+interface CropRect {
   sx: number
   sy: number
   size: number
@@ -18,7 +18,7 @@ export function squareCrop(width: number, height: number): CropRect {
   return { sx: Math.round((width - size) / 2), sy: Math.round((height - size) / 2), size }
 }
 
-export type Strength = 0 | 1 | 2 | 3 | 4
+type Strength = 0 | 1 | 2 | 3 | 4
 
 /** Robustezza indicativa di una password: lunghezza e varietà di caratteri (0 = troppo corta). */
 export function passwordStrength(password: string): Strength {

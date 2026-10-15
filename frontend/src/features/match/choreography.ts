@@ -13,7 +13,7 @@ const easeOut = (t: number) => 1 - (1 - t) ** 3
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2)
 const mix = (a: Point, b: Point, t: number): Point => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) })
 
-export interface Layout {
+interface Layout {
   home: Point[]
   away: Point[]
   /** i portieri restano in porta e seguono la palla */
@@ -28,7 +28,7 @@ export interface Frame extends Layout {
   index: number
 }
 
-export interface Timeline {
+interface Timeline {
   actions: Action[]
   initial: Layout & { ball: Point }
   /** layouts[i] = posizioni al termine dell'azione i */

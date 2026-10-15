@@ -58,7 +58,7 @@ export const it = {
   'position.any': 'Qualsiasi',
 
   'search.hero.title': 'Trova il *giocatore giusto*.',
-  'search.hero.lead': 'Cerca tra i dati reali dei top 5 campionati europei e confronta chi ti serve.',
+  'search.hero.lead': 'Cerca tra i dati reali dei migliori campionati del mondo e confronta chi ti serve.',
   'filters.title': 'Nuova ricerca',
   'filters.open': 'Filtri',
   'filters.close': 'Chiudi filtri',
@@ -262,7 +262,6 @@ export const it = {
   'match.search': 'Cerca un giocatore',
   'match.add': 'Aggiungi',
   'match.taken': 'Già scelto',
-  'match.inYours': 'Nella tua squadra',
   'match.kickoff': 'Calcio d\'inizio',
   'match.feed': 'Azioni della partita',
   'match.ev.goal': 'GOL di {name}!',

@@ -60,7 +60,7 @@ export const en: Record<TranslationKey, string> = {
   'position.any': 'Any',
 
   'search.hero.title': 'Find the *right player*.',
-  'search.hero.lead': 'Search real data from Europe\'s top five leagues and compare who you need.',
+  'search.hero.lead': 'Search real data from the best leagues in the world and compare who you need.',
   'filters.title': 'New search',
   'filters.open': 'Filters',
   'filters.close': 'Close filters',
@@ -264,7 +264,6 @@ export const en: Record<TranslationKey, string> = {
   'match.search': 'Search a player',
   'match.add': 'Add',
   'match.taken': 'Already picked',
-  'match.inYours': 'In your team',
   'match.kickoff': 'Kick off',
   'match.feed': 'Match actions',
   'match.ev.goal': 'GOAL by {name}!',

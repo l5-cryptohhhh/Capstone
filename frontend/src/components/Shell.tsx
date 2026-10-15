@@ -46,7 +46,7 @@ export function Shell() {
                 <Avatar name={user.displayName} url={user.avatarUrl} size="xs" />
                 <span>{user.displayName}</span>
               </NavLink>
-              <button type="button" className="btn" onClick={() => void logout()}>
+              <button type="button" className="btn topbar__logout" onClick={() => void logout()}>
                 {t('nav.logout')}
               </button>
             </>

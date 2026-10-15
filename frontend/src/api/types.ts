@@ -1,7 +1,7 @@
 // Tipi che rispecchiano i DTO del backend (/api/v1). I valori mancanti arrivano come null, mai come 0.
 
 export type Position = 'GK' | 'DEF' | 'MID' | 'ATT'
-export type MetricUnit = 'PER_90' | 'PERCENT' | 'RATING'
+type MetricUnit = 'PER_90' | 'PERCENT' | 'RATING'
 
 export interface TeamRef {
   id: number
@@ -9,7 +9,7 @@ export interface TeamRef {
   logoUrl: string | null
 }
 
-export interface LeagueRef {
+interface LeagueRef {
   id: number
   name: string
   country: string | null
@@ -47,7 +47,7 @@ export interface PlayerSummary {
 }
 
 /** Riga riservata agli utenti registrati: del giocatore il backend non invia nulla oltre a ruolo, squadra e campionato. */
-export interface LockedPlayerSummary {
+interface LockedPlayerSummary {
   locked: true
   position: Position | null
   team: TeamRef

@@ -90,7 +90,7 @@ export interface Point {
 
 /** Campo in coordinate 1000 x 600; la squadra "home" attacca verso x = 1000. */
 export const PITCH = { w: 1000, h: 600 }
-export const CENTER: Point = { x: 500, y: 300 }
+const CENTER: Point = { x: 500, y: 300 }
 
 /** Indice del portiere come portatore di palla: i giocatori di movimento sono 0, 1, 2. */
 export const KEEPER = 3
@@ -100,7 +100,7 @@ export const otherSide = (s: Side): Side => (s === 'home' ? 'away' : 'home')
 export const directionOf = (s: Side): 1 | -1 => (s === 'home' ? 1 : -1)
 
 /** Avanzamento della palla verso la porta avversaria, 0 (propria area) - 1 (area avversaria). */
-export function zoneOf(side: Side, x: number): number {
+function zoneOf(side: Side, x: number): number {
   const z = side === 'home' ? (x - 70) / 860 : (930 - x) / 860
   return Math.min(1, Math.max(0, z))
 }
@@ -112,9 +112,9 @@ export interface PlayState {
   ball: Point
 }
 
-export type ActionKind = 'pass' | 'dribble' | 'shot' | 'foul' | 'restart'
-export type Restart = 'kickoff' | 'throwIn' | 'corner' | 'goalKick' | 'freeKick' | 'keeper'
-export type Outcome = 'goal' | 'saved' | 'miss' | 'blocked'
+type ActionKind = 'pass' | 'dribble' | 'shot' | 'foul' | 'restart'
+type Restart = 'kickoff' | 'throwIn' | 'corner' | 'goalKick' | 'freeKick' | 'keeper'
+type Outcome = 'goal' | 'saved' | 'miss' | 'blocked'
 
 export interface Action {
   /** minuto di gioco d'inizio e durata, in minuti: le azioni sono contigue */
