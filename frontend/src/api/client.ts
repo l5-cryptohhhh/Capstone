@@ -38,8 +38,9 @@ export class ApiError extends Error {
 
 async function request<T>(path: string, init: RequestInit, query?: URLSearchParams): Promise<T> {
   const token = getToken()
-  const headers: Record<string, string> = { Accept: 'application/json' }
-  if (init.body) headers['Content-Type'] = 'application/json'
+  const headers: Record<string, string> = { Accept: 'application/json', ...(init.headers as Record<string, string>) }
+  // Il corpo testuale è JSON; un'immagine porta il proprio Content-Type
+  if (typeof init.body === 'string') headers['Content-Type'] = 'application/json'
   if (token) headers.Authorization = `Bearer ${token}`
 
   const suffix = query && query.size > 0 ? `?${query.toString()}` : ''
@@ -75,4 +76,20 @@ export function apiGet<T>(path: string, params?: URLSearchParams, signal?: Abort
 
 export function apiPost<T>(path: string, body?: unknown): Promise<T> {
   return request<T>(path, { method: 'POST', body: body === undefined ? undefined : JSON.stringify(body) })
+}
+
+/** Richiesta con un metodo qualsiasi (PATCH, PUT, DELETE...) e un corpo JSON facoltativo. */
+export function apiSend<T>(method: 'PATCH' | 'PUT' | 'DELETE' | 'POST', path: string, body?: unknown): Promise<T> {
+  return request<T>(path, { method, body: body === undefined ? undefined : JSON.stringify(body) })
+}
+
+/** Invia un file (corpo grezzo) con il suo tipo, per esempio la foto profilo. */
+export function apiUpload<T>(path: string, file: Blob): Promise<T> {
+  return request<T>(path, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } })
+}
+
+/** Indirizzo assoluto di una risorsa del backend (es. la foto), anche quando l'API è su un altro dominio. */
+export function assetUrl(path: string): string {
+  const origin = /^https?:\/\//.test(BASE) ? new URL(BASE).origin : ''
+  return `${origin}${path}`
 }

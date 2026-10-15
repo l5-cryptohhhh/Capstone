@@ -21,7 +21,13 @@ public class AuthService {
 
     static final Duration SESSION_TTL = Duration.ofDays(30);
 
-    public record UserDto(Long id, String email, String displayName) {
+    public record UserDto(Long id, String email, String displayName, String bio, String location,
+                          String favoriteTeam, String favoritePosition, String avatarUrl, Instant createdAt) {
+
+        /** Solo i dati di base (usato dove il profilo non serve). */
+        public UserDto(Long id, String email, String displayName) {
+            this(id, email, displayName, null, null, null, null, null, null);
+        }
     }
 
     public record AuthResponse(String token, UserDto user) {
@@ -89,15 +95,18 @@ public class AuthService {
         return new AuthResponse(token, toDto(user));
     }
 
-    private static UserDto toDto(AppUser u) {
-        return new UserDto(u.getId(), u.getEmail(), u.getDisplayName());
+    static UserDto toDto(AppUser u) {
+        String avatar = u.getAvatarUpdatedAt() == null ? null
+                : "/api/v1/users/" + u.getId() + "/avatar?v=" + u.getAvatarUpdatedAt().toEpochMilli();
+        return new UserDto(u.getId(), u.getEmail(), u.getDisplayName(), u.getBio(), u.getLocation(),
+                u.getFavoriteTeam(), u.getFavoritePosition(), avatar, u.getCreatedAt());
     }
 
-    private static String normalize(String email) {
+    static String normalize(String email) {
         return email.trim().toLowerCase();
     }
 
-    private static String hash(String token) {
+    static String hash(String token) {
         try {
             return HexFormat.of().formatHex(
                     MessageDigest.getInstance("SHA-256").digest(token.getBytes(StandardCharsets.UTF_8)));

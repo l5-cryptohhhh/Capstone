@@ -27,4 +27,18 @@ public class AppUser {
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt = Instant.now();
+
+    private String bio;
+
+    private String location;
+
+    @Column(name = "favorite_team")
+    private String favoriteTeam;
+
+    @Column(name = "favorite_position")
+    private String favoritePosition;
+
+    /** Quando è stata cambiata la foto (null = nessuna foto): serve a invalidare la cache del browser. */
+    @Column(name = "avatar_updated_at")
+    private Instant avatarUpdatedAt;
 }

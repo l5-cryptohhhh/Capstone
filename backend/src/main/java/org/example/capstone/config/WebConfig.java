@@ -36,7 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
         // per i visitatori mostra solo i primi giocatori di ogni campionato (vedi PlayerSearchService).
         registry.addInterceptor(requireAuthInterceptor)
                 .addPathPatterns("/api/v1/players/*", "/api/v1/players/*/similar", "/api/v1/ai/**",
-                        "/api/v1/auth/me");
+                        "/api/v1/auth/me", "/api/v1/auth/me/**");
         registry.addInterceptor(aiRateLimitInterceptor).addPathPatterns("/api/v1/ai/**");
     }
 
@@ -45,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(security.corsAllowedOrigin())
-                .allowedMethods("GET", "POST", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("Content-Type", "Authorization", "X-Admin-Key");
     }
 }

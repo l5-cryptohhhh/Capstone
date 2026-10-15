@@ -18,6 +18,9 @@ import java.util.Map;
 @Component
 public class OpenRouterClient {
 
+    private static final int ATTEMPTS = 3;
+    private static final long RETRY_DELAY_MS = 1500;
+
     private final RestClient client;
     private final String model;
     private final boolean keyConfigured;
@@ -52,22 +55,56 @@ public class OpenRouterClient {
             body.put("response_format", Map.of("type", "json_object"));
         }
 
+        // I modelli gratuiti vanno spesso in sovraccarico (anche con HTTP 200 e un campo "error"): si riprova
+        // qualche volta prima di arrendersi.
+        ApiException last = null;
+        for (int attempt = 1; attempt <= ATTEMPTS; attempt++) {
+            try {
+                return callOnce(body);
+            } catch (ApiException e) {
+                last = e;
+                // Timeout o rete assente: riprovare farebbe solo aspettare di più
+                if (e.getCause() != null) {
+                    throw e;
+                }
+                if (attempt < ATTEMPTS) {
+                    pause(RETRY_DELAY_MS * attempt);
+                }
+            }
+        }
+        throw last;
+    }
+
+    private String callOnce(Map<String, Object> body) {
         ChatResponse response;
         try {
             response = client.post().uri("/chat/completions").body(body).retrieve().body(ChatResponse.class);
         } catch (RestClientException e) {
             throw new ApiException(ErrorCode.AI_UNAVAILABLE, "Servizio AI non raggiungibile", e);
         }
+        if (response != null && response.error() != null) {
+            throw new ApiException(ErrorCode.AI_UNAVAILABLE,
+                    "Il modello AI è sovraccarico o non disponibile: riprova tra poco");
+        }
         if (response == null || response.choices() == null || response.choices().isEmpty()
                 || response.choices().get(0).message() == null
-                || response.choices().get(0).message().content() == null) {
+                || response.choices().get(0).message().content() == null
+                || response.choices().get(0).message().content().isBlank()) {
             throw new ApiException(ErrorCode.AI_UNAVAILABLE, "Risposta vuota dal servizio AI");
         }
         return response.choices().get(0).message().content();
     }
 
+    private static void pause(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record ChatResponse(List<Choice> choices) {
+    record ChatResponse(List<Choice> choices, Map<String, Object> error) {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

@@ -37,7 +37,7 @@ class PlayerSearchServiceTest {
     }
 
     @Test
-    void ratingSortIgnoresShortAppearancesUnlessMinutesAreGiven() {
+    void ratingSortShowsEveryoneButRanksRegularsFirst() {
         for (boolean desc : new boolean[]{true, false}) {
             var c = new SearchCriteria(null, null, null, null, null, null, null, null, 2024, null, List.of(), "rating",
                     desc);
@@ -46,8 +46,18 @@ class PlayerSearchServiceTest {
 
             assertNotNull(page);
             BigDecimal previous = null;
+            boolean seenShort = false;
+            boolean previousRegular = true;
             for (var p : page) {
-                assertEquals(true, p.minutes() != null && p.minutes() >= 450, "minuti insufficienti: " + p.minutes());
+                boolean regular = p.minutes() != null && p.minutes() >= 450;
+                if (!regular) {
+                    seenShort = true;
+                }
+                assertEquals(false, seenShort && regular, "un titolare compare dopo un giocatore con pochi minuti");
+                if (regular != previousRegular) {
+                    previous = null;
+                }
+                previousRegular = regular;
                 if (previous != null && p.rating() != null) {
                     int cmp = previous.compareTo(p.rating());
                     assertEquals(true, desc ? cmp >= 0 : cmp <= 0, "ordine voto non rispettato");

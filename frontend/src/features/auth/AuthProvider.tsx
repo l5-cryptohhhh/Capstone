@@ -82,6 +82,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         writeGuest(true)
         setGuest(true)
       },
+      updateUser: setUser,
+      closeAccount: () => {
+        setToken(null)
+        setUser(null)
+        queryClient.clear()
+      },
     }),
     [user, loading, guest, start, queryClient],
   )

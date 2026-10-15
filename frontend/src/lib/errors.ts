@@ -11,6 +11,8 @@ const KNOWN_CODES = [
   'INSUFFICIENT_DATA',
   'AI_UNAVAILABLE',
   'RATE_LIMITED',
+  'WRONG_PASSWORD',
+  'EMAIL_ALREADY_REGISTERED',
 ] as const
 // UNAUTHORIZED non è qui: la sessione scaduta rimanda alla pagina di accesso, non mostra un errore
 
