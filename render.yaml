@@ -1,0 +1,82 @@
+# Blueprint di Render: crea database, backend e frontend con "New > Blueprint".
+# I valori con "sync: false" si inseriscono a mano nella dashboard: sono segreti o dipendono dagli indirizzi finali.
+# Vedi docs/deploy.md.
+
+databases:
+  # PostgreSQL gratuito di Render. Attenzione: viene cancellato 30 giorni dopo la creazione.
+  - name: scoutai-db
+    plan: free
+    region: frankfurt
+    databaseName: scoutai
+    user: scoutai
+
+services:
+  # --- Backend: Spring Boot in un container Docker ---
+  - type: web
+    name: scoutai-api
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    # Pubblica e leggera, passa dal database: se risponde 200 il servizio è sano
+    healthCheckPath: /api/v1/leagues
+    autoDeploy: true
+    envVars:
+      # Collegamento al database: indirizzo interno di Render (stessa regione, veloce, senza passare da internet)
+      - key: SCOUTAI_DB_HOST
+        fromDatabase:
+          name: scoutai-db
+          property: host
+      - key: SCOUTAI_DB_PORT
+        fromDatabase:
+          name: scoutai-db
+          property: port
+      - key: SCOUTAI_DB_NAME
+        fromDatabase:
+          name: scoutai-db
+          property: database
+      - key: SCOUTAI_DB_USER
+        fromDatabase:
+          name: scoutai-db
+          property: user
+      - key: SCOUTAI_DB_PASSWORD
+        fromDatabase:
+          name: scoutai-db
+          property: password
+      - key: API_FOOTBALL_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        sync: false
+      # Indirizzo del frontend (https://scoutai-web.onrender.com): l'unico ammesso dal CORS
+      - key: CORS_ALLOWED_ORIGIN
+        sync: false
+      # Render la genera: serve anche al workflow GitHub dell'import giornaliero
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: SCOUTAI_IMPORT_AUTO_ENABLED
+        value: "false"
+      - key: SERVER_FORWARD_HEADERS_STRATEGY
+        value: native
+
+  # --- Frontend: file statici generati da Vite ---
+  - type: web
+    name: scoutai-web
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/dist
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Indirizzo pubblico del backend con il percorso dell'API: https://scoutai-api.onrender.com/api/v1
+      # Entra nel codice durante il build: se lo cambi, il frontend va ricostruito.
+      - key: VITE_API_BASE_URL
+        sync: false
+    routes:
+      # Le pagine (/giocatore/1, /liste...) sono rotte del browser: ogni indirizzo deve servire index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html

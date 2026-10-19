@@ -21,6 +21,7 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 |---|---|
 | `backend/` | Spring Boot (Java 25), REST API, PostgreSQL |
 | `frontend/` | React + Vite + TypeScript |
+| `scripts/` | Script di supporto: copia dei dati verso il database online |
 | `docs/` | [Architettura](docs/architettura.md), [database](docs/database.md), [API](docs/api.md), [decisioni](docs/decisioni.md) |
 
 ## Documentazione API interattiva (Swagger)
@@ -33,6 +34,12 @@ Con il backend acceso: `http://localhost:8080/swagger-ui.html` (schema OpenAPI s
 2. `docker compose up -d` per avviare PostgreSQL.
 3. Backend: `cd backend && ./mvnw spring-boot:run`
 4. Frontend: `cd frontend && npm install && npm run dev`
+
+## Deploy
+
+Backend, frontend e database su Render, import giornaliero con GitHub Actions: tutto gratuito. La guida
+passo-passo è in [`docs/deploy.md`](docs/deploy.md); la configurazione è in [`render.yaml`](render.yaml) e
+[`backend/Dockerfile`](backend/Dockerfile).
 
 ## API backend
 
