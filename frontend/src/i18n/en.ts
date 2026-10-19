@@ -361,23 +361,29 @@ export const en: Record<TranslationKey, string> = {
 
   'method.title': 'Method and data limits',
   'method.lead':
-    'ScoutAI shows real numbers and puts them in relation to positional peers. Here is where they come from and what they cannot tell you.',
+    'ScoutAI shows real numbers and puts them in relation to positional peers. Here is where they come from, how they are computed and what they cannot tell you.',
   'method.source.title': 'Where the data comes from',
   'method.source.body':
-    'Season statistics are imported from API-Football and stored in a PostgreSQL database. The application reads only from that database: the browser never calls the external source.',
+    'Season statistics are imported from API-Football and stored in a PostgreSQL database. The application reads only from that database: the browser never calls the external source. The leagues available are the ones you find in the league filter.',
   'method.per90.title': 'Per 90 minute metrics',
   'method.per90.body':
     'Season totals are scaled to 90 minutes of play so that players with fewer minutes stay comparable. A missing value stays empty: it is never replaced with zero.',
   'method.percentile.title': 'Percentiles',
   'method.percentile.body':
-    'A percentile tells how many positional peers, in the same league and season, have a lower value. Only players with at least 450 minutes count, and the cohort needs at least 10 players. For fouls committed and goals conceded the scale is inverted: less is better.',
-  'method.limits.title': 'What the data does not say',
-  'method.limits.body':
-    'The source provides no xG, progressive passes or positional data. Metrics are proxies: ball recoveries are tackles plus interceptions, progression is read from dribbles and key passes. Position is one of the source\'s four: it does not tell a holding midfielder from a box-to-box one.',
-  'method.seasons.title': 'Seasons and updates',
-  'method.seasons.body':
-    'The source\'s free plan covers seasons 2022, 2023 and 2024. The import runs league by league over several days to respect the request limit, so some leagues may still be incomplete. Age is computed today, while statistics belong to the season shown.',
-  'method.ai.title': 'Artificial intelligence analysis',
+    'A percentile tells how many positional peers, in the same league and season, have a lower value. Only players with at least 450 minutes count, and the cohort needs at least 10 players. For fouls committed and goals conceded the scale is inverted: less is better. Players with fewer minutes still appear in the list, but their percentile may be unavailable.',
+  'method.visibility.title': 'Who appears in the list',
+  'method.visibility.body':
+    'The list shows every imported player, including those who played few minutes: for scouting, young players matter too. When sorting by rating, however, players with at least 450 minutes come first, because an average rating over a few matches is not reliable; the others follow, also in rating order. You can always change the order or set a minimum number of minutes.',
+  'method.similar.title': 'Similar players',
+  'method.similar.body':
+    'On a player\'s page you find others with the same position and season, ordered by closeness: the percentiles the two profiles have in common (at least six) are compared, and the closer they are, the higher the similarity. It is a calculation on the data, repeatable and without artificial intelligence.',
+  'method.ai.title': 'Artificial intelligence',
   'method.ai.body':
-    'Not active yet. When it arrives it will interpret numbers already computed and will always be kept distinct from the data: it cannot invent statistics.',
+    'AI is used in three places: natural-language search (it turns the sentence into filters, while players and numbers always come from the database), the report on a single player and the verdict on a comparison. It reads only the data shown on the page and its text is always marked as generated: it can summarise and interpret, but must not add statistics. The service can be slow or unavailable and the answer can change at every request; the numbers stay those of the database.',
+  'method.match.title': 'The kickabout',
+  'method.match.body':
+    'It is a simulation, not a prediction. Every player gets an attack and a defence strength derived from their season percentiles and weighted by position; goalkeepers count for saves. Possession, passes, dribbles and shots decide the match: the stronger side is more likely to win, but chance remains and an upset is possible. It lasts 90 game minutes in one real minute.',
+  'method.account.title': 'Account and personal data',
+  'method.account.body':
+    'Without an account you only see the first players of each league; player pages, comparison and AI require registration. We store your email, name and, if you wish, your profile details and photo. The password is kept only as a BCrypt hash, sessions last 30 days and from your profile you can sign out other devices or delete the account with all its data.',
 }

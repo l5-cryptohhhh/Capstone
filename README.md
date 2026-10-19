@@ -2,6 +2,15 @@
 
 Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Football), non li inventa.
 
+## Cosa fa
+
+- **Cerca** tra tutti i giocatori dei campionati importati, con filtri per ruolo, età, squadra, minuti e metriche, oppure con una frase (ricerca con AI).
+- **Scheda** del giocatore con statistiche per 90 minuti, percentili sui pari ruolo, giocatori simili e report AI.
+- **Confronto** fino a 3 giocatori affiancati, con verdetto AI.
+- **Partitella**: una simulazione 3 contro 3 con portieri tra due squadre di giocatori reali, in cui contano i loro percentili.
+- **Profilo**: foto, dati personali, email, password, sessioni ed eliminazione dell'account.
+- Italiano e inglese, tema scuro e chiaro, versione mobile.
+
 ## Struttura
 
 | Cartella | Contenuto |
@@ -9,6 +18,10 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 | `backend/` | Spring Boot (Java 25), REST API, PostgreSQL |
 | `frontend/` | React + Vite + TypeScript |
 | `docs/` | [Architettura](docs/architettura.md), [database](docs/database.md), [API](docs/api.md), [decisioni](docs/decisioni.md) |
+
+## Documentazione API interattiva (Swagger)
+
+Con il backend acceso: `http://localhost:8080/swagger-ui.html` (schema OpenAPI su `/v3/api-docs`). Per le rotte protette fai `POST /auth/login`, copia il token e usa **Authorize**.
 
 ## Setup locale
 
@@ -25,8 +38,12 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 | `GET /api/v1/players/{id}` | Scheda giocatore con statistiche e percentili per stagione |
 | `GET /api/v1/leagues`, `GET /api/v1/leagues/{id}/teams` | Campionati con dati e squadre |
 | `GET /api/v1/metrics` | Catalogo delle metriche |
+| `GET /api/v1/players/{id}/similar` | Giocatori simili: stesso ruolo e stagione, vicini sul profilo dei percentili |
 | `POST /api/v1/ai/search` `{"query": "..."}` | Ricerca in linguaggio naturale (l'AI produce i filtri, i dati vengono dal DB) |
 | `GET /api/v1/ai/players/{id}/report` | Report AI basato solo sulle statistiche reali |
+| `GET /api/v1/ai/compare?ids=1,2,3` | Verdetto AI su 2-3 giocatori |
+| `POST /api/v1/auth/register`, `/login`, `/logout`, `GET /auth/me` | Account e sessioni |
+| `PATCH /api/v1/auth/me` e `/auth/me/**` | Profilo: dati, foto, email, password, sessioni, eliminazione account |
 | `POST /api/v1/admin/import/run`, `GET /api/v1/admin/import/status`, `POST /api/v1/admin/stats/recompute` | Import da API-Football e ricalcolo dei percentili (header `X-Admin-Key`) |
 
 Le chiamate `/api/v1/ai/**` sono limitate a 20 al minuto per IP. I dettagli sono in [`docs/api.md`](docs/api.md).

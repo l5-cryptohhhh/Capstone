@@ -1,5 +1,8 @@
 package org.example.capstone.ingestion;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.example.capstone.config.OpenApiConfig;
 import org.example.capstone.ingestion.quota.QuotaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Admin - Import", description = "Avvio e stato dell'import dei dati dalla fonte esterna")
+@SecurityRequirement(name = OpenApiConfig.ADMIN_KEY)
 @RestController
 @RequestMapping("/api/v1/admin/import")
 public class AdminImportController {

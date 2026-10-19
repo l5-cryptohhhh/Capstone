@@ -1,5 +1,9 @@
 package org.example.capstone.player;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.capstone.auth.AuthInterceptor;
 import org.example.capstone.common.PageResponse;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Giocatori", description = "Ricerca, scheda e giocatori simili")
 @RestController
 @RequestMapping("/api/v1/players")
 public class PlayerController {
@@ -40,20 +45,26 @@ public class PlayerController {
      * Senza season usa la stagione più recente disponibile; senza minMinutes non esclude nessuno.
      */
     @GetMapping
+    @Operation(summary = "Cerca giocatori",
+            description = "Filtri sulle metriche, oltre ai parametri elencati: `pct.<metrica>.min|max` (percentile) e "
+                    + "`val.<metrica>.min|max` (valore), per esempio `pct.goals_p90.min=80`. I visitatori non "
+                    + "registrati vedono solo i primi giocatori di ogni campionato.")
     public PageResponse<PlayerSummaryDto> search(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) Position position,
             @RequestParam(required = false) Integer minAge,
             @RequestParam(required = false) Integer maxAge,
-            @RequestParam(required = false) Long leagueId,
-            @RequestParam(required = false) Long teamId,
+            // Senza formato: Swagger UI valida male i campi int64 lasciati vuoti
+            @Parameter(schema = @Schema(type = "integer")) @RequestParam(required = false) Long leagueId,
+            @Parameter(schema = @Schema(type = "integer")) @RequestParam(required = false) Long teamId,
             @RequestParam(required = false) Integer season,
             @RequestParam(required = false) Integer minMinutes,
             @RequestParam(defaultValue = "minutes") String sort,
             @RequestParam(defaultValue = "desc") String order,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam Map<String, String> params,
+            // Raccoglie i filtri sulle metriche (pct.* e val.*): non è un campo da compilare
+            @Parameter(hidden = true) @RequestParam Map<String, String> params,
             HttpServletRequest request) {
 
         SearchCriteria criteria = SearchParamParser.parse(new SearchParamParser.Request(

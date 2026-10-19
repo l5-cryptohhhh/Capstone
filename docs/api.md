@@ -1,6 +1,15 @@
 # API
 
-Base path: `/api/v1`. Il CORS è aperto solo all'origine indicata da `CORS_ALLOWED_ORIGIN` (default `http://localhost:5173`), con i metodi `GET` e `POST`.
+Base path: `/api/v1`. Il CORS è aperto solo all'origine indicata da `CORS_ALLOWED_ORIGIN` (default `http://localhost:5173`), con i metodi `GET`, `POST`, `PUT`, `PATCH` e `DELETE`.
+
+## Documentazione interattiva (Swagger)
+
+Con il backend acceso, la documentazione generata dal codice è su:
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`, per leggere e provare ogni rotta dal browser;
+- schema OpenAPI (JSON): `http://localhost:8080/v3/api-docs`.
+
+Per le rotte protette: esegui `POST /auth/login`, copia il `token`, premi **Authorize** e incollalo (schema `sessione`). Le rotte `/admin` usano invece la chiave `X-Admin-Key` (schema `chiaveAdmin`).
 
 ## Giocatori
 
@@ -13,10 +22,10 @@ Base path: `/api/v1`. Il CORS è aperto solo all'origine indicata da `CORS_ALLOW
 | `minAge`, `maxAge` | Età in anni |
 | `leagueId`, `teamId` | Campionato e squadra |
 | `season` | Anno di inizio stagione. Se assente, la più recente disponibile |
-| `minMinutes` | Minuti minimi. Se assente, `scoutai.stats.min-minutes` (450) |
+| `minMinutes` | Minuti minimi. Se assente non esclude nessuno: compaiono anche i giocatori con pochi minuti |
 | `pct.<metrica>.min`, `pct.<metrica>.max` | Filtro sul percentile (0-100) rispetto ai pari ruolo |
 | `val.<metrica>.min`, `val.<metrica>.max` | Filtro sul valore della metrica |
-| `sort` | `name`, `age`, `minutes` (default), `rating`, `goals`, `assists` oppure la chiave di una metrica |
+| `sort` | `name`, `age`, `minutes` (default), `rating`, `goals`, `assists` oppure la chiave di una metrica. Con `rating` passano prima i giocatori con almeno 450 minuti (`scoutai.stats.min-minutes`), poi gli altri, ciascun gruppo per voto |
 | `order` | `desc` (default) o `asc` |
 | `page`, `size` | Pagina (da 0) e dimensione (da 1 a 50, default 20) |
 
@@ -78,6 +87,8 @@ Ogni errore ha lo stesso formato:
 | `UNAUTHORIZED` | 401 |
 | `PLAYER_NOT_FOUND`, `LEAGUE_NOT_FOUND` | 404 |
 | `INSUFFICIENT_DATA`, `QUERY_NOT_INTERPRETABLE` | 422 |
+| `WRONG_PASSWORD` | 403 |
+| `EMAIL_ALREADY_REGISTERED` | 409 |
 | `RATE_LIMITED`, `QUOTA_EXCEEDED` | 429 |
 | `UPSTREAM_FOOTBALL_API_ERROR` | 502 |
 | `AI_UNAVAILABLE` | 503 |
@@ -92,6 +103,21 @@ Le sessioni usano un token casuale nell'header `Authorization: Bearer <token>` (
 | `POST` | `/auth/register` con `{email, displayName, password}` (password 8 to 72 caratteri) | Crea l'account e apre la sessione: `{token, user}`. `409 EMAIL_ALREADY_REGISTERED` se l'email esiste |
 | `POST` | `/auth/login` con `{email, password}` | `{token, user}`, oppure `401 UNAUTHORIZED` |
 | `POST` | `/auth/logout` | Chiude la sessione (204) |
-| `GET` | `/auth/me` | Utente corrente, 401 se non autenticato |
+| `GET` | `/auth/me` | Utente corrente (con i dati del profilo), 401 se non autenticato |
 
 **Cosa vede chi non ha fatto l'accesso:** `GET /players` è pubblico ma restituisce in chiaro solo i primi 3 giocatori per voto di ogni campionato; le altre righe hanno `locked: true` e nessun dato oltre a ruolo, squadra, campionato e stagione. `GET /players/{id}` e `/ai/**` rispondono `401` senza login.
+
+## Profilo
+
+Tutte le rotte sotto `/auth/me` richiedono il token. Quelle che cambiano le credenziali chiedono anche la password attuale e rispondono `403 WRONG_PASSWORD` se è sbagliata (non 401: il client lo leggerebbe come sessione scaduta).
+
+| Metodo | Percorso | Descrizione |
+|---|---|---|
+| `PATCH` | `/auth/me` con `{displayName, bio, location, favoriteTeam, favoritePosition}` | Aggiorna i dati: nome obbligatorio (max 80), biografia max 280, ruolo preferito `GK`, `DEF`, `MID`, `ATT` o assente. I campi vuoti diventano assenti |
+| `POST` | `/auth/me/email` con `{newEmail, currentPassword}` | Cambia l'email. `409 EMAIL_ALREADY_REGISTERED` se è già usata |
+| `POST` | `/auth/me/password` con `{currentPassword, newPassword}` | Cambia la password (8-72 caratteri, diversa dall'attuale) e chiude tutte le altre sessioni. 204 |
+| `POST` | `/auth/me/sessions/revoke-others` | Chiude le altre sessioni dell'utente: `{revoked: n}` |
+| `PUT` | `/auth/me/avatar` | Corpo grezzo dell'immagine con il suo `Content-Type` (`image/jpeg`, `image/png` o `image/webp`, max 256 KB). Il tipo dichiarato è confrontato con i primi byte del file. Risponde con l'utente aggiornato |
+| `DELETE` | `/auth/me/avatar` | Rimuove la foto |
+| `POST` | `/auth/me/delete` con `{password}` | Elimina l'account con sessioni e foto (204). `POST` perché porta la password nel corpo |
+| `GET` | `/users/{id}/avatar` | Pubblica: serve per mostrare la foto in un `<img>`, che non può inviare l'header `Authorization`. Il percorso nell'utente (`avatarUrl`) contiene `?v=<timestamp>`, quindi cambia con la foto e la risposta si può tenere in cache 30 giorni |
