@@ -35,7 +35,9 @@ public class WebConfig implements WebMvcConfigurer {
         // La scheda con le statistiche e l'AI sono per gli utenti registrati. La ricerca (/players) è pubblica ma
         // per i visitatori mostra solo i primi giocatori di ogni campionato (vedi PlayerSearchService).
         registry.addInterceptor(requireAuthInterceptor)
-                .addPathPatterns("/api/v1/players/*", "/api/v1/players/*/similar", "/api/v1/ai/**",
+                .addPathPatterns("/api/v1/players/*", "/api/v1/players/*/similar", "/api/v1/players/*/notes",
+                        "/api/v1/players/*/projection",
+                        "/api/v1/notes/**", "/api/v1/watchlists", "/api/v1/watchlists/**", "/api/v1/ai/**",
                         "/api/v1/auth/me", "/api/v1/auth/me/**");
         registry.addInterceptor(aiRateLimitInterceptor).addPathPatterns("/api/v1/ai/**");
     }

@@ -46,7 +46,10 @@ export interface PlayerSummary {
   locked: false
 }
 
-/** Riga riservata agli utenti registrati: del giocatore il backend non invia nulla oltre a ruolo, squadra e campionato. */
+/**
+ * Riga riservata agli utenti registrati: del giocatore il backend non invia nulla oltre a ruolo, squadra e
+ * campionato.
+ */
 interface LockedPlayerSummary {
   locked: true
   position: Position | null
@@ -184,4 +187,62 @@ export interface ApiErrorBody {
   message: string
   path?: string
   details?: string[]
+}
+
+/** Nota privata dell'utente su un giocatore (date ISO 8601). */
+export interface PlayerNote {
+  id: number
+  playerId: number
+  body: string
+  createdAt: string
+  updatedAt: string
+}
+
+/** Lista privata di giocatori. contains: ha già il giocatore chiesto con ?playerId. */
+export interface Watchlist {
+  id: number
+  name: string
+  playerCount: number
+  contains: boolean
+}
+
+/** Giocatore in una lista, con l'ultima stagione disponibile (squadra e numeri null se non ne ha). */
+export interface WatchlistPlayer {
+  id: number
+  name: string
+  age: number | null
+  position: 'GK' | 'DEF' | 'MID' | 'ATT' | null
+  photoUrl: string | null
+  team: TeamRef | null
+  league: { id: number; name: string } | null
+  season: number | null
+  minutes: number | null
+  rating: number | null
+}
+
+export interface WatchlistDetail {
+  id: number
+  name: string
+  players: WatchlistPlayer[]
+}
+
+export interface ProjectionPoint {
+  /** anni da oggi (0 = stima attuale) */
+  yearOffset: number
+  age: number
+  /** milioni di euro */
+  minM: number
+  midM: number
+  maxM: number
+}
+
+/** Stima euristica di valore e crescita. Se available è false, reason dice perché mancano i dati. */
+export interface Projection {
+  available: boolean
+  reason: 'NO_SEASON' | 'NO_AGE' | 'MINUTES' | 'PERCENTILES' | null
+  season: number | null
+  age: number | null
+  score: number | null
+  currentValueM: number | null
+  points: ProjectionPoint[]
 }

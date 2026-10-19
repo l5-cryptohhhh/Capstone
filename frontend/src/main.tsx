@@ -13,6 +13,11 @@ import './styles/similar.css'
 import './styles/match.css'
 import './styles/shiny-button.css'
 import './styles/profile.css'
+import './styles/notes.css'
+import './styles/watchlist.css'
+import './styles/radar.css'
+import './styles/zones.css'
+import './styles/projection.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

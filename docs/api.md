@@ -121,3 +121,37 @@ Tutte le rotte sotto `/auth/me` richiedono il token. Quelle che cambiano le cred
 | `DELETE` | `/auth/me/avatar` | Rimuove la foto |
 | `POST` | `/auth/me/delete` con `{password}` | Elimina l'account con sessioni e foto (204). `POST` perché porta la password nel corpo |
 | `GET` | `/users/{id}/avatar` | Pubblica: serve per mostrare la foto in un `<img>`, che non può inviare l'header `Authorization`. Il percorso nell'utente (`avatarUrl`) contiene `?v=<timestamp>`, quindi cambia con la foto e la risposta si può tenere in cache 30 giorni |
+
+## Note
+
+Richiedono la sessione. Ogni utente vede solo le proprie note: quella di un altro utente risponde `404 NOTE_NOT_FOUND`.
+
+| Metodo | Percorso | Descrizione |
+|---|---|---|
+| `GET` | `/players/{id}/notes` | Le note dell'utente su quel giocatore, dalla più recente: `[{id, playerId, body, createdAt, updatedAt}]` |
+| `POST` | `/players/{id}/notes` con `{body}` | Crea una nota (201). Testo di 1-2000 caratteri, massimo 50 note per giocatore. `404 PLAYER_NOT_FOUND` se il giocatore non esiste |
+| `PUT` | `/notes/{id}` con `{body}` | Modifica una propria nota |
+| `DELETE` | `/notes/{id}` | Elimina una propria nota (204) |
+
+## Liste
+
+Richiedono la sessione. Ogni utente vede solo le proprie liste: quella di un altro utente risponde `404 WATCHLIST_NOT_FOUND`. Massimo 20 liste per utente e 200 giocatori per lista; il nome è unico per utente senza distinguere le maiuscole.
+
+| Metodo | Percorso | Descrizione |
+|---|---|---|
+| `GET` | `/watchlists` | Le liste dell'utente: `[{id, name, playerCount, contains}]`. Con `?playerId=` il campo `contains` dice se la lista ha già quel giocatore (altrimenti è `false`) |
+| `POST` | `/watchlists` con `{name}` | Crea una lista (201). Il nome è ripulito dagli spazi, 1-80 caratteri; `400 INVALID_REQUEST` se è vuoto, doppio o si supera il limite |
+| `GET` | `/watchlists/{id}` | La lista con i giocatori, ciascuno con la sua ultima stagione (squadra, campionato, minuti, voto; `null` se non ha statistiche), in ordine alfabetico |
+| `DELETE` | `/watchlists/{id}` | Elimina la lista (204) |
+| `PUT` | `/watchlists/{id}/players/{playerId}` | Aggiunge il giocatore (204). Idempotente. `404 PLAYER_NOT_FOUND` se non esiste |
+| `DELETE` | `/watchlists/{id}/players/{playerId}` | Toglie il giocatore dalla lista (204) |
+
+## Stima di valore e crescita
+
+Richiede la sessione. Calcolata al volo, senza salvare nulla.
+
+| Metodo | Percorso | Descrizione |
+|---|---|---|
+| `GET` | `/players/{id}/projection?season=` | Stima euristica in milioni di euro: `{available, reason, season, age, score, currentValueM, points: [{yearOffset, age, minM, midM, maxM}]}`. Senza `season` usa la più recente. I punti vanno da oggi (`yearOffset` 0) a 5 anni. Se i dati non bastano risponde `available: false` con `reason`: `NO_SEASON`, `NO_AGE`, `MINUTES` (meno di 450 minuti) o `PERCENTILES` (meno di 3 percentili) |
+
+**Non è un valore di mercato.** Il punteggio (`score`, 0-100) è la media dei percentili del giocatore. Il valore parte da 0,2 M€ e raddoppia ogni 10 punti; si moltiplica per fattori di età, campionato, minuti e ruolo. La traiettoria sposta il punteggio ogni anno secondo l'età e allarga minimo e massimo di 2,5 punti per la radice degli anni. Le costanti sono in `ValuationModel` e sono spiegate nella pagina Metodo.

@@ -6,6 +6,10 @@ Piattaforma di scouting calcistico con AI: l'AI interpreta i dati reali (API-Foo
 
 - **Cerca** tra tutti i giocatori dei campionati importati, con filtri per ruolo, età, squadra, minuti e metriche, oppure con una frase (ricerca con AI).
 - **Scheda** del giocatore con statistiche per 90 minuti, percentili sui pari ruolo, giocatori simili e report AI.
+- **Radar e mappa per zone**: i percentili del ruolo in un grafico a ragnatela e il profilo per fase di gioco (attacco, costruzione, difesa), anche nel confronto. La mappa non mostra posizioni reali: i dati dell'API non hanno coordinate.
+- **Stima di valore e crescita**: una formula spiegata nella pagina Metodo dà un valore indicativo e una traiettoria a 5 anni (minimo, medio, massimo). È sempre etichettata come stima, non è un valore di mercato.
+- **Note e liste private**: ogni utente scrive note sui giocatori e li raccoglie in liste (watchlist); nessun altro le vede.
+- **Scheda in PDF**: scaricabile dalla scheda del giocatore, con radar, zone, stima e note.
 - **Confronto** fino a 3 giocatori affiancati, con verdetto AI.
 - **Partitella**: una simulazione 3 contro 3 con portieri tra due squadre di giocatori reali, in cui contano i loro percentili.
 - **Profilo**: foto, dati personali, email, password, sessioni ed eliminazione dell'account.
@@ -42,6 +46,9 @@ Con il backend acceso: `http://localhost:8080/swagger-ui.html` (schema OpenAPI s
 | `POST /api/v1/ai/search` `{"query": "..."}` | Ricerca in linguaggio naturale (l'AI produce i filtri, i dati vengono dal DB) |
 | `GET /api/v1/ai/players/{id}/report` | Report AI basato solo sulle statistiche reali |
 | `GET /api/v1/ai/compare?ids=1,2,3` | Verdetto AI su 2-3 giocatori |
+| `GET /api/v1/players/{id}/projection` | Stima euristica di valore e traiettoria di crescita |
+| `GET`, `POST /api/v1/players/{id}/notes`, `PUT`, `DELETE /api/v1/notes/{id}` | Note private dell'utente sul giocatore |
+| `GET`, `POST /api/v1/watchlists`, `GET`, `DELETE /api/v1/watchlists/{id}`, `PUT`, `DELETE /api/v1/watchlists/{id}/players/{playerId}` | Liste private di giocatori |
 | `POST /api/v1/auth/register`, `/login`, `/logout`, `GET /auth/me` | Account e sessioni |
 | `PATCH /api/v1/auth/me` e `/auth/me/**` | Profilo: dati, foto, email, password, sessioni, eliminazione account |
 | `POST /api/v1/admin/import/run`, `GET /api/v1/admin/import/status`, `POST /api/v1/admin/stats/recompute` | Import da API-Football e ricalcolo dei percentili (header `X-Admin-Key`) |
