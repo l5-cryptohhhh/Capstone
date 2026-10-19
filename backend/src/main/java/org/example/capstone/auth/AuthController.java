@@ -1,5 +1,7 @@
 package org.example.capstone.auth;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -7,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.example.capstone.auth.AuthService.AuthResponse;
 import org.example.capstone.auth.AuthService.UserDto;
+import org.example.capstone.config.OpenApiConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Account", description = "Registrazione, accesso e utente corrente")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -53,6 +57,7 @@ public class AuthController {
     }
 
     /** Utente corrente: 401 se il token manca o è scaduto (gestito da RequireAuthInterceptor). */
+    @SecurityRequirement(name = OpenApiConfig.SESSION)
     @GetMapping("/me")
     public UserDto me(HttpServletRequest request) {
         return AuthInterceptor.currentUser(request);

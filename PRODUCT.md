@@ -24,7 +24,7 @@ Unlike a stats site that answers "what did player X do?", ScoutAI answers "who f
 
 ## Operating Context
 
-Data comes from API-Football (free plan: 100 requests/day, seasons 2022-2024 only, no xG or progressive passes). Currently imported: top 5 European leagues (Serie A, Ligue 1, Bundesliga, Premier League, La Liga), season 2024 first, then 2023. Import is incremental over about six days, so the UI must work with partial data (small cohorts, missing percentiles). Metrics are per-90 and percentile-based, with percentiles computed per position, league and season for players with at least 450 minutes.
+Data comes from API-Football (free plan: 100 requests/day, seasons 2022-2024 only, of which 2023 and 2024 are imported, no xG or progressive passes). Currently imported: Serie A, Premier League, La Liga, Bundesliga, Ligue 1, Liga Portugal and Eredivisie, seasons 2024 and 2023 (2024 first). Import is incremental over several days, so the UI must work with partial data (small cohorts, missing percentiles). Metrics are per-90 and percentile-based, with percentiles computed per position, league and season for players with at least 450 minutes.
 
 ## Capabilities and Constraints
 

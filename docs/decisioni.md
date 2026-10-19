@@ -11,3 +11,11 @@
 - **Chiavi mai nei log.** `ApiFootballProperties`, `OpenRouterProperties` e `SecurityProperties` mascherano la chiave in `toString()`. La chiave admin è confrontata a tempo costante.
 - **Endpoint admin chiusi per default.** Senza `ADMIN_API_KEY` configurata nessuno vi accede.
 - **Limite alle chiamate AI.** Ogni chiamata costa token: 20 al minuto per IP, usando l'indirizzo reale della connessione e non `X-Forwarded-For`, che il client può falsificare. Il preflight CORS del browser non conta.
+- **L'elenco mostra tutti, i percentili solo chi ha giocato abbastanza.** Per lo scouting contano anche i giovani con pochi minuti, quindi nessun giocatore è nascosto. La soglia dei 450 minuti resta per i percentili e per l'ordine per voto, dove chi ha giocato di più passa prima: una media su poche partite non è affidabile.
+- **La foto profilo sta nel database.** Sui servizi gratuiti il disco si cancella a ogni riavvio, il database no. Il browser la ritaglia e la riduce a 256 px prima dell'invio, il backend accetta solo JPEG, PNG o WEBP fino a 256 KB e ne controlla i primi byte.
+- **Password sbagliata è 403, non 401.** Il client interpreta ogni 401 con un token come sessione scaduta e fa uscire l'utente: una password attuale errata nel profilo non deve avere quell'effetto.
+- **Cambio password chiude le altre sessioni.** Chi aveva la vecchia password non resta connesso altrove.
+- **La Partitella è una simulazione deterministica nel browser.** Il motore è una funzione pura con generatore casuale iniettato, quindi si testa ripetendo migliaia di partite: il più forte vince spesso ma non sempre. La durata è fissata a 90 minuti di gioco in un minuto reale e non dipende dall'orologio ma dai fotogrammi visibili.
+- **Swagger generato dal codice.** La documentazione interattiva (`/swagger-ui.html`) arriva dalle annotazioni dei controller con springdoc: non può andare fuori sincrono con le rotte come un file scritto a mano.
+- **L'import non recupera le esecuzioni perse.** Parte ogni notte alle 02:05 (ora italiana) e all'avvio del backend: se il backend è spento a quell'ora si rilancia da solo al riavvio, usando la quota del giorno.
+

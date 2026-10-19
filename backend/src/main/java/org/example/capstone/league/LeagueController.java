@@ -1,5 +1,6 @@
 package org.example.capstone.league;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.capstone.player.dto.TeamRefDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "Campionati", description = "Campionati disponibili, stagioni e squadre")
 @RestController
 @RequestMapping("/api/v1/leagues")
 public class LeagueController {

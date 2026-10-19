@@ -359,25 +359,31 @@ export const it = {
 
   'method.title': 'Metodo e limiti dei dati',
   'method.lead':
-    'ScoutAI mostra numeri reali e li mette in relazione con i pari ruolo. Qui trovi da dove arrivano e cosa non possono dire.',
+    'ScoutAI mostra numeri reali e li mette in relazione con i pari ruolo. Qui trovi da dove arrivano, come sono calcolati e cosa non possono dire.',
   'method.source.title': 'Da dove arrivano i dati',
   'method.source.body':
-    'Le statistiche stagionali vengono importate da API-Football e salvate in un database PostgreSQL. L\'applicazione legge solo da quel database: nessuna richiesta parte dal browser verso la fonte esterna.',
+    'Le statistiche stagionali vengono importate da API-Football e salvate in un database PostgreSQL. L\'applicazione legge solo da quel database: nessuna richiesta parte dal browser verso la fonte esterna. I campionati disponibili sono quelli che trovi nel filtro per campionato.',
   'method.per90.title': 'Metriche per 90 minuti',
   'method.per90.body':
     'I totali stagionali sono riportati a 90 minuti di gioco, così chi ha giocato di meno resta confrontabile. Se un dato manca resta vuoto: non viene mai sostituito con zero.',
   'method.percentile.title': 'Percentili',
   'method.percentile.body':
-    'Il percentile dice quanti pari ruolo, nello stesso campionato e nella stessa stagione, hanno un valore inferiore. Contano solo i giocatori con almeno 450 minuti e servono almeno 10 giocatori nella coorte. Per falli commessi e gol subiti la scala è invertita: meno è meglio.',
-  'method.limits.title': 'Cosa i dati non dicono',
-  'method.limits.body':
-    'La fonte non fornisce xG, passaggi progressivi né dati di posizione. Le metriche sono proxy: i palloni recuperati sono contrasti più intercetti, la progressione è letta da dribbling e passaggi chiave. Il ruolo è uno dei quattro della fonte: non distingue per esempio un mediano da una mezzala.',
-  'method.seasons.title': 'Stagioni e aggiornamenti',
-  'method.seasons.body':
-    'Il piano gratuito della fonte copre le stagioni 2022, 2023 e 2024. L\'import procede per campionato in più giorni per rispettare il limite di richieste, quindi alcuni campionati possono essere ancora incompleti. L\'età è calcolata a oggi, le statistiche appartengono alla stagione indicata.',
-  'method.ai.title': 'Analisi con intelligenza artificiale',
+    'Il percentile dice quanti pari ruolo, nello stesso campionato e nella stessa stagione, hanno un valore inferiore. Contano solo i giocatori con almeno 450 minuti e servono almeno 10 giocatori nella coorte. Per falli commessi e gol subiti la scala è invertita: meno è meglio. Chi ha meno minuti compare comunque nell\'elenco, ma il suo percentile può non essere disponibile.',
+  'method.visibility.title': 'Chi compare nell\'elenco',
+  'method.visibility.body':
+    'L\'elenco mostra tutti i giocatori importati, anche chi ha giocato pochi minuti: per lo scouting contano anche i giovani. Ordinando per valutazione passano però prima i giocatori con almeno 450 minuti, perché una media voto su poche partite non è affidabile; gli altri seguono, a loro volta in ordine di voto. Puoi sempre cambiare l\'ordine o impostare un minimo di minuti.',
+  'method.similar.title': 'Giocatori simili',
+  'method.similar.body':
+    'Nella scheda di un giocatore trovi altri con lo stesso ruolo e nella stessa stagione, ordinati per vicinanza: si confrontano i percentili che i due profili hanno in comune (almeno sei) e più sono vicini, più la somiglianza è alta. È un calcolo sui dati, ripetibile e senza intelligenza artificiale.',
+  'method.ai.title': 'Intelligenza artificiale',
   'method.ai.body':
-    'Non è ancora attiva. Quando arriverà, interpreterà i numeri già calcolati e sarà sempre distinta dai dati: non potrà inventare statistiche.',
+    'L\'AI è usata in tre punti: la ricerca in linguaggio naturale (traduce la frase in filtri, mentre giocatori e numeri vengono sempre dal database), il report sul singolo giocatore e il verdetto sul confronto. Legge solo i dati mostrati nella pagina e il suo testo è sempre segnalato come generato: può riassumere e interpretare, ma non deve aggiungere statistiche. Il servizio può essere lento o non disponibile e la risposta può cambiare a ogni richiesta; i numeri restano quelli del database.',
+  'method.match.title': 'La Partitella',
+  'method.match.body':
+    'È una simulazione, non una previsione. Ogni giocatore riceve una forza in attacco e una in difesa ricavate dai suoi percentili della stagione e pesate per ruolo; i portieri contano per le parate. Nella partita decidono possesso, passaggi, dribbling e tiri: chi è più forte ha più probabilità di vincere, ma il caso resta e un risultato a sorpresa è possibile. Dura 90 minuti di gioco in un minuto reale.',
+  'method.account.title': 'Account e dati personali',
+  'method.account.body':
+    'Senza account vedi solo i primi giocatori di ogni campionato; schede, confronto e AI richiedono la registrazione. Di te salviamo email, nome e, se vuoi, i dati e la foto del profilo. La password è conservata solo come hash BCrypt, le sessioni durano 30 giorni e dal profilo puoi uscire dagli altri dispositivi o eliminare l\'account con tutti i suoi dati.',
 } as const
 
 export type TranslationKey = keyof typeof it

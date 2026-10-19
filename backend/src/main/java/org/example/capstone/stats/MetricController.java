@@ -1,5 +1,6 @@
 package org.example.capstone.stats;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.capstone.player.Position;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 /** Catalogo delle metriche interrogabili: il frontend lo usa per costruire filtri ed etichette. */
+@Tag(name = "Metriche", description = "Elenco e descrizione delle metriche")
 @RestController
 @RequestMapping("/api/v1/metrics")
 public class MetricController {

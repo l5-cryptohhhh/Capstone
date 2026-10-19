@@ -1,5 +1,8 @@
 package org.example.capstone.auth;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -7,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.example.capstone.auth.AuthService.UserDto;
+import org.example.capstone.config.OpenApiConfig;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +31,8 @@ import java.time.Duration;
 import java.util.Map;
 
 /** Profilo dell'utente connesso. Tutte le rotte sotto /auth/me richiedono la sessione (vedi WebConfig). */
+@Tag(name = "Profilo", description = "Dati del profilo, foto, email, password, sessioni ed eliminazione dell'account")
+@SecurityRequirement(name = OpenApiConfig.SESSION)
 @RestController
 @RequestMapping("/api/v1")
 public class ProfileController {
@@ -98,6 +104,7 @@ public class ProfileController {
     }
 
     /** Pubblica: serve per mostrare la foto in un <img>, che non può inviare l'header Authorization. */
+    @SecurityRequirements
     @GetMapping("/users/{id}/avatar")
     public ResponseEntity<byte[]> avatar(@PathVariable Long id) {
         return profile.avatar(id)
