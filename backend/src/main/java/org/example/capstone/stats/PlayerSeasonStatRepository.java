@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,12 @@ public interface PlayerSeasonStatRepository
             where s.season = :season and s.position = :position and s.minutes >= :minMinutes""")
     List<PlayerSeasonStat> findCohort(@Param("season") int season, @Param("position") Position position,
                                       @Param("minMinutes") int minMinutes);
+
+    /** Righe dei giocatori indicati, dalla stagione più recente (a parità, da chi ha giocato di più). */
+    @Query("""
+            select s from PlayerSeasonStat s join fetch s.player join fetch s.team join fetch s.league
+            where s.player.id in :ids order by s.season desc, s.minutes desc nulls last""")
+    List<PlayerSeasonStat> findForPlayers(@Param("ids") Collection<Long> ids);
 
     @Query("select max(s.season) from PlayerSeasonStat s")
     Integer findMaxSeason();

@@ -1,0 +1,64 @@
+/* Note private dell'utente sulla scheda giocatore */
+.notes__new,
+.notes__item {
+  display: grid;
+  gap: 8px;
+}
+
+.notes__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.notes__input {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  resize: vertical;
+}
+
+.notes__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.notes__actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.notes__count,
+.notes__meta {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.notes__list {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes__item {
+  padding: 14px 16px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.notes__body {
+  margin: 0;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -12,6 +12,8 @@ import { MethodPage } from '../features/method/MethodPage'
 import { PlayerPage } from '../features/player/PlayerPage'
 import { ProfilePage } from '../features/profile/ProfilePage'
 import { SearchPage } from '../features/search/SearchPage'
+import { WatchlistDetailPage } from '../features/watchlist/WatchlistDetailPage'
+import { WatchlistsPage } from '../features/watchlist/WatchlistsPage'
 import { I18nProvider } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
 import { ThemeProvider } from './ThemeProvider'
@@ -78,6 +80,22 @@ export default function App() {
                       element={
                         <RequireAuth>
                           <ComparePage />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="liste"
+                      element={
+                        <RequireAuth>
+                          <WatchlistsPage />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="liste/:id"
+                      element={
+                        <RequireAuth>
+                          <WatchlistDetailPage />
                         </RequireAuth>
                       }
                     />

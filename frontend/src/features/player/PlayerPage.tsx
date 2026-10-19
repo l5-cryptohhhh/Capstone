@@ -15,7 +15,13 @@ import { countryName } from '../../lib/countries'
 import { formatDate, formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { useCompare } from '../compare/useCompare'
+import { NotesPanel } from '../notes/NotesPanel'
+import { RadarPanel } from '../radar/RadarPanel'
+import { ZonePanel } from '../radar/ZonePanel'
+import { SaveToList } from '../watchlist/SaveToList'
 import { AiReport } from './AiReport'
+import { PdfButton } from './pdf/PdfButton'
+import { ProjectionPanel } from './ProjectionPanel'
 import { SimilarPlayers } from './SimilarPlayers'
 import { MIN_COHORT, MIN_MINUTES_FOR_PERCENTILES, formatMetricValue } from './helpers'
 
@@ -243,13 +249,17 @@ function PlayerView({ playerId }: { playerId: number }) {
           aria-pressed={inCompare}
           disabled={!inCompare && compare.isFull}
           onClick={() =>
-            inCompare ? compare.remove(player.id) : compare.add({ id: player.id, name: player.name, photoUrl: player.photoUrl })
+            inCompare
+              ? compare.remove(player.id)
+              : compare.add({ id: player.id, name: player.name, photoUrl: player.photoUrl })
           }
         >
           {inCompare ? <Check size={16} weight="bold" aria-hidden="true" /> : <Plus size={16} aria-hidden="true" />}
           {inCompare ? t('player.compare.remove') : t('player.compare.add')}
         </button>
       </header>
+
+      <SaveToList playerId={player.id}>{entry && <PdfButton player={player} entry={entry} />}</SaveToList>
 
       {seasons.length > 1 && (
         <nav className="seg seg--wide" aria-label={t('player.season')}>
@@ -291,8 +301,12 @@ function PlayerView({ playerId }: { playerId: number }) {
       ) : (
         <>
           <Bio player={player} entry={entry} />
+          <RadarPanel players={[{ id: String(player.id), name: player.name, entry }]} titleId="radar-title" />
+          <ZonePanel players={[{ id: String(player.id), name: player.name, entry }]} titleId="zone-title" />
           <Profile entry={entry} />
+          <ProjectionPanel playerId={player.id} season={entry.season} />
           <Stats entry={entry} />
+          <NotesPanel playerId={player.id} />
           <SimilarPlayers playerId={player.id} season={entry.season} />
           <AiReport playerId={player.id} />
           {syncedAt && <p className="source">{t('player.source', { date: syncedAt })}</p>}

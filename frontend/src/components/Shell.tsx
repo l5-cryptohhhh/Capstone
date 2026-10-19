@@ -35,6 +35,7 @@ export function Shell() {
             {t('nav.compare')}
             {entries.length > 0 && <span className="count">{entries.length}</span>}
           </NavLink>
+          <NavLink to="/liste">{t('nav.lists')}</NavLink>
           <NavLink to="/metodo">{t('nav.method')}</NavLink>
         </nav>
 

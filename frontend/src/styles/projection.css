@@ -1,0 +1,83 @@
+/* Stima di valore e grafico della traiettoria di crescita */
+.proj__value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 4px;
+}
+
+.proj__number {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* L'etichetta "Stima" accompagna sempre il numero: non va letto come un dato */
+.proj__badge {
+  padding: 3px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pen);
+  background: var(--pen-wash);
+  border-radius: var(--radius-pill);
+}
+
+.growth {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.growth__svg {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
+
+.growth__grid {
+  stroke: var(--ink-3);
+  stroke-opacity: 0.3;
+  stroke-width: 1;
+}
+
+.growth__tick,
+.growth__axis {
+  font-size: 11px;
+  fill: var(--ink-3);
+}
+
+.growth__band {
+  fill: var(--mark-1);
+  fill-opacity: 0.16;
+}
+
+.growth__edge {
+  fill: none;
+  stroke: var(--mark-1);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.growth__line {
+  fill: none;
+  stroke: var(--mark-1);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.growth__dot {
+  fill: var(--mark-1);
+}
+
+.growth__key {
+  display: inline-block;
+  width: 22px;
+  height: 0;
+  border-top: 3px solid var(--mark-1);
+}
+
+.growth__key--edge {
+  border-top: 2px dashed var(--mark-1);
+}

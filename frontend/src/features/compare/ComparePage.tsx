@@ -15,6 +15,8 @@ import { formatNumber, seasonLabel } from '../../lib/format'
 import { METRIC_GROUPS } from '../../lib/metricGroups'
 import { formatMetricValue } from '../player/helpers'
 import { Partitella } from '../match/Partitella'
+import { RadarPanel } from '../radar/RadarPanel'
+import { ZonePanel } from '../radar/ZonePanel'
 import { AiVerdict } from './AiVerdict'
 import { SLOTS, bestIndex, commonSeason, entryFor, parseIds } from './helpers'
 import { useCompare } from './useCompare'
@@ -164,7 +166,10 @@ export function ComparePage() {
               </button>
             </div>
             <h2 className="compare-head__name">
-              <Link to={`/giocatore/${player.id}?season=${season ?? ''}`} aria-label={t('compare.open', { name: player.name })}>
+              <Link
+                to={`/giocatore/${player.id}?season=${season ?? ''}`}
+                aria-label={t('compare.open', { name: player.name })}
+              >
                 {player.name}
               </Link>
             </h2>
@@ -203,6 +208,16 @@ export function ComparePage() {
           </tbody>
         </table>
       </section>
+
+      <RadarPanel
+        players={players.map((player, i) => ({ id: String(player.id), name: player.name, entry: entries[i] }))}
+        titleId="cmp-radar"
+      />
+
+      <ZonePanel
+        players={players.map((player, i) => ({ id: String(player.id), name: player.name, entry: entries[i] }))}
+        titleId="cmp-zones"
+      />
 
       <section className="part" aria-labelledby="cmp-profile">
         <h2 id="cmp-profile" className="part__title">
