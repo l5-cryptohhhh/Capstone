@@ -1,0 +1,36 @@
+# Lancia ogni giorno l'import da API-Football sul backend online.
+# Il servizio gratuito di Render si addormenta e il suo scheduler interno non può essere affidabile: la chiamata
+# serve anche a svegliarlo, per questo ritenta a lungo.
+#
+# Servono due "secrets" nel repository (Settings > Secrets and variables > Actions):
+#   SCOUTAI_API_URL   indirizzo del backend, senza barra finale (es. https://scoutai-api.onrender.com)
+#   ADMIN_API_KEY     la stessa chiave del backend (variabile ADMIN_API_KEY su Render)
+
+name: Import giornaliero
+
+on:
+  schedule:
+    # 00:10 UTC: la quota di API-Football si azzera a mezzanotte UTC
+    - cron: "10 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Avvia l'import
+        env:
+          API_URL: ${{ secrets.SCOUTAI_API_URL }}
+          ADMIN_KEY: ${{ secrets.ADMIN_API_KEY }}
+        run: |
+          set -euo pipefail
+          # 202 = avviato, 409 = ce n'è già uno in corso (va bene). Il primo tentativo sveglia il servizio.
+          status=$(curl --silent --show-error --output response.json --write-out '%{http_code}' \
+            --retry 6 --retry-delay 20 --retry-all-errors --max-time 90 \
+            --request POST --header "X-Admin-Key: ${ADMIN_KEY}" "${API_URL}/api/v1/admin/import/run")
+          cat response.json; echo
+          case "$status" in
+            202|409) echo "Import: HTTP $status" ;;
+            *) echo "Risposta inattesa: HTTP $status"; exit 1 ;;
+          esac
