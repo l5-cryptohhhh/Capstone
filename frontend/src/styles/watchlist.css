@@ -3,7 +3,7 @@
   display: grid;
   justify-items: start;
   gap: 10px;
-  margin: 0 0 16px;
+  margin: 20px 0 16px;
 }
 
 .save__bar {
