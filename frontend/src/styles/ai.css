@@ -98,13 +98,37 @@
   border-radius: var(--radius-lg);
 }
 
-/* Il modello separa titolo e testo con un a capo singolo: va mantenuto */
-.ai-report__body p {
-  white-space: pre-line;
+.ai-md {
+  margin-top: 8px;
 }
 
-.ai-report__body p + p {
-  margin-top: 10px;
+.ai-md h3 {
+  margin: 14px 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pen);
+}
+
+.ai-md h3:first-child {
+  margin-top: 0;
+}
+
+.ai-md p + p {
+  margin-top: 8px;
+}
+
+.ai-md ul,
+.ai-md ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.ai-md li + li {
+  margin-top: 4px;
+}
+
+.ai-md strong {
+  font-weight: 600;
 }
 
 .ai-report__badge {
