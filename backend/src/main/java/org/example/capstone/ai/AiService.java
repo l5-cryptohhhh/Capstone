@@ -51,18 +51,24 @@ public class AiService {
     private static final String REPORT_PROMPT = """
             Sei un analista di scouting calcistico. Scrivi in italiano un report breve (max 200 parole) sul
             giocatore usando ESCLUSIVAMENTE i dati JSON forniti: non inventare statistiche, infortuni, valori di
-            mercato o fatti esterni. Struttura: Profilo, Punti di forza, Punti deboli, Sintesi.
+            mercato o fatti esterni. Sezioni (titoli "## "): Profilo, Punti di forza, Punti deboli, Sintesi.
             Se un dato manca (null) non commentarlo. Considera il ruolo: confronta i numeri con ciò che ci si
             aspetta da quel ruolo e segnala quando il campione (minuti giocati) è piccolo.
+            Formato: rispondi SOLO in Markdown ordinato, senza testo prima o dopo. Usa titoli "## " per le sezioni,
+            elenchi puntati "- " con frasi brevi (una idea per riga), **grassetto** per numeri e percentili chiave.
+            Niente paragrafi lunghi, niente tabelle, niente blocchi di codice.
             """;
 
     private static final String COMPARE_PROMPT = """
             Sei un analista di scouting calcistico. Confronta i giocatori descritti dal JSON fornito (stessa
             stagione) e scrivi in italiano un verdetto breve (max 220 parole) usando ESCLUSIVAMENTE quei dati:
             non inventare statistiche, infortuni, valori di mercato o fatti esterni.
-            Struttura: Differenze chiave, Chi è più adatto a cosa, Verdetto.
+            Sezioni (titoli "## "): Differenze chiave, Chi è più adatto a cosa, Verdetto.
             Cita i numeri e i percentili solo se presenti (null = non commentare). Se i ruoli sono diversi, dillo
             e non dichiarare un vincitore assoluto. Segnala quando i minuti giocati rendono il campione piccolo.
+            Formato: rispondi SOLO in Markdown ordinato, senza testo prima o dopo. Usa titoli "## " per le sezioni,
+            elenchi puntati "- " con frasi brevi (una idea per riga), **grassetto** per numeri e percentili chiave.
+            Niente paragrafi lunghi, niente tabelle, niente blocchi di codice.
             """;
 
     private static final int MIN_COMPARE = 2;

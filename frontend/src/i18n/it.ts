@@ -429,45 +429,45 @@ export const it = {
   'tray.remove': 'Togli {name}',
   'tray.needTwo': 'Seleziona almeno 2 giocatori',
 
-  'method.title': 'Metodo e limiti dei dati',
+  'method.title': 'Come ho costruito i dati',
   'method.lead':
-    'ScoutAI mostra numeri reali e li mette in relazione con i pari ruolo. Qui trovi da dove arrivano, come sono calcolati e cosa non possono dire.',
-  'method.source.title': 'Da dove arrivano i dati',
+    'Scout AI non inventa niente: parte da numeri reali e li confronta con quelli dei giocatori che fanno lo stesso ruolo. In questa pagina spiego da dove li prendo, come li calcolo e quali sono i limiti di quello che vedi.',
+  'method.source.title': 'Da dove prendo i dati',
   'method.source.body':
-    'Le statistiche stagionali vengono importate da API-Football e salvate in un database PostgreSQL. L\'applicazione legge solo da quel database: nessuna richiesta parte dal browser verso la fonte esterna. I campionati disponibili sono quelli che trovi nel filtro per campionato.',
-  'method.per90.title': 'Metriche per 90 minuti',
+    'Le statistiche di stagione le importo da API-Football e le salvo in un database PostgreSQL. L\'app legge solo da quel database: dal browser non parte nessuna richiesta verso la fonte esterna. I campionati che trovi sono quelli del filtro per campionato.',
+  'method.per90.title': 'Perché ragiono per 90 minuti',
   'method.per90.body':
-    'I totali stagionali sono riportati a 90 minuti di gioco, così chi ha giocato di meno resta confrontabile. Se un dato manca resta vuoto: non viene mai sostituito con zero.',
-  'method.percentile.title': 'Percentili',
+    'Ho riportato i totali di stagione a 90 minuti di gioco, così anche chi ha giocato meno resta confrontabile con gli altri. Quando un dato manca lo lascio vuoto: non lo sostituisco mai con uno zero, che direbbe una cosa falsa.',
+  'method.percentile.title': 'Come calcolo i percentili',
   'method.percentile.body':
-    'Il percentile dice quanti pari ruolo, nello stesso campionato e nella stessa stagione, hanno un valore inferiore. Contano solo i giocatori con almeno 450 minuti e servono almeno 10 giocatori nella coorte. Per falli commessi e gol subiti la scala è invertita: meno è meglio. Chi ha meno minuti compare comunque nell\'elenco, ma il suo percentile può non essere disponibile.',
-  'method.visibility.title': 'Chi compare nell\'elenco',
+    'Il percentile dice quanti giocatori dello stesso ruolo, nello stesso campionato e nella stessa stagione, hanno un valore più basso. Ho scelto di contare solo chi ha almeno 450 minuti e di calcolarlo solo se la coorte ha almeno 10 giocatori, altrimenti il numero non significa niente. Per falli commessi e gol subiti ho invertito la scala, perché lì meno è meglio. Chi ha giocato meno compare comunque nell\'elenco, ma il suo percentile può non esserci.',
+  'method.visibility.title': 'Chi vedi nell\'elenco',
   'method.visibility.body':
-    'L\'elenco mostra tutti i giocatori importati, anche chi ha giocato pochi minuti: per lo scouting contano anche i giovani. Ordinando per valutazione passano però prima i giocatori con almeno 450 minuti, perché una media voto su poche partite non è affidabile; gli altri seguono, a loro volta in ordine di voto. Puoi sempre cambiare l\'ordine o impostare un minimo di minuti.',
-  'method.similar.title': 'Giocatori simili',
+    'Nell\'elenco metto tutti i giocatori importati, anche chi ha giocato pochi minuti, perché per lo scouting contano anche i giovani. Quando ordini per valutazione, però, faccio passare prima chi ha almeno 450 minuti: una media voto su poche partite non è affidabile. Gli altri seguono, sempre in ordine di voto. L\'ordine lo puoi cambiare quando vuoi e puoi anche fissare un minimo di minuti.',
+  'method.similar.title': 'Come trovo i giocatori simili',
   'method.similar.body':
-    'Nella scheda di un giocatore trovi altri con lo stesso ruolo e nella stessa stagione, ordinati per vicinanza: si confrontano i percentili che i due profili hanno in comune (almeno sei) e più sono vicini, più la somiglianza è alta. È un calcolo sui dati, ripetibile e senza intelligenza artificiale.',
-  'method.radar.title': 'Radar dei percentili',
+    'Nella scheda di un giocatore cerco altri dello stesso ruolo e della stessa stagione e li ordino per vicinanza. Confronto i percentili che i due profili hanno in comune (almeno sei): più sono vicini, più la somiglianza è alta. È un semplice calcolo sui dati, si ripete sempre uguale e non usa intelligenza artificiale.',
+  'method.radar.title': 'Il radar dei percentili',
   'method.radar.body':
-    'Il radar mostra, per gli assi tipici del ruolo, il percentile del giocatore rispetto ai pari ruolo della stessa stagione e dello stesso campionato (0 al centro, 100 al bordo). Falli commessi e gol subiti sono invertiti: più lontano dal centro è sempre meglio. Se un percentile manca l\'asse resta vuoto e non viene inventato; servono almeno tre percentili per disegnare l\'area.',
-  'method.zones.title': 'Mappa per zone',
+    'Per ogni ruolo ho scelto gli assi più tipici e il radar mostra il percentile del giocatore rispetto ai pari ruolo della stessa stagione e dello stesso campionato (0 al centro, 100 al bordo). Falli commessi e gol subiti sono invertiti, così più lontano dal centro vuol dire sempre meglio. Se un percentile manca lascio l\'asse vuoto invece di inventarlo, e servono almeno tre percentili per disegnare l\'area.',
+  'method.zones.title': 'La mappa per zone',
   'method.zones.body':
-    'I dati dell\'API non hanno coordinate (dove avviene un tiro o un passaggio), quindi non possiamo disegnare posizioni reali. La mappa divide il campo in tre zone e colora ognuna con la media dei percentili delle sue metriche: attacco (gol, tiri, tiri in porta, assist), costruzione (passaggi, passaggi chiave, dribbling riusciti) e difesa (palloni recuperati, blocchi, duelli vinti). Per i portieri c\'è la sola zona porta (parate, gol subiti). Una zona con meno di due percentili è dichiarata non disponibile.',
-  'method.value.title': 'Stima di valore e crescita',
+    'I dati dell\'API non hanno le coordinate (dove avviene un tiro o un passaggio), quindi non posso disegnare posizioni reali e non voglio far finta di averle. Ho diviso il campo in tre zone e colorato ognuna con la media dei percentili delle sue metriche: attacco (gol, tiri, tiri in porta, assist), costruzione (passaggi, passaggi chiave, dribbling riusciti) e difesa (palloni recuperati, blocchi, duelli vinti). Per i portieri c\'è solo la zona porta (parate, gol subiti). Se una zona ha meno di due percentili la segno come non disponibile.',
+  'method.value.title': 'La stima di valore e di crescita',
   'method.value.body':
-    'È una stima euristica, non un valore di mercato. Il punteggio è la media dei percentili del giocatore (almeno tre, con almeno 450 minuti). Il valore parte da 0,2 milioni di euro e raddoppia ogni 10 punti di punteggio; si moltiplica poi per un fattore età (da 1,5 fino a 21 anni a 0,25 dai 31), uno per il campionato (Premier League 1,3; Serie A, Liga e Bundesliga 1,0; Ligue 1 0,85; Portogallo e Olanda 0,6; altri 0,7), uno per i minuti (radice di minuti su 1800, al massimo 1) e uno per il ruolo (portieri 0,7). La traiettoria cambia il punteggio ogni anno di un valore che dipende dall\'età (+3 fino a 21 anni, -3 dai 30) e allarga minimo e massimo di 2,5 punti per la radice degli anni. Non conosce contratto, infortuni, potenziale né il mercato reale: serve a confrontare profili, non a fissare un prezzo.',
+    'È una stima che ho costruito io con una formula semplice, non un valore di mercato. Il punteggio è la media dei percentili del giocatore (almeno tre, con almeno 450 minuti). Il valore parte da 0,2 milioni di euro e raddoppia ogni 10 punti di punteggio; poi lo moltiplico per un fattore età (da 1,5 fino a 21 anni a 0,25 dai 31), uno per il campionato (Premier League 1,3; Serie A, Liga e Bundesliga 1,0; Ligue 1 0,85; Portogallo e Olanda 0,6; altri 0,7), uno per i minuti (radice di minuti su 1800, al massimo 1) e uno per il ruolo (portieri 0,7). Per la traiettoria faccio cambiare il punteggio ogni anno di un valore che dipende dall\'età (+3 fino a 21 anni, -3 dai 30) e allargo minimo e massimo di 2,5 punti per la radice degli anni. La formula non conosce contratto, infortuni, potenziale e mercato reale: serve a confrontare profili, non a fissare un prezzo.',
   'method.private.title': 'Note e liste private',
   'method.private.body':
-    'Le note e le liste sono tue: nessun altro utente le vede. Restano salvate nel database e spariscono se elimini l\'account.',
-  'method.ai.title': 'Intelligenza artificiale',
+    'Le note e le liste sono solo tue: nessun altro utente le vede. Le salvo nel database e vengono cancellate se elimini l\'account.',
+  'method.ai.title': 'Dove uso l\'intelligenza artificiale',
   'method.ai.body':
-    'L\'AI è usata in tre punti: la ricerca in linguaggio naturale (traduce la frase in filtri, mentre giocatori e numeri vengono sempre dal database), il report sul singolo giocatore e il verdetto sul confronto. Legge solo i dati mostrati nella pagina e il suo testo è sempre segnalato come generato: può riassumere e interpretare, ma non deve aggiungere statistiche. Il servizio può essere lento o non disponibile e la risposta può cambiare a ogni richiesta; i numeri restano quelli del database.',
+    'L\'AI la uso in tre punti: la ricerca in linguaggio naturale (traduce la tua frase in filtri, mentre giocatori e numeri arrivano sempre dal database), il report sul singolo giocatore e il verdetto sul confronto. Le faccio leggere solo i dati che vedi nella pagina e il testo che produce è sempre segnalato come generato: può riassumere e interpretare, ma non deve aggiungere statistiche. Il servizio può essere lento o non disponibile e la risposta può cambiare a ogni richiesta, ma i numeri restano quelli del database.',
   'method.match.title': 'La Partitella',
   'method.match.body':
-    'È una simulazione, non una previsione. Ogni giocatore riceve una forza in attacco e una in difesa ricavate dai suoi percentili della stagione e pesate per ruolo; i portieri contano per le parate. Nella partita decidono possesso, passaggi, dribbling e tiri: chi è più forte ha più probabilità di vincere, ma il caso resta e un risultato a sorpresa è possibile. Dura 90 minuti di gioco in un minuto reale.',
+    'È una simulazione, non una previsione. Ogni giocatore riceve una forza in attacco e una in difesa che ricavo dai suoi percentili della stagione, pesati per ruolo; i portieri contano per le parate. In partita decidono possesso, passaggi, dribbling e tiri: chi è più forte ha più probabilità di vincere, ma il caso resta e un risultato a sorpresa è possibile. Dura 90 minuti di gioco in un minuto reale.',
   'method.account.title': 'Account e dati personali',
   'method.account.body':
-    'Senza account vedi solo i primi giocatori di ogni campionato; schede, confronto e AI richiedono la registrazione. Di te salviamo email, nome e, se vuoi, i dati e la foto del profilo. La password è conservata solo come hash BCrypt, le sessioni durano 30 giorni e dal profilo puoi uscire dagli altri dispositivi o eliminare l\'account con tutti i suoi dati.',
+    'Senza account vedi solo i primi giocatori di ogni campionato; schede, confronto e AI richiedono la registrazione. Di te salvo email, nome e, se vuoi, i dati e la foto del profilo. La password la conservo solo come hash BCrypt, le sessioni durano 30 giorni e dal profilo puoi uscire dagli altri dispositivi o eliminare l\'account con tutti i suoi dati.',
 } as const
 
 export type TranslationKey = keyof typeof it

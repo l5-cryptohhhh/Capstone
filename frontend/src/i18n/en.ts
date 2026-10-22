@@ -431,43 +431,43 @@ export const en: Record<TranslationKey, string> = {
   'tray.remove': 'Remove {name}',
   'tray.needTwo': 'Select at least 2 players',
 
-  'method.title': 'Method and data limits',
+  'method.title': 'How I built the data',
   'method.lead':
-    'ScoutAI shows real numbers and puts them in relation to positional peers. Here is where they come from, how they are computed and what they cannot tell you.',
-  'method.source.title': 'Where the data comes from',
+    'Scout AI doesn\'t make anything up: it starts from real numbers and compares them with those of players in the same role. On this page I explain where I get them, how I compute them and what the limits of what you see are.',
+  'method.source.title': 'Where I get the data',
   'method.source.body':
-    'Season statistics are imported from API-Football and stored in a PostgreSQL database. The application reads only from that database: the browser never calls the external source. The leagues available are the ones you find in the league filter.',
-  'method.per90.title': 'Per 90 minute metrics',
+    'I import the season statistics from API-Football and store them in a PostgreSQL database. The app reads only from that database: the browser never calls the external source. The leagues you find are the ones in the league filter.',
+  'method.per90.title': 'Why I think in 90 minutes',
   'method.per90.body':
-    'Season totals are scaled to 90 minutes of play so that players with fewer minutes stay comparable. A missing value stays empty: it is never replaced with zero.',
-  'method.percentile.title': 'Percentiles',
+    'I scaled the season totals to 90 minutes of play so that players with fewer minutes stay comparable with the others. When a value is missing I leave it empty: I never replace it with a zero, which would say something false.',
+  'method.percentile.title': 'How I compute percentiles',
   'method.percentile.body':
-    'A percentile tells how many positional peers, in the same league and season, have a lower value. Only players with at least 450 minutes count, and the cohort needs at least 10 players. For fouls committed and goals conceded the scale is inverted: less is better. Players with fewer minutes still appear in the list, but their percentile may be unavailable.',
-  'method.visibility.title': 'Who appears in the list',
+    'A percentile tells how many players in the same role, league and season have a lower value. I chose to count only players with at least 450 minutes and to compute it only when the cohort has at least 10 players, otherwise the number means nothing. For fouls committed and goals conceded I inverted the scale, because there less is better. Players with fewer minutes still appear in the list, but their percentile may be missing.',
+  'method.visibility.title': 'Who you see in the list',
   'method.visibility.body':
-    'The list shows every imported player, including those who played few minutes: for scouting, young players matter too. When sorting by rating, however, players with at least 450 minutes come first, because an average rating over a few matches is not reliable; the others follow, also in rating order. You can always change the order or set a minimum number of minutes.',
-  'method.similar.title': 'Similar players',
+    'The list includes every imported player, even those who played few minutes, because for scouting young players matter too. When you sort by rating, though, I put players with at least 450 minutes first: an average rating over a few matches is not reliable. The others follow, still in rating order. You can change the order whenever you like and also set a minimum number of minutes.',
+  'method.similar.title': 'How I find similar players',
   'method.similar.body':
-    'On a player\'s page you find others with the same position and season, ordered by closeness: the percentiles the two profiles have in common (at least six) are compared, and the closer they are, the higher the similarity. It is a calculation on the data, repeatable and without artificial intelligence.',
-  'method.radar.title': 'Percentile radar',
+    'On a player\'s page I look for others with the same role and season and order them by closeness. I compare the percentiles the two profiles have in common (at least six): the closer they are, the higher the similarity. It is a plain calculation on the data, it always gives the same result and it uses no artificial intelligence.',
+  'method.radar.title': 'The percentile radar',
   'method.radar.body':
-    'For the axes typical of the role, the radar shows the player\'s percentile against peers in the same role, season and league (0 at the centre, 100 at the edge). Fouls committed and goals conceded are inverted: further from the centre is always better. If a percentile is missing the axis stays empty and is never made up; at least three percentiles are needed to draw the area.',
-  'method.zones.title': 'Zone map',
+    'For each role I picked the most typical axes, and the radar shows the player\'s percentile against peers in the same role, season and league (0 at the centre, 100 at the edge). Fouls committed and goals conceded are inverted, so further from the centre always means better. If a percentile is missing I leave the axis empty instead of making it up, and at least three percentiles are needed to draw the area.',
+  'method.zones.title': 'The zone map',
   'method.zones.body':
-    'The API data has no coordinates (where a shot or a pass happens), so real positions cannot be drawn. The map splits the pitch into three zones and colours each with the average percentile of its metrics: attack (goals, shots, shots on target, assists), build-up (passes, key passes, successful dribbles) and defence (recoveries, blocks, duels won). Goalkeepers only have the goal zone (saves, goals conceded). A zone with fewer than two percentiles is declared unavailable.',
-  'method.value.title': 'Value estimate and growth',
+    'The API data has no coordinates (where a shot or a pass happens), so I can\'t draw real positions and I don\'t want to pretend I can. I split the pitch into three zones and coloured each with the average percentile of its metrics: attack (goals, shots, shots on target, assists), build-up (passes, key passes, successful dribbles) and defence (recoveries, blocks, duels won). Goalkeepers only have the goal zone (saves, goals conceded). If a zone has fewer than two percentiles I mark it as unavailable.',
+  'method.value.title': 'The value and growth estimate',
   'method.value.body':
-    'It is a heuristic estimate, not a market value. The score is the average of the player\'s percentiles (at least three, with at least 450 minutes). The value starts at 0.2 million euros and doubles every 10 score points; it is then multiplied by an age factor (from 1.5 up to 21 years to 0.25 from 31), a league factor (Premier League 1.3; Serie A, Liga and Bundesliga 1.0; Ligue 1 0.85; Portugal and Netherlands 0.6; others 0.7), a minutes factor (square root of minutes over 1800, at most 1) and a role factor (goalkeepers 0.7). The trajectory changes the score every year by an amount that depends on age (+3 up to 21, -3 from 30) and widens minimum and maximum by 2.5 points times the square root of the years. It knows nothing about contract, injuries, potential or the real market: it is meant to compare profiles, not to set a price.',
+    'It is an estimate I built myself with a simple formula, not a market value. The score is the average of the player\'s percentiles (at least three, with at least 450 minutes). The value starts at 0.2 million euros and doubles every 10 score points; then I multiply it by an age factor (from 1.5 up to 21 years to 0.25 from 31), a league factor (Premier League 1.3; Serie A, Liga and Bundesliga 1.0; Ligue 1 0.85; Portugal and Netherlands 0.6; others 0.7), a minutes factor (square root of minutes over 1800, at most 1) and a role factor (goalkeepers 0.7). For the trajectory I change the score every year by an amount that depends on age (+3 up to 21, -3 from 30) and widen minimum and maximum by 2.5 points times the square root of the years. The formula knows nothing about contract, injuries, potential or the real market: it is meant to compare profiles, not to set a price.',
   'method.private.title': 'Private notes and lists',
   'method.private.body':
-    'Notes and lists are yours: no other user can see them. They are stored in the database and disappear if you delete your account.',
-  'method.ai.title': 'Artificial intelligence',
+    'Notes and lists are yours alone: no other user can see them. I store them in the database and they are deleted if you delete your account.',
+  'method.ai.title': 'Where I use artificial intelligence',
   'method.ai.body':
-    'AI is used in three places: natural-language search (it turns the sentence into filters, while players and numbers always come from the database), the report on a single player and the verdict on a comparison. It reads only the data shown on the page and its text is always marked as generated: it can summarise and interpret, but must not add statistics. The service can be slow or unavailable and the answer can change at every request; the numbers stay those of the database.',
+    'I use AI in three places: natural-language search (it turns your sentence into filters, while players and numbers always come from the database), the report on a single player and the verdict on a comparison. I let it read only the data you see on the page, and the text it produces is always marked as generated: it can summarise and interpret, but must not add statistics. The service can be slow or unavailable and the answer can change at every request, but the numbers stay those of the database.',
   'method.match.title': 'The kickabout',
   'method.match.body':
-    'It is a simulation, not a prediction. Every player gets an attack and a defence strength derived from their season percentiles and weighted by position; goalkeepers count for saves. Possession, passes, dribbles and shots decide the match: the stronger side is more likely to win, but chance remains and an upset is possible. It lasts 90 game minutes in one real minute.',
+    'It is a simulation, not a prediction. Every player gets an attack and a defence strength that I derive from their season percentiles, weighted by position; goalkeepers count for saves. Possession, passes, dribbles and shots decide the match: the stronger side is more likely to win, but chance remains and an upset is possible. It lasts 90 game minutes in one real minute.',
   'method.account.title': 'Account and personal data',
   'method.account.body':
-    'Without an account you only see the first players of each league; player pages, comparison and AI require registration. We store your email, name and, if you wish, your profile details and photo. The password is kept only as a BCrypt hash, sessions last 30 days and from your profile you can sign out other devices or delete the account with all its data.',
+    'Without an account you only see the first players of each league; player pages, comparison and AI require registration. I store your email, name and, if you wish, your profile details and photo. I keep the password only as a BCrypt hash, sessions last 30 days and from your profile you can sign out other devices or delete the account with all its data.',
 }
