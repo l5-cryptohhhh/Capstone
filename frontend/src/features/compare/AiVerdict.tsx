@@ -6,8 +6,8 @@ import { useI18n } from '../../i18n/useI18n'
 
 /** Verdetto su richiesta: l'AI vede solo le schede dei giocatori confrontati, nella stessa stagione. */
 export function AiVerdict({ ids, season }: { ids: number[]; season: number | undefined }) {
-  const { t } = useI18n()
-  const verdict = useAiCompare(ids, season)
+  const { t, lang } = useI18n()
+  const verdict = useAiCompare(ids, season, lang)
 
   return (
     <section className="part ai-report" aria-labelledby="ai-verdict-title">

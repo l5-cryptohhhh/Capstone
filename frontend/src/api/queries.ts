@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiGet, apiPost, apiSend } from './client'
 import { useAuth } from '../features/auth/useAuth'
+import type { Lang } from '../i18n/metricLabels'
 import type {
   AiSearchResult,
   CompareVerdict,
@@ -81,15 +82,17 @@ export function useAiSearch() {
 }
 
 /** Il report si genera su richiesta (non al caricamento della pagina) per non consumare chiamate inutili. */
-export function useAiReport(playerId: number) {
-  return useMutation({ mutationFn: () => apiGet<PlayerReport>(`/ai/players/${playerId}/report`) })
+export function useAiReport(playerId: number, lang: Lang) {
+  return useMutation({
+    mutationFn: () => apiGet<PlayerReport>(`/ai/players/${playerId}/report`, new URLSearchParams({ lang })),
+  })
 }
 
 /** Verdetto sul confronto: le stesse schede mostrate nella pagina, nella stessa stagione. */
-export function useAiCompare(ids: number[], season: number | undefined) {
+export function useAiCompare(ids: number[], season: number | undefined, lang: Lang) {
   return useMutation({
     mutationFn: () => {
-      const params = new URLSearchParams({ ids: ids.join(',') })
+      const params = new URLSearchParams({ ids: ids.join(','), lang })
       if (season !== undefined) params.set('season', String(season))
       return apiGet<CompareVerdict>('/ai/compare', params)
     },

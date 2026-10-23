@@ -49,9 +49,9 @@ public class AiService {
             """;
 
     private static final String REPORT_PROMPT = """
-            Sei un analista di scouting calcistico. Scrivi in italiano un report breve (max 150 parole) sul
+            Sei un analista di scouting calcistico. Scrivi in %s un report breve (max 150 parole) sul
             giocatore usando ESCLUSIVAMENTE i dati JSON forniti: non inventare statistiche, infortuni, valori di
-            mercato o fatti esterni. Sezioni (titoli "## "): Profilo, Punti di forza, Punti deboli, Sintesi.
+            mercato o fatti esterni. Sezioni (titoli "## "): %s.
             Se un dato manca (null) non commentarlo. Considera il ruolo: confronta i numeri con ciò che ci si
             aspetta da quel ruolo e segnala quando il campione (minuti giocati) è piccolo.
             Formato: rispondi SOLO in Markdown ordinato, senza testo prima o dopo. Usa titoli "## " per le sezioni,
@@ -63,18 +63,23 @@ public class AiService {
 
     private static final String COMPARE_PROMPT = """
             Sei un analista di scouting calcistico. Confronta i giocatori descritti dal JSON fornito (stessa
-            stagione) e scrivi in italiano un verdetto breve (max 150 parole) usando ESCLUSIVAMENTE quei dati:
+            stagione) e scrivi in %s un verdetto breve (max 150 parole) usando ESCLUSIVAMENTE quei dati:
             non inventare statistiche, infortuni, valori di mercato o fatti esterni.
-            Sezioni (titoli "## "): Differenze chiave, Chi è più adatto a cosa, Verdetto.
+            Sezioni (titoli "## "): %s.
             Cita i numeri e i percentili solo se presenti (null = non commentare). Se i ruoli sono diversi, dillo
             e non dichiarare un vincitore assoluto. Segnala quando i minuti giocati rendono il campione piccolo.
             Formato: rispondi SOLO in Markdown ordinato, senza testo prima o dopo. Usa titoli "## " per le sezioni,
             elenchi puntati "- " con frasi brevi (una idea per riga), **grassetto** per numeri e percentili chiave.
             Niente paragrafi lunghi, niente tabelle, niente blocchi di codice.
-            Massimo 5 punti elenco per sezione, ciascuno di una sola riga; "Verdetto" al massimo 2 punti.
+            Massimo 5 punti elenco per sezione, ciascuno di una sola riga; l'ultima sezione al massimo 2 punti.
             Per ogni giocatore usa un solo campionato, quello con più minuti, e non sommare né mescolare campionati.
             Non fare un elenco di tutte le statistiche: scegli solo le 4-5 differenze che contano di più.
             """;
+
+    private static final String REPORT_SECTIONS_IT = "Profilo, Punti di forza, Punti deboli, Sintesi";
+    private static final String REPORT_SECTIONS_EN = "Profile, Strengths, Weaknesses, Summary";
+    private static final String COMPARE_SECTIONS_IT = "Differenze chiave, Chi è più adatto a cosa, Verdetto";
+    private static final String COMPARE_SECTIONS_EN = "Key differences, Who fits what, Verdict";
 
     private static final int MIN_COMPARE = 2;
     private static final int MAX_COMPARE = 3;
@@ -143,6 +148,11 @@ public class AiService {
     }
 
     public PlayerReport report(Long playerId) {
+        return report(playerId, "it");
+    }
+
+    /** {@code lang} è la lingua dell'interfaccia ("it" o "en"): il testo dell'AI segue quella. */
+    public PlayerReport report(Long playerId, String lang) {
         PlayerDetailDto detail = players.detail(playerId, null);
         if (detail.seasons().isEmpty()) {
             throw new ApiException(ErrorCode.INSUFFICIENT_DATA, "Nessuna statistica disponibile per questo giocatore");
@@ -153,7 +163,7 @@ public class AiService {
         } catch (JacksonException e) {
             throw new ApiException(ErrorCode.INTERNAL_ERROR, "Errore interno", e);
         }
-        return new PlayerReport(playerId, llm.complete(REPORT_PROMPT, data, false));
+        return new PlayerReport(playerId, llm.complete(reportPrompt(lang), data, false));
     }
 
     /**
@@ -161,6 +171,10 @@ public class AiService {
      * L'AI riceve solo le schede reali e non può usare altre fonti.
      */
     public CompareVerdict compare(List<Long> ids, Integer season) {
+        return compare(ids, season, "it");
+    }
+
+    public CompareVerdict compare(List<Long> ids, Integer season, String lang) {
         if (ids == null || ids.size() < MIN_COMPARE || ids.size() > MAX_COMPARE
                 || ids.stream().distinct().count() != ids.size()) {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "Servono da 2 a 3 giocatori diversi");
@@ -183,7 +197,21 @@ public class AiService {
         } catch (JacksonException e) {
             throw new ApiException(ErrorCode.INTERNAL_ERROR, "Errore interno", e);
         }
-        return new CompareVerdict(ids, target, llm.complete(COMPARE_PROMPT, data, false));
+        return new CompareVerdict(ids, target, llm.complete(comparePrompt(lang), data, false));
+    }
+
+    private static boolean english(String lang) {
+        return "en".equalsIgnoreCase(lang);
+    }
+
+    private static String reportPrompt(String lang) {
+        return english(lang) ? REPORT_PROMPT.formatted("inglese", REPORT_SECTIONS_EN)
+                : REPORT_PROMPT.formatted("italiano", REPORT_SECTIONS_IT);
+    }
+
+    private static String comparePrompt(String lang) {
+        return english(lang) ? COMPARE_PROMPT.formatted("inglese", COMPARE_SECTIONS_EN)
+                : COMPARE_PROMPT.formatted("italiano", COMPARE_SECTIONS_IT);
     }
 
     /** Stagione più recente presente in tutti i giocatori, null se non ce n'è. */
