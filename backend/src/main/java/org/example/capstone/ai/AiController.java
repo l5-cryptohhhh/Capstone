@@ -42,13 +42,14 @@ public class AiController {
 
     /** Verdetto su 2-3 giocatori, basato solo sulle loro statistiche reali nella stessa stagione. */
     @GetMapping("/compare")
-    public CompareVerdict compare(@RequestParam List<Long> ids, @RequestParam(required = false) Integer season) {
-        return service.compare(ids, season);
+    public CompareVerdict compare(@RequestParam List<Long> ids, @RequestParam(required = false) Integer season,
+                                  @RequestParam(defaultValue = "it") String lang) {
+        return service.compare(ids, season, lang);
     }
 
     /** Report testuale basato solo sulle statistiche reali del giocatore. */
     @GetMapping("/players/{id}/report")
-    public PlayerReport report(@PathVariable Long id) {
-        return service.report(id);
+    public PlayerReport report(@PathVariable Long id, @RequestParam(defaultValue = "it") String lang) {
+        return service.report(id, lang);
     }
 }

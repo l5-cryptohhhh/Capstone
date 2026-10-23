@@ -6,8 +6,8 @@ import { useI18n } from '../../i18n/useI18n'
 
 /** Report su richiesta: il testo dell'AI sta in un riquadro a parte, mai confuso con i dati della scheda. */
 export function AiReport({ playerId }: { playerId: number }) {
-  const { t } = useI18n()
-  const report = useAiReport(playerId)
+  const { t, lang } = useI18n()
+  const report = useAiReport(playerId, lang)
 
   return (
     <section className="part ai-report" aria-labelledby="ai-report-title">
