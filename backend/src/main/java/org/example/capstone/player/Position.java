@@ -1,6 +1,7 @@
 package org.example.capstone.player;
 
-/** Ruolo normalizzato: API-Football distingue solo portiere, difensore, centrocampista, attaccante. */
+/** Ruolo normalizzato: API-Football distingue solo portiere, difensore, centrocampista, attaccante (questi ultimi arrivano
+ * come "Attacker" o "Forward", a seconda della risposta). */
 public enum Position {
     GK, DEF, MID, ATT;
 
@@ -12,7 +13,7 @@ public enum Position {
             case "Goalkeeper" -> GK;
             case "Defender" -> DEF;
             case "Midfielder" -> MID;
-            case "Attacker" -> ATT;
+            case "Attacker", "Forward" -> ATT;
             default -> null;
         };
     }
