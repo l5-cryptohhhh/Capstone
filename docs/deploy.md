@@ -16,7 +16,7 @@ Cosa c'è nel repository per questo:
 |---|---|
 | [`render.yaml`](../render.yaml) | Blueprint: descrive database e servizi Render e le variabili da compilare |
 | [`backend/Dockerfile`](../backend/Dockerfile) | Compila il backend con Maven (JDK 25) e lo esegue con il solo JRE |
-| [`scripts/copy-data.sh`](../scripts/copy-data.sh) | Copia i dati importati dal database locale a quello online |
+| [`backend/scripts/copy-data.sh`](../backend/scripts/copy-data.sh) | Copia i dati importati dal database locale a quello online |
 | [`.github/workflows/daily-import.yml`](../.github/workflows/daily-import.yml) | Import giornaliero (sveglia anche il servizio) |
 
 ## Prima di cominciare
@@ -51,7 +51,7 @@ Senza questo passaggio il sito parte vuoto e l'import da API-Football (90 richie
 SOURCE_URL='postgresql://scoutai:<password>@localhost:5432/scoutai' \
 TARGET_URL='<External Database URL>?sslmode=require' \
 PG_BIN='/c/Program Files/PostgreSQL/18/bin' \
-./scripts/copy-data.sh
+./backend/scripts/copy-data.sh
 ```
 
 Lo script copia campionati, squadre, giocatori, statistiche e percentili (non utenti, note e liste), in una transazione sola, e alla fine stampa le righe presenti. Se `psql` e `pg_dump` sono già nel PATH, `PG_BIN` non serve. Non occorre riavviare il backend.

@@ -199,5 +199,5 @@ Depth is a hairline border plus one dark shadow family. `--edge` is a 4% white i
 
 ## Open points
 
-- `.impeccable/design.json` and `.impeccable/surfaces/` describe the earlier directions and are out of date. Regenerate them with `/impeccable document` rather than editing by hand.
+- The earlier `.impeccable/` files described superseded directions and were removed from the repository. Regenerate them with `/impeccable document` if needed.
 - The brand board also shows a landing page, pricing and an app icon. Those surfaces do not exist in the product yet; only the identity (colors, type, icons, components, slogan) is applied.

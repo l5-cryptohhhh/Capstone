@@ -49,8 +49,9 @@ per 90 minuti e i percentili sono confrontati tra giocatori dello stesso ruolo.
 |---|---|
 | `backend/` | Spring Boot (Java 25), REST API, PostgreSQL |
 | `frontend/` | React + Vite + TypeScript |
-| `scripts/` | Script di supporto: copia dei dati verso il database online |
-| `docs/` | [Architettura](docs/architettura.md), [database](docs/database.md), [API](docs/api.md), [decisioni](docs/decisioni.md) |
+| `backend/scripts/` | Script di supporto: copia dei dati verso il database online |
+| `frontend/design/` | Documenti di design e di prodotto dell'interfaccia: [DESIGN](frontend/design/DESIGN.md), [PRODUCT](frontend/design/PRODUCT.md) |
+| `docs/` | [Architettura](docs/architettura.md), [decisioni](docs/decisioni.md), [deploy](docs/deploy.md); in `docs/backend/` il [database](docs/backend/database.md) e le [API](docs/backend/api.md) |
 
 ## Documentazione API interattiva (Swagger)
 
@@ -93,7 +94,7 @@ Limiti del piano gratuito da tenere presenti:
 | `PATCH /api/v1/auth/me` e `/auth/me/**` | Profilo: dati, foto, email, password, sessioni, eliminazione account |
 | `POST /api/v1/admin/import/run`, `GET /api/v1/admin/import/status`, `POST /api/v1/admin/stats/recompute` | Import da API-Football e ricalcolo dei percentili (header `X-Admin-Key`) |
 
-Le chiamate `/api/v1/ai/**` sono limitate a 20 al minuto per IP. I dettagli sono in [`docs/api.md`](docs/api.md).
+Le chiamate `/api/v1/ai/**` sono limitate a 20 al minuto per IP. I dettagli sono in [`docs/backend/api.md`](docs/backend/api.md).
 
 ## Test
 

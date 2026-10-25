@@ -8,7 +8,7 @@
 # Uso:
 #   SOURCE_URL='postgresql://utente:password@localhost:5432/scoutai' \
 #   TARGET_URL='postgresql://utente:password@host/db?sslmode=require' \
-#   ./scripts/copy-data.sh
+#   ./backend/scripts/copy-data.sh
 #
 # Variabili facoltative:
 #   PG_BIN         cartella dei programmi PostgreSQL, se psql e pg_dump non sono nel PATH
