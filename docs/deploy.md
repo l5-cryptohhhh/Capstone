@@ -78,7 +78,7 @@ GitHub sospende i workflow programmati dopo 60 giorni di inattività del reposit
 
 ## Cose da sapere
 
-- **Il database gratuito scade.** Render cancella il PostgreSQL gratuito 30 giorni dopo la creazione (con un breve periodo di grazia e avvisi via email). Segnati la data di creazione di `scoutai-db` e controlla che la consegna e l'eventuale presentazione cadano prima. Se serve andare oltre: crea un nuovo database (anche a pagamento, se vuoi tenerlo), cambia le variabili del backend e rilancia `scripts/copy-data.sh`. Gli utenti registrati, le note e le liste non si copiano e andrebbero rifatti.
+- **Il database gratuito scade.** Render cancella il PostgreSQL gratuito 30 giorni dopo la creazione (con un breve periodo di grazia e avvisi via email). Segnati la data di creazione di `scoutai-db` e controlla che la consegna e l'eventuale presentazione cadano prima. Se serve andare oltre: crea un nuovo database (anche a pagamento, se vuoi tenerlo), cambia le variabili del backend e rilancia `backend/scripts/copy-data.sh`. Gli utenti registrati, le note e le liste non si copiano e andrebbero rifatti.
 - **Risveglio lento.** Dopo 15 minuti di inattività il backend si addormenta e la prima richiesta può metterci 30-60 secondi. Prima di una presentazione apri il sito qualche minuto prima. Per tenerlo sveglio nei giorni della consegna puoi far chiamare `/api/v1/leagues` ogni 5 minuti da un servizio di monitoraggio gratuito (per esempio UptimeRobot); le 750 ore mensili del piano gratuito bastano per un servizio sempre acceso.
 - **Memoria.** Il piano gratuito ha 512 MB; il Dockerfile limita l'heap al 70% e usa un garbage collector leggero.
 - **Swagger** (`/swagger-ui.html`) è raggiungibile anche online: è la documentazione delle API e non espone dati.
