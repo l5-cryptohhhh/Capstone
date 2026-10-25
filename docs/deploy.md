@@ -38,7 +38,7 @@ Cosa c'è nel repository per questo:
    `ADMIN_API_KEY` la genera Render da sola. Le altre (`SCOUTAI_IMPORT_AUTO_ENABLED=false`, `SERVER_FORWARD_HEADERS_STRATEGY=native`) sono già nel blueprint.
 3. Compila la variabile del frontend: `VITE_API_BASE_URL` = indirizzo del backend + `/api/v1`, per esempio `https://scoutai-api.onrender.com/api/v1`.
 4. Crea tutto. Se un nome è già preso Render aggiunge un suffisso: in quel caso correggi `CORS_ALLOWED_ORIGIN` e `VITE_API_BASE_URL` con gli indirizzi veri. La seconda va **ricostruita** (Manual Deploy), perché entra nel codice durante il build.
-5. Al primo avvio il backend crea le tabelle da solo (Flyway). Controlla nei log di `scoutai-api` la riga *"Successfully applied 10 migrations"*.
+5. Al primo avvio il backend crea le tabelle da solo (Flyway). Controlla nei log di `scoutai-api` la riga *"Successfully applied 11 migrations"*.
 
 ## 2. Copiare i dati già importati
 

@@ -49,8 +49,8 @@ Servono `OPENROUTER_API_KEY` e un limite di 20 chiamate al minuto per IP. Senza 
 | Metodo | Percorso | Risposta |
 |---|---|---|
 | `POST` | `/ai/search` con `{"query": "..."}` (max 300 caratteri) | `{interpreted, results}`: i filtri interpretati e i risultati, che hanno lo stesso formato e la stessa logica di `/players` (stagione più recente e minuti minimi se non indicati). Senza ordinamento richiesto, per voto |
-| `GET` | `/ai/players/{id}/report` | Report testuale basato solo sulle statistiche reali del giocatore |
-| `GET` | `/ai/compare?ids=1,2,3&season=2024` | `{playerIds, season, verdict}`: verdetto su 2-3 giocatori. Senza `season` usa la più recente in comune; `400 INVALID_REQUEST` se i giocatori non sono 2-3 e diversi, `422 INSUFFICIENT_DATA` se manca la stagione per qualcuno |
+| `GET` | `/ai/players/{id}/report?lang=it|en` | Report testuale basato solo sulle statistiche reali del giocatore |
+| `GET` | `/ai/compare?ids=1,2,3&season=2024&lang=it|en` | `{playerIds, season, verdict}`: verdetto su 2-3 giocatori. Senza `season` usa la più recente in comune; `400 INVALID_REQUEST` se i giocatori non sono 2-3 e diversi, `422 INSUFFICIENT_DATA` se manca la stagione per qualcuno |
 
 L'AI compila solo i campi di un oggetto di filtri (`name`, `position`, `team`, `league`, `season`, `minAge`, `maxAge`, `minMinutes`, `sort`): non scrive query. I risultati vengono sempre dal database. Il report riceve la scheda completa del giocatore, con statistiche e percentili.
 
