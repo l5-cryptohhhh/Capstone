@@ -40,10 +40,10 @@ services:
         fromDatabase:
           name: scoutai-db
           property: user
-      # Inserita a mano nella dashboard: la password è stata cambiata dentro PostgreSQL, quindi quella che Render
-      # conosce non vale più e fromDatabase la rimetterebbe a ogni sincronizzazione del Blueprint
       - key: SCOUTAI_DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: scoutai-db
+          property: password
       - key: API_FOOTBALL_KEY
         sync: false
       - key: OPENROUTER_API_KEY
